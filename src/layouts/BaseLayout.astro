@@ -1,0 +1,413 @@
+---
+/**
+ * Base document shell: head, theme bootstrap, header, footer, palette.
+ */
+import '@fontsource-variable/inter';
+import '@fontsource-variable/fraunces';
+import '@fontsource-variable/jetbrains-mono';
+
+import '../styles/global.css';
+
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CommandPalette from '../components/CommandPalette.astro';
+import { SITE } from '../lib/site';
+import { getSearchIndex } from '../lib/search';
+import { profile } from '../lib/data';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Full override of the document title. */
+  rawTitle?: string;
+  type?: 'website' | 'article';
+  published?: Date;
+  updated?: Date;
+  tags?: string[];
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description = SITE.description,
+  rawTitle,
+  type = 'website',
+  published,
+  updated,
+  tags = [],
+  noindex = false,
+} = Astro.props;
+
+const pageTitle = rawTitle ?? (title ? `${title} · ${SITE.title}` : `${SITE.title} — ${SITE.tagline}`);
+const canonical = new URL(Astro.url.pathname.replace(/\/$/, '') || '/', SITE.url).href;
+// PNG, not SVG: X, Facebook, LinkedIn, Slack and Discord all refuse to render
+// an SVG social card, so the preview would come up blank. `og.png` is a
+// 1200x630 raster of `og.svg` — regenerate it if the SVG ever changes.
+const ogImage = new URL('/og.png', SITE.url).href;
+const ogImageAlt = `${SITE.author} — ${SITE.tagline}`;
+
+const index = await getSearchIndex();
+
+// Structured data helps the site read well when shared or indexed.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': `${SITE.url}/#person`,
+      name: SITE.author,
+      url: SITE.github,
+      sameAs: [SITE.github],
+      knowsAbout: profile.topLanguages.slice(0, 6).map((l) => l.name),
+    },
+    {
+      '@type': type === 'article' ? 'TechArticle' : 'WebSite',
+      '@id': canonical,
+      url: canonical,
+      name: pageTitle,
+      description,
+      inLanguage: SITE.locale,
+      author: { '@id': `${SITE.url}/#person` },
+      ...(published ? { datePublished: published.toISOString() } : {}),
+      ...(updated ? { dateModified: updated.toISOString() } : {}),
+      ...(tags.length ? { keywords: tags.join(', ') } : {}),
+      ...(type === 'article'
+        ? { publisher: { '@id': `${SITE.url}/#person` }, mainEntityOfPage: canonical }
+        : {}),
+    },
+  ],
+};
+---
+
+<!doctype html>
+<html lang="en-GB" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <meta name="theme-color" content="#f6f4f0" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0c0b0a" media="(prefers-color-scheme: dark)" />
+
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={SITE.title} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    <meta property="og:locale" content="en_GB" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={`${SITE.title} — writing`}
+      href="/rss.xml"
+    />
+
+    <!-- Apply the saved theme before first paint so nothing flashes. -->
+    <script is:inline>
+      (function () {
+        try {
+          var saved = localStorage.getItem('theme');
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme =
+            saved === 'dark' || saved === 'light' ? saved : prefersDark ? 'dark' : 'light';
+        } catch (e) {
+          document.documentElement.dataset.theme = 'light';
+        }
+      })();
+    </script>
+
+    <!-- Reveal animations need JS; without it, show everything immediately. -->
+    <noscript>
+      <style>
+        .reveal { opacity: 1 !important; transform: none !important; }
+      </style>
+    </noscript>
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+
+  <body>
+    <div class="scroll-progress" aria-hidden="true">
+      <span class="scroll-progress__bar" id="scroll-progress"></span>
+    </div>
+
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <Header />
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <Footer />
+
+    <CommandPalette index={index} />
+
+    <script>
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      /* ---- 1. Reveal on scroll ------------------------------------- */
+      if (!reduce && 'IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-in');
+                io.unobserve(entry.target);
+              }
+            }
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.05 }
+        );
+
+        const scan = () =>
+          document
+            .querySelectorAll('.reveal:not(.is-in)')
+            .forEach((el) => io.observe(el));
+
+        scan();
+        document.addEventListener('astro:page-load', scan);
+      } else {
+        document.querySelectorAll('.reveal').forEach((el) => el.classList.add('is-in'));
+      }
+
+      /* ---- 1b. Safety net ------------------------------------------
+       * The observer is the normal path, but it can miss elements when the
+       * page opens on a #hash, restores a scroll position, or is restored
+       * from the back/forward cache. Content must never be left invisible,
+       * so anything sitting in or above the viewport is revealed directly.
+       */
+      const sweep = () => {
+        document.querySelectorAll<HTMLElement>('.reveal:not(.is-in)').forEach((el) => {
+          const r = el.getBoundingClientRect();
+          // In view, or already scrolled past the top of the page.
+          if (r.top < window.innerHeight + 40 && r.bottom > -200) {
+            el.classList.add('is-in');
+          }
+        });
+      };
+
+      window.addEventListener('load', () => setTimeout(sweep, 350));
+      window.addEventListener('hashchange', () => setTimeout(sweep, 350));
+      window.addEventListener('pageshow', () => setTimeout(sweep, 350));
+      document.addEventListener('astro:page-load', () => setTimeout(sweep, 350));
+
+      /* Enable smooth in-page scrolling only after the initial position has
+         settled, so a direct hit on /#section does not animate from the top. */
+      const enableSmooth = () => document.documentElement.classList.add('is-ready');
+      if (document.readyState === 'complete') {
+        requestAnimationFrame(enableSmooth);
+      } else {
+        window.addEventListener('load', () => requestAnimationFrame(enableSmooth));
+      }
+
+      /* ---- 2. Stagger sibling reveals ------------------------------ */
+      // Any container marked [data-stagger] hands its direct .reveal
+      // children an incremental delay, so grids cascade instead of
+      // snapping in all at once.
+      const stagger = () => {
+        document.querySelectorAll<HTMLElement>('[data-stagger]').forEach((group) => {
+          if (group.dataset.staggered === '1') return;
+          group.dataset.staggered = '1';
+          group
+            .querySelectorAll<HTMLElement>(':scope > .reveal, :scope > * > .reveal')
+            .forEach((el, i) => {
+              if (!el.style.getPropertyValue('--reveal-delay')) {
+                el.style.setProperty('--reveal-delay', `${Math.min(i * 65, 390)}ms`);
+              }
+            });
+        });
+      };
+      stagger();
+      document.addEventListener('astro:page-load', stagger);
+
+      /* ---- 3. Section headings light up ---------------------------- */
+      // Latches on first entry rather than toggling with visibility. A toggle
+      // made the heading flash on and off as it crossed the trigger band, which
+      // reads as a glitch; latching gives a progressive "the page fills in as
+      // you descend" feel and stays stable when you scroll back up.
+      if ('IntersectionObserver' in window) {
+        const headIo = new IntersectionObserver(
+          (entries, io) => {
+            for (const e of entries) {
+              if (!e.isIntersecting) continue;
+              e.target.classList.add('is-lit');
+              io.unobserve(e.target);
+            }
+          },
+          { rootMargin: '0px 0px -35% 0px' }
+        );
+        const wireHeads = () =>
+          document.querySelectorAll('.sec-head:not(.is-lit)').forEach((el) => headIo.observe(el));
+        wireHeads();
+        document.addEventListener('astro:page-load', wireHeads);
+      }
+
+      /* ---- 4. Count-up readouts ------------------------------------ */
+      // Attribute is `data-countup` (not `data-count`) so it can never
+      // collide with data attributes used for other purposes.
+      const runCount = (el: HTMLElement) => {
+        if (el.dataset.countupDone === '1') return;
+        el.dataset.countupDone = '1';
+
+        const target = Number(el.dataset.countup || '0');
+        const from = Number(el.dataset.countupFrom || '0');
+        const suffix = el.dataset.countupSuffix || '';
+        const dur = 950;
+        const t0 = performance.now();
+
+        const step = (t: number) => {
+          const p = Math.min(1, (t - t0) / dur);
+          const eased = 1 - Math.pow(1 - p, 3);
+          const v = Math.round(from + (target - from) * eased);
+          el.textContent = v.toLocaleString('en-GB') + suffix;
+          if (p < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      };
+
+      if (!reduce && 'IntersectionObserver' in window) {
+        const countIo = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                runCount(e.target as HTMLElement);
+                countIo.unobserve(e.target);
+              }
+            }
+          },
+          { threshold: 0.4 }
+        );
+        const wireCounts = () =>
+          document
+            .querySelectorAll<HTMLElement>('[data-countup]:not([data-countup-done])')
+            .forEach((el) => countIo.observe(el));
+        wireCounts();
+        document.addEventListener('astro:page-load', wireCounts);
+      }
+
+      /* ---- 5. Pointer spotlight on cards --------------------------- */
+      const wireSpotlights = () => {
+        document.querySelectorAll<HTMLElement>('.card--spot').forEach((card) => {
+          if (card.dataset.spot === '1') return;
+          card.dataset.spot = '1';
+          card.addEventListener('pointermove', (e) => {
+            const r = card.getBoundingClientRect();
+            card.style.setProperty('--mx', `${e.clientX - r.left}px`);
+            card.style.setProperty('--my', `${e.clientY - r.top}px`);
+          });
+        });
+      };
+      wireSpotlights();
+      document.addEventListener('astro:page-load', wireSpotlights);
+
+      /* ---- 6. Scroll flow: progress bar + velocity marquee ---------
+       * Both are deliberately lazy. The progress bar is driven by scroll
+       * events (throttled to one paint per frame) rather than a permanent
+       * rAF loop, and the marquee only runs while it is actually on screen.
+       * A page that animates forever in the background is a page that heats
+       * a laptop up for nothing.
+       */
+      if (!reduce) {
+        /* -- 6a. Reading progress -- */
+        const bar = document.getElementById('scroll-progress');
+        if (bar) {
+          let queued = 0;
+          const draw = () => {
+            queued = 0;
+            const max = document.documentElement.scrollHeight - window.innerHeight;
+            const pct = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+            bar.style.transform = `scaleX(${pct})`;
+          };
+          const request = () => {
+            if (!queued) queued = requestAnimationFrame(draw);
+          };
+          draw();
+          window.addEventListener('scroll', request, { passive: true });
+          window.addEventListener('resize', request, { passive: true });
+        }
+
+        /* -- 6b. Scroll-velocity marquee -- */
+        const track = document.querySelector<HTMLElement>('.marquee__track');
+
+        if (track) {
+          track.classList.add('is-live');
+
+          const BASE = 0.5; // idle drift, px/frame
+          let offset = 0;
+          let lastY = window.scrollY;
+          let velocity = 0;
+          let dir = 1; // 1 = drifting left, -1 = reversed
+          let visible = false;
+          let raf = 0;
+
+          const frame = () => {
+            raf = 0;
+
+            const y = window.scrollY;
+            velocity += (y - lastY - velocity) * 0.14;
+            lastY = y;
+
+            // Reverse the drift when the reader scrolls upward.
+            if (velocity < -2) dir = -1;
+            else if (velocity > 2) dir = 1;
+
+            offset -= (BASE + Math.min(Math.abs(velocity) * 0.55, 14)) * dir;
+
+            const half = track.scrollWidth / 2;
+            if (half > 0) {
+              if (offset <= -half) offset += half;
+              else if (offset > 0) offset -= half;
+            }
+
+            track.style.transform = `translate3d(${offset.toFixed(2)}px,0,0)`;
+
+            if (visible) raf = requestAnimationFrame(frame);
+          };
+
+          const kick = () => {
+            if (visible && !raf) raf = requestAnimationFrame(frame);
+          };
+
+          const host = track.closest('.marquee') || track;
+
+          if ('IntersectionObserver' in window) {
+            new IntersectionObserver(
+              ([entry]) => {
+                visible = entry.isIntersecting;
+                if (visible) {
+                  lastY = window.scrollY;
+                  kick();
+                }
+              },
+              { rootMargin: '150px' }
+            ).observe(host);
+          } else {
+            visible = true;
+            kick();
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,194 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getAllTags } from '../../lib/tags';
+import { getRepo } from '../../lib/data';
+import { langColor } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const tags = await getAllTags();
+  return tags.map((t) => ({ params: { tag: t.slug }, props: { tag: t } }));
+}
+
+const { tag } = Astro.props;
+const allTags = await getAllTags();
+
+const projects = tag.projects
+  .map((p) => getRepo(p.name))
+  .filter((r): r is NonNullable<typeof r> => Boolean(r));
+
+const siblings = allTags.filter((t) => t.slug !== tag.slug).slice(0, 14);
+---
+
+<BaseLayout
+  title={`#${tag.name}`}
+  description={`${tag.articles.length} articles and ${projects.length} builds tagged ${tag.name}.`}
+  tags={[tag.name]}
+>
+  <section class="shell page-head">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/tags" class="crumbs__link">Tags</a>
+      <span class="crumbs__sep" aria-hidden="true">/</span>
+      <span class="crumbs__here">{tag.name}</span>
+    </nav>
+
+    <h1 class="page-head__title">
+      <span class="hash" aria-hidden="true">#</span>{tag.name}
+    </h1>
+
+    <div class="head-meta">
+      {langColor(tag.name) !== 'var(--ink-faint)' && (
+        <span class="badge">
+          <span class="badge__dot" style={`background:${langColor(tag.name)}`}></span>
+          language
+        </span>
+      )}
+      <span class="badge">{tag.articles.length} article{tag.articles.length === 1 ? '' : 's'}</span>
+      <span class="badge">{projects.length} build{projects.length === 1 ? '' : 's'}</span>
+    </div>
+  </section>
+
+  {tag.articles.length > 0 && (
+    <section class="shell section--tight">
+      <div class="sec-head">
+        <span class="sec-head__num">01</span>
+        <h2 class="sec-head__title">Writing</h2>
+      </div>
+      <div class="article-grid">
+        {tag.articles.map((a, i) => (
+          <ArticleCard
+            href={`/writing/${a.id}`}
+            title={a.title}
+            description={a.description}
+            date={a.date}
+            tags={[tag.name]}
+            glyph={a.glyph}
+            tone={a.tone as any}
+            index={i + 1}
+          />
+        ))}
+      </div>
+    </section>
+  )}
+
+  {projects.length > 0 && (
+    <section class="shell section--tight">
+      <div class="sec-head">
+        <span class="sec-head__num">{tag.articles.length > 0 ? '02' : '01'}</span>
+        <h2 class="sec-head__title">Builds</h2>
+      </div>
+      <div class="build-grid">
+        {projects.map((r) => (
+          <ProjectCard repo={r} />
+        ))}
+      </div>
+    </section>
+  )}
+
+  {tag.articles.length === 0 && projects.length === 0 && (
+    <section class="shell section--tight">
+      <p class="empty">Nothing tagged {tag.name} yet.</p>
+    </section>
+  )}
+
+  <section class="shell section--tight">
+    <div class="sec-head">
+      <span class="sec-head__num">↳</span>
+      <h2 class="sec-head__title">Related tags</h2>
+      <a class="sec-head__link" href="/tags">All tags <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="pill-cloud">
+      {siblings.map((t) => (
+        <a class="pill" href={`/tags/${t.slug}`}>
+          {t.name} <span class="pill__count">{t.count}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-head {
+    padding-top: clamp(2.5rem, 6vw, 5rem);
+    padding-bottom: var(--sp-6);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .crumbs {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    color: var(--ink-mute);
+    margin-bottom: 1rem;
+  }
+
+  .crumbs__link:hover {
+    color: var(--accent);
+  }
+
+  .crumbs__sep {
+    color: var(--ink-faint);
+  }
+
+  .page-head__title {
+    font-size: var(--step-4);
+    letter-spacing: -0.035em;
+  }
+
+  .hash {
+    color: var(--accent);
+  }
+
+  .head-meta {
+    display: flex;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+    margin-top: 1.25rem;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.42em;
+    padding: 0.3em 0.72em;
+    border: 1px solid var(--line-mid);
+    border-radius: var(--r-full);
+    background: var(--bg-elev);
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    color: var(--ink-soft);
+  }
+
+  .badge__dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+  }
+
+  .section--tight {
+    padding-block: var(--sp-6);
+  }
+
+  .article-grid,
+  .build-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--sp-4);
+  }
+
+  .pill-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .empty {
+    padding: var(--sp-7) 0;
+    text-align: center;
+    color: var(--ink-mute);
+    font-family: var(--font-mono);
+  }
+</style>

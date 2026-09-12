@@ -1,0 +1,4015 @@
+[
+  {
+    "name": "AI-Zotero",
+    "fullName": "shay2000/AI-Zotero",
+    "description": "A fork which lets you bring in your own AI agent for summarising content or auto sorting tags.",
+    "url": "https://github.com/shay2000/AI-Zotero",
+    "homepage": "https://www.zotero.org",
+    "language": "JavaScript",
+    "languages": [
+      {
+        "name": "JavaScript",
+        "bytes": 10743251,
+        "percent": 61.4
+      },
+      {
+        "name": "Fluent",
+        "bytes": 4707885,
+        "percent": 26.9
+      },
+      {
+        "name": "C++",
+        "bytes": 498443,
+        "percent": 2.85
+      },
+      {
+        "name": "HTML",
+        "bytes": 328797,
+        "percent": 1.88
+      },
+      {
+        "name": "SCSS",
+        "bytes": 285421,
+        "percent": 1.63
+      },
+      {
+        "name": "NSIS",
+        "bytes": 279556,
+        "percent": 1.6
+      },
+      {
+        "name": "TypeScript",
+        "bytes": 198734,
+        "percent": 1.14
+      },
+      {
+        "name": "Shell",
+        "bytes": 193746,
+        "percent": 1.11
+      },
+      {
+        "name": "Python",
+        "bytes": 91313,
+        "percent": 0.52
+      },
+      {
+        "name": "Perl",
+        "bytes": 53566,
+        "percent": 0.31
+      },
+      {
+        "name": "CSS",
+        "bytes": 36464,
+        "percent": 0.21
+      },
+      {
+        "name": "C",
+        "bytes": 27688,
+        "percent": 0.16
+      },
+      {
+        "name": "XSLT",
+        "bytes": 19695,
+        "percent": 0.11
+      },
+      {
+        "name": "Java",
+        "bytes": 13941,
+        "percent": 0.08
+      },
+      {
+        "name": "PHP",
+        "bytes": 8455,
+        "percent": 0.05
+      },
+      {
+        "name": "Lua",
+        "bytes": 4609,
+        "percent": 0.03
+      },
+      {
+        "name": "Makefile",
+        "bytes": 3259,
+        "percent": 0.02
+      },
+      {
+        "name": "Rich Text Format",
+        "bytes": 2273,
+        "percent": 0.01
+      },
+      {
+        "name": "VBScript",
+        "bytes": 1453,
+        "percent": 0.01
+      }
+    ],
+    "stars": 0,
+    "forks": 0,
+    "watchers": 0,
+    "openIssues": 0,
+    "topics": [],
+    "license": "NOASSERTION",
+    "isFork": true,
+    "isArchived": false,
+    "createdAt": "2026-08-11T23:58:56Z",
+    "pushedAt": "2026-09-12T13:14:03Z",
+    "sizeKb": 214309,
+    "hasPages": false,
+    "hasWiki": false,
+    "defaultBranch": "main",
+    "featured": false,
+    "commits": [
+      {
+        "sha": "ed692c3",
+        "message": "Move Buy Me a Coffee shield to top of README",
+        "date": "2026-09-12T13:14:03Z"
+      },
+      {
+        "sha": "8bc2ee4",
+        "message": "Add Buy Me a Coffee support links",
+        "date": "2026-09-12T12:59:17Z"
+      },
+      {
+        "sha": "366a53d",
+        "message": "Implement AI Zotero plugin foundation",
+        "date": "2026-08-12T01:16:39Z"
+      },
+      {
+        "sha": "fdec969",
+        "message": "Update reader submodule",
+        "date": "2026-08-11T19:42:41Z"
+      },
+      {
+        "sha": "ad71598",
+        "message": "Reader: Add support code for popup position persistence",
+        "date": "2026-08-11T19:41:10Z"
+      },
+      {
+        "sha": "e5508e8",
+        "message": "Actually return 400 and throw when multipart body is malformed.",
+        "date": "2026-08-10T13:15:41Z"
+      },
+      {
+        "sha": "896582a",
+        "message": "Hash files incrementally in md5Async() instead of blocking main thread",
+        "date": "2026-08-09T15:12:12Z"
+      },
+      {
+        "sha": "c1cdd03",
+        "message": "Select item explicitly in item-pane refresh test",
+        "date": "2026-08-10T02:09:02Z"
+      },
+      {
+        "sha": "fe35127",
+        "message": "Update items-in-view count when rows change without a selection",
+        "date": "2026-08-09T16:05:55Z"
+      },
+      {
+        "sha": "b8cbdc8",
+        "message": "Document in-memory state handling for transaction rollbacks",
+        "date": "2026-08-09T18:17:56Z"
+      },
+      {
+        "sha": "04321fc",
+        "message": "Restore cached user name on transaction rollback",
+        "date": "2026-08-09T17:50:21Z"
+      },
+      {
+        "sha": "3630b90",
+        "message": "Process downloaded objects in batched transactions",
+        "date": "2026-08-09T17:50:21Z"
+      },
+      {
+        "sha": "646fbfa",
+        "message": "Don't treat error in commit callback as a rollback",
+        "date": "2026-08-09T15:26:40Z"
+      },
+      {
+        "sha": "46603ca",
+        "message": "Discard queued commit callbacks on transaction rollback",
+        "date": "2026-08-09T15:26:40Z"
+      },
+      {
+        "sha": "1d279fb",
+        "message": "Add executeTransactionWithForcedRollback() test helper",
+        "date": "2026-08-09T18:16:24Z"
+      },
+      {
+        "sha": "45867ce",
+        "message": "Update reader submodule",
+        "date": "2026-08-08T01:02:49Z"
+      },
+      {
+        "sha": "c87328a",
+        "message": "Fix leading space in creator autocomplete values",
+        "date": "2026-08-07T13:47:46Z"
+      },
+      {
+        "sha": "8f6dc58",
+        "message": "Skip startup full-text index purge and optimize when unnecessary",
+        "date": "2026-08-05T19:13:43Z"
+      },
+      {
+        "sha": "3af8cea",
+        "message": "Name annotation types by type alone in the Advanced Search",
+        "date": "2026-08-05T19:02:21Z"
+      },
+      {
+        "sha": "09249bf",
+        "message": "fx153: Interface should load with nsIID instead of string (#6008)",
+        "date": "2026-08-05T18:18:32Z"
+      },
+      {
+        "sha": "8fb2870",
+        "message": "Restore dxcompiler.dll on Windows for WebGPU and leave WebGPU pref on",
+        "date": "2026-08-05T17:58:10Z"
+      },
+      {
+        "sha": "9da57a9",
+        "message": "Search: Allow binding a group whose conditions match at any level",
+        "date": "2026-08-03T19:45:30Z"
+      },
+      {
+        "sha": "b83342d",
+        "message": "Include numeric cell values in row accessibility labels",
+        "date": "2026-07-21T13:50:56Z"
+      },
+      {
+        "sha": "2f90893",
+        "message": "Fix clearing the previous sort column's persisted direction",
+        "date": "2026-07-21T15:39:47Z"
+      },
+      {
+        "sha": "8052b8f",
+        "message": "Fix system-handler detection for PDFs/EPUBs on Windows 11",
+        "date": "2026-08-05T15:04:48Z"
+      },
+      {
+        "sha": "aaeb9c6",
+        "message": "fx153: Don't bundle unused Firefox runtime files",
+        "date": "2026-08-04T17:28:55Z"
+      },
+      {
+        "sha": "adc5648",
+        "message": "fx153: Restore pass-through clicks on toolbarbutton dropmarkers",
+        "date": "2026-08-04T17:26:47Z"
+      },
+      {
+        "sha": "300305a",
+        "message": "fx153: Set menu icons via --menuitem-icon for in-content menus",
+        "date": "2026-08-04T17:19:04Z"
+      },
+      {
+        "sha": "97de885",
+        "message": "fx153: Use font glyphs for Windows titlebar buttons",
+        "date": "2026-08-04T16:53:52Z"
+      },
+      {
+        "sha": "770f445",
+        "message": "Update Windows build to Firefox 153.0esr",
+        "date": "2026-08-04T15:49:12Z"
+      },
+      {
+        "sha": "a2a419c",
+        "message": "Match field values without regard to case or accents for 'is'",
+        "date": "2026-08-03T13:41:30Z"
+      },
+      {
+        "sha": "0ae2e42",
+        "message": "Use proper accent color for the selected autocomplete row",
+        "date": "2026-08-03T18:37:37Z"
+      },
+      {
+        "sha": "1dffe21",
+        "message": "fx153: Don't embed source-repo info in custom Windows builds",
+        "date": "2026-08-03T22:42:11Z"
+      },
+      {
+        "sha": "d5aacaf",
+        "message": "fx153: Stamp the git source repo and changeset for Windows packaging",
+        "date": "2026-08-03T18:58:01Z"
+      },
+      {
+        "sha": "ea30bbd",
+        "message": "Update version to 11.0",
+        "date": "2026-08-03T18:13:53Z"
+      },
+      {
+        "sha": "72115c3",
+        "message": "Set Rust default toolchain before adding the target",
+        "date": "2026-08-03T17:03:01Z"
+      },
+      {
+        "sha": "6f3e4b5",
+        "message": "fx153: Update Mozilla patch for Windows",
+        "date": "2026-08-03T16:32:09Z"
+      },
+      {
+        "sha": "e4ee852",
+        "message": "fx153: Update Rust version for Mozilla builds",
+        "date": "2026-08-03T16:09:02Z"
+      },
+      {
+        "sha": "b5ceb6f",
+        "message": "fx153: Don't assign oncommand attribute strings to .oncommand",
+        "date": "2026-07-29T19:56:31Z"
+      },
+      {
+        "sha": "35a7011",
+        "message": "fx153: Restore the toolbarbutton dropmarker",
+        "date": "2026-07-29T14:41:05Z"
+      },
+      {
+        "sha": "030cd3d",
+        "message": "fx153: Drop the hover background on native search clear buttons",
+        "date": "2026-07-29T14:32:39Z"
+      },
+      {
+        "sha": "503bb03",
+        "message": "fx153: Hide the native clear button in search fields",
+        "date": "2026-07-29T14:27:40Z"
+      },
+      {
+        "sha": "3430ad2",
+        "message": "fx153: Keep our own Assets.car in the Mac app",
+        "date": "2026-07-29T14:16:52Z"
+      },
+      {
+        "sha": "00cad2c",
+        "message": "Remove 32-bit Linux build support",
+        "date": "2026-07-29T02:30:06Z"
+      },
+      {
+        "sha": "2bd9342",
+        "message": "Don't inject a platform wizard stylesheet on macOS",
+        "date": "2026-07-29T02:26:28Z"
+      },
+      {
+        "sha": "d43dc2f",
+        "message": "Fail the xulrunner download on an HTTP error",
+        "date": "2026-07-29T02:26:28Z"
+      },
+      {
+        "sha": "78d2161",
+        "message": "fx153: Hide the about:addons sidebar",
+        "date": "2026-07-28T22:15:33Z"
+      },
+      {
+        "sha": "7793b46",
+        "message": "fx153: Hide the Help button label on macOS",
+        "date": "2026-07-28T22:02:37Z"
+      },
+      {
+        "sha": "8110ab4",
+        "message": "Add a newline after the Zotero prefs in the built prefs file",
+        "date": "2026-07-28T22:02:37Z"
+      },
+      {
+        "sha": "45e3832",
+        "message": "fx153: Keep backup-constants.mjs",
+        "date": "2026-07-28T21:55:36Z"
+      },
+      {
+        "sha": "2eba339",
+        "message": "fx153: Restore Settings in the macOS application menu",
+        "date": "2026-07-28T21:42:04Z"
+      },
+      {
+        "sha": "01b7d06",
+        "message": "fx153: Move to nsIPKCS11Token for the NSS key database",
+        "date": "2026-07-28T20:31:07Z"
+      },
+      {
+        "sha": "a32dd2b",
+        "message": "fx153: Don't freeze built-ins in the translation sandbox",
+        "date": "2026-07-28T20:27:09Z"
+      },
+      {
+        "sha": "6fbe5e4",
+        "message": "fx153: Match XUL boolean attributes in selectors without a value",
+        "date": "2026-07-29T18:11:32Z"
+      },
+      {
+        "sha": "567cc2d",
+        "message": "fx153: Set XUL hidden/collapsed as boolean attributes",
+        "date": "2026-07-28T20:08:34Z"
+      },
+      {
+        "sha": "f245f5c",
+        "message": "fx153: Set XUL checked/disabled as boolean attributes",
+        "date": "2026-07-28T19:56:11Z"
+      },
+      {
+        "sha": "bcd8ad2",
+        "message": "fx153: Use command events for checkbox changes",
+        "date": "2026-07-28T19:38:52Z"
+      },
+      {
+        "sha": "eac3838",
+        "message": "fx153: Use ChromeUtils.predictRemoteTypeForURI() in HiddenBrowser",
+        "date": "2026-07-28T19:29:43Z"
+      },
+      {
+        "sha": "bca6537",
+        "message": "fx153: Allow eval() in the parent process",
+        "date": "2026-07-28T19:29:42Z"
+      },
+      {
+        "sha": "5ea6243",
+        "message": "fx153: ownerGlobal -> documentGlobal",
+        "date": "2026-07-28T18:50:38Z"
+      },
+      {
+        "sha": "3bb3b4f",
+        "message": "fx153: Move off the removed synchronous nsILoginManager methods",
+        "date": "2026-07-28T18:35:39Z"
+      },
+      {
+        "sha": "1c005c7",
+        "message": "fx153: Re-enable chrome: DTD loading",
+        "date": "2026-07-28T18:27:46Z"
+      },
+      {
+        "sha": "14b43c9",
+        "message": "fx153: Disable Firefox's baseline CSP for chrome: documents",
+        "date": "2026-07-28T18:16:21Z"
+      },
+      {
+        "sha": "b7232f1",
+        "message": "fx153: Don't remove the Pocket actor, removed from Firefox",
+        "date": "2026-07-28T18:16:20Z"
+      },
+      {
+        "sha": "c192127",
+        "message": "fx153: Take over <search-textbox>, removed from Firefox",
+        "date": "2026-07-28T18:16:11Z"
+      },
+      {
+        "sha": "d701c43",
+        "message": "fx153: Restore autocomplete popup sizing from the anchor element",
+        "date": "2026-07-28T18:16:03Z"
+      },
+      {
+        "sha": "06848ce",
+        "message": "fx153: Update about:addons patches for the ES module split",
+        "date": "2026-07-28T18:15:55Z"
+      },
+      {
+        "sha": "408179a",
+        "message": "fx153: Anchor the actor-removal patterns in ActorManagerParent",
+        "date": "2026-07-28T18:15:47Z"
+      },
+      {
+        "sha": "242bbcc",
+        "message": "Update Mac and Linux builds to Firefox 153.0esr",
+        "date": "2026-07-28T18:15:38Z"
+      },
+      {
+        "sha": "fdd3434",
+        "message": "Update English strings for Transifex",
+        "date": "2026-08-03T15:12:15Z"
+      },
+      {
+        "sha": "c9d5aa3",
+        "message": "Use general strings for file renaming prompt buttons",
+        "date": "2026-08-03T15:08:20Z"
+      },
+      {
+        "sha": "d54327a",
+        "message": "Fix retracted-item icon spacing in items list",
+        "date": "2026-08-01T14:42:29Z"
+      },
+      {
+        "sha": "b5ea455",
+        "message": "Fix release build on x86 mac (#5926)",
+        "date": "2026-07-31T17:41:33Z"
+      },
+      {
+        "sha": "9c03a93",
+        "message": "Fix tree multi-selection collapse/expand behaviour (#5983)",
+        "date": "2026-07-31T17:25:01Z"
+      },
+      {
+        "sha": "a7cae87",
+        "message": "Improve undo/redo in the note editor (#3398)",
+        "date": "2026-07-28T10:26:51Z"
+      },
+      {
+        "sha": "4ec5ba9",
+        "message": "Don't fail translation on open-access lookup error",
+        "date": "2026-07-30T19:37:45Z"
+      },
+      {
+        "sha": "7abcf23",
+        "message": "Move PMC lookup after open-access lookup",
+        "date": "2026-07-30T18:47:52Z"
+      },
+      {
+        "sha": "8bebaf0",
+        "message": "Fix open-access lookup for PMCID items during in-app translation",
+        "date": "2026-07-30T18:47:52Z"
+      },
+      {
+        "sha": "80658e9",
+        "message": "Handle download challenge on PubMed Central",
+        "date": "2026-07-30T18:31:30Z"
+      },
+      {
+        "sha": "4388f6d",
+        "message": "Drop redundant charset extraction in blobToText()",
+        "date": "2026-07-30T18:13:40Z"
+      },
+      {
+        "sha": "9ed00c8",
+        "message": "Don't update read status when using Show File",
+        "date": "2026-07-30T17:43:41Z"
+      },
+      {
+        "sha": "08880f7",
+        "message": "Update citeproc.js to include Juris-M/citeproc-js#286",
+        "date": "2026-07-30T13:39:09Z"
+      },
+      {
+        "sha": "c39f168",
+        "message": "Extend the template engine and add template validation (#5989)",
+        "date": "2026-07-22T13:29:34Z"
+      },
+      {
+        "sha": "efcfaec",
+        "message": "Move templating engine to a standalone, lazy-loaded module (#5989)",
+        "date": "2026-07-22T12:56:19Z"
+      },
+      {
+        "sha": "dc6d55a",
+        "message": "Remove collectionTreeRow from the plugin menu context",
+        "date": "2026-07-29T14:56:11Z"
+      },
+      {
+        "sha": "783da0e",
+        "message": "Don't offer Remove from Collection if saved search is selected",
+        "date": "2026-07-29T16:32:17Z"
+      },
+      {
+        "sha": "1d97f64",
+        "message": "Replace ItemTree#collectionTreeRow with a validated view mode",
+        "date": "2026-07-29T14:05:56Z"
+      },
+      {
+        "sha": "5d1a2cb",
+        "message": "Remove the singular collection tree selection getters",
+        "date": "2026-07-29T14:05:56Z"
+      },
+      {
+        "sha": "e45871f",
+        "message": "Don't treat a selected saved search as a collection",
+        "date": "2026-07-29T16:55:41Z"
+      },
+      {
+        "sha": "c92c75e",
+        "message": "Mark read attachments in every selected library",
+        "date": "2026-07-29T16:55:40Z"
+      },
+      {
+        "sha": "3da869b",
+        "message": "Keep library headers in place when the items list is re-sorted",
+        "date": "2026-07-28T22:19:51Z"
+      },
+      {
+        "sha": "85a33e1",
+        "message": "Don't treat library header and spacer rows as items",
+        "date": "2026-07-28T22:19:23Z"
+      },
+      {
+        "sha": "3bf74a3",
+        "message": "Local API: Actually exempt file uploads from Zotero-Server-ID",
+        "date": "2026-07-29T14:14:28Z"
+      },
+      {
+        "sha": "ae98136",
+        "message": "Save uploaded objects to the sync cache on an unchanged response",
+        "date": "2026-07-29T04:06:42Z"
+      },
+      {
+        "sha": "2fb8d69",
+        "message": "Auto-resolve lastRead conflicts without a cached version",
+        "date": "2026-07-29T03:56:29Z"
+      },
+      {
+        "sha": "681c48f",
+        "message": "Local API: Don't validate Zotero-Server-ID for file uploads",
+        "date": "2026-07-28T18:34:40Z"
+      },
+      {
+        "sha": "caeffa9",
+        "message": "Citation dialog: Hide the citation preview until the citation has items",
+        "date": "2026-07-28T15:59:30Z"
+      },
+      {
+        "sha": "b66519c",
+        "message": "Citation dialog: Hide the list layout divider when the list is empty",
+        "date": "2026-07-28T15:59:14Z"
+      },
+      {
+        "sha": "db5e7ed",
+        "message": "Citation dialog: Show number of items the + button will add in a tooltip",
+        "date": "2026-07-28T15:06:57Z"
+      },
+      {
+        "sha": "7925b4e",
+        "message": "Citation dialog: Add all selected items on + click in Library mode",
+        "date": "2026-07-28T15:36:48Z"
+      }
+    ]
+  },
+  {
+    "name": "watt-is-it",
+    "fullName": "shay2000/watt-is-it",
+    "description": "A tiny native macOS menu-bar utility that shows your Mac's real power figures — actual input from the charger, system draw, rated adapter input, and charge surplus — so you can see whether your charger really delivers what it promises.",
+    "url": "https://github.com/shay2000/watt-is-it",
+    "homepage": null,
+    "language": "Swift",
+    "languages": [
+      {
+        "name": "Swift",
+        "bytes": 54838,
+        "percent": 96.62
+      },
+      {
+        "name": "Shell",
+        "bytes": 1916,
+        "percent": 3.38
+      }
+    ],
+    "stars": 0,
+    "forks": 0,
+    "watchers": 0,
+    "openIssues": 1,
+    "topics": [
+      "charging",
+      "macos",
+      "menubar-app"
+    ],
+    "license": null,
+    "isFork": false,
+    "isArchived": false,
+    "createdAt": "2026-08-31T03:04:12Z",
+    "pushedAt": "2026-09-12T13:13:59Z",
+    "sizeKb": 3634,
+    "hasPages": false,
+    "hasWiki": true,
+    "defaultBranch": "main",
+    "featured": true,
+    "commits": [
+      {
+        "sha": "d10433c",
+        "message": "Move Buy Me a Coffee shield to top of README",
+        "date": "2026-09-12T13:13:59Z"
+      },
+      {
+        "sha": "0f6ef6a",
+        "message": "Add Buy Me a Coffee support links",
+        "date": "2026-09-12T13:00:52Z"
+      },
+      {
+        "sha": "1ddd856",
+        "message": "Ignore editor and agent tooling dirs",
+        "date": "2026-09-04T00:57:11Z"
+      },
+      {
+        "sha": "41f9872",
+        "message": "Document unsigned-build authorization flow in README",
+        "date": "2026-09-03T02:02:01Z"
+      },
+      {
+        "sha": "72210aa",
+        "message": "Merge pull request #5 from shay2000/add-show-discharge-on-battery",
+        "date": "2026-09-03T01:55:36Z"
+      },
+      {
+        "sha": "bcfa39a",
+        "message": "Add option to show discharge rate on battery",
+        "date": "2026-09-03T01:46:44Z"
+      },
+      {
+        "sha": "9894930",
+        "message": "Merge pull request #4 from shay2000/add-agents-release-docs",
+        "date": "2026-09-02T21:26:40Z"
+      },
+      {
+        "sha": "48184e6",
+        "message": "Document the release workflow in AGENTS.md",
+        "date": "2026-09-02T21:25:38Z"
+      },
+      {
+        "sha": "5426aff",
+        "message": "Merge pull request #3 from shay2000/add-release-dmg-workflow",
+        "date": "2026-09-02T21:22:04Z"
+      },
+      {
+        "sha": "c860227",
+        "message": "Add GitHub Actions release workflow",
+        "date": "2026-09-02T21:21:52Z"
+      },
+      {
+        "sha": "1171f49",
+        "message": "Merge pull request #2 from shay2000/add-start-at-login",
+        "date": "2026-09-02T21:12:56Z"
+      },
+      {
+        "sha": "e75b7ef",
+        "message": "Address launch-at-login review feedback",
+        "date": "2026-09-02T21:11:53Z"
+      },
+      {
+        "sha": "d374ce6",
+        "message": "Add Start at login option",
+        "date": "2026-09-02T20:57:51Z"
+      },
+      {
+        "sha": "19c77b7",
+        "message": "Release 1.1.8",
+        "date": "2026-09-02T16:54:05Z"
+      },
+      {
+        "sha": "9ca6aca",
+        "message": "Release 1.1.7",
+        "date": "2026-09-02T14:05:39Z"
+      },
+      {
+        "sha": "06ad255",
+        "message": "Merge pull request #1 from shay2000/optimise-watt-is-it",
+        "date": "2026-09-02T14:02:16Z"
+      },
+      {
+        "sha": "4a50ab1",
+        "message": "Keep polling active while menu is open",
+        "date": "2026-09-02T13:44:07Z"
+      },
+      {
+        "sha": "bdd069b",
+        "message": "Address updater review comments",
+        "date": "2026-09-02T12:03:37Z"
+      },
+      {
+        "sha": "865afe6",
+        "message": "Optimise polling and harden update handling",
+        "date": "2026-09-02T11:40:38Z"
+      },
+      {
+        "sha": "8b92de7",
+        "message": "Restore status item visibility after update",
+        "date": "2026-08-31T04:01:59Z"
+      },
+      {
+        "sha": "5b0cb8f",
+        "message": "Keep update spinner in watt status item",
+        "date": "2026-08-31T03:54:18Z"
+      },
+      {
+        "sha": "cf167da",
+        "message": "Add configurable daily update checks",
+        "date": "2026-08-31T03:47:50Z"
+      },
+      {
+        "sha": "c632ec7",
+        "message": "Add update download spinner",
+        "date": "2026-08-31T03:41:09Z"
+      },
+      {
+        "sha": "d6a1809",
+        "message": "Add version footer and changelog",
+        "date": "2026-08-31T03:36:06Z"
+      },
+      {
+        "sha": "a954015",
+        "message": "Check for updates weekly",
+        "date": "2026-08-31T03:30:38Z"
+      },
+      {
+        "sha": "e3cc75e",
+        "message": "Add power-aware polling and release updater",
+        "date": "2026-08-31T03:25:45Z"
+      },
+      {
+        "sha": "f276f1a",
+        "message": "Prepare 1.0.1 DMG release",
+        "date": "2026-08-31T03:12:43Z"
+      },
+      {
+        "sha": "2959959",
+        "message": "Initial release of Watt is it?",
+        "date": "2026-08-31T02:56:19Z"
+      }
+    ]
+  },
+  {
+    "name": "docsafterdark",
+    "fullName": "shay2000/docsafterdark",
+    "description": "Beyond dark mode for Google Docs",
+    "url": "https://github.com/shay2000/docsafterdark",
+    "homepage": "https://docsafterdark.com",
+    "language": "SCSS",
+    "languages": [
+      {
+        "name": "SCSS",
+        "bytes": 143512,
+        "percent": 65.24
+      },
+      {
+        "name": "TypeScript",
+        "bytes": 55355,
+        "percent": 25.16
+      },
+      {
+        "name": "HTML",
+        "bytes": 14625,
+        "percent": 6.65
+      },
+      {
+        "name": "Shell",
+        "bytes": 3442,
+        "percent": 1.56
+      },
+      {
+        "name": "JavaScript",
+        "bytes": 3045,
+        "percent": 1.38
+      }
+    ],
+    "stars": 0,
+    "forks": 0,
+    "watchers": 0,
+    "openIssues": 0,
+    "topics": [],
+    "license": "GPL-3.0",
+    "isFork": true,
+    "isArchived": false,
+    "createdAt": "2026-08-22T14:14:01Z",
+    "pushedAt": "2026-09-12T13:13:55Z",
+    "sizeKb": 9317,
+    "hasPages": false,
+    "hasWiki": false,
+    "defaultBranch": "main",
+    "featured": false,
+    "commits": [
+      {
+        "sha": "178d6a0",
+        "message": "Move Buy Me a Coffee shield to top of README",
+        "date": "2026-09-12T13:13:54Z"
+      },
+      {
+        "sha": "5d8b5a9",
+        "message": "Add Buy Me a Coffee support links",
+        "date": "2026-09-12T12:59:42Z"
+      },
+      {
+        "sha": "470aa21",
+        "message": "update build.sh comments",
+        "date": "2026-05-14T05:20:32Z"
+      },
+      {
+        "sha": "eb4b2ea",
+        "message": "Merge pull request #163 from waymondrang/readme-update",
+        "date": "2026-05-14T05:15:24Z"
+      },
+      {
+        "sha": "2dd665e",
+        "message": "clean up and update readme, add comment in build.sh about version number source",
+        "date": "2026-05-14T04:48:50Z"
+      },
+      {
+        "sha": "7c89215",
+        "message": "Merge pull request #162 from waymondrang/new-build-script",
+        "date": "2026-05-14T04:45:08Z"
+      },
+      {
+        "sha": "917a1bb",
+        "message": "create build.sh, update npm run build, remove package.ts",
+        "date": "2026-05-14T04:28:43Z"
+      },
+      {
+        "sha": "3a3a107",
+        "message": "Merge pull request #149 from waymondrang/firefox-version-patch",
+        "date": "2026-02-27T07:25:08Z"
+      },
+      {
+        "sha": "7ae8efd",
+        "message": "bump firefox patch version (failed upload)",
+        "date": "2026-02-27T06:36:19Z"
+      },
+      {
+        "sha": "426df9f",
+        "message": "Merge pull request #148 from waymondrang/version-bump",
+        "date": "2026-02-26T06:53:29Z"
+      },
+      {
+        "sha": "73f977f",
+        "message": "bump patch version to 2.0.3",
+        "date": "2026-02-26T06:46:32Z"
+      },
+      {
+        "sha": "ba8a239",
+        "message": "Merge pull request #147 from waymondrang/fix-build",
+        "date": "2026-02-26T06:10:08Z"
+      },
+      {
+        "sha": "63e97fe",
+        "message": "remove build date and commit definitions from define plugin",
+        "date": "2026-02-26T06:08:23Z"
+      },
+      {
+        "sha": "91ccb43",
+        "message": "update v2.0.2 approval status in readme",
+        "date": "2026-02-21T19:11:49Z"
+      },
+      {
+        "sha": "a8e759b",
+        "message": "update readme to add recommended action",
+        "date": "2026-02-19T17:51:10Z"
+      },
+      {
+        "sha": "8194cf6",
+        "message": "update readme to reflect update status",
+        "date": "2026-02-18T07:02:23Z"
+      },
+      {
+        "sha": "74eb43e",
+        "message": "Merge pull request #141 from waymondrang/background-hotfix",
+        "date": "2026-02-18T06:39:24Z"
+      },
+      {
+        "sha": "19a160c",
+        "message": "Merge remote-tracking branch 'origin' into background-hotfix",
+        "date": "2026-02-18T06:25:41Z"
+      },
+      {
+        "sha": "0713102",
+        "message": "fix pageless background",
+        "date": "2026-02-18T06:24:26Z"
+      },
+      {
+        "sha": "6dd2f2c",
+        "message": "Merge pull request #140 from waymondrang/background-hotfix",
+        "date": "2026-02-18T06:12:50Z"
+      },
+      {
+        "sha": "5e1b41a",
+        "message": "update npm dependencies",
+        "date": "2026-02-18T06:11:13Z"
+      },
+      {
+        "sha": "a0e241b",
+        "message": "bump patch version to 2.0.2",
+        "date": "2026-02-18T06:08:55Z"
+      },
+      {
+        "sha": "b2b91d8",
+        "message": "fix white background behind editor",
+        "date": "2026-02-18T06:05:51Z"
+      },
+      {
+        "sha": "d3ff8d2",
+        "message": "update readme with urgent message regarding recent issues",
+        "date": "2026-02-18T05:59:40Z"
+      },
+      {
+        "sha": "2847a00",
+        "message": "Merge pull request #139 from chiyeon/hotfix-context-menu",
+        "date": "2026-02-18T05:54:02Z"
+      },
+      {
+        "sha": "bb90b1e",
+        "message": "Fixes #138: Context Menu uses Google defined colors",
+        "date": "2026-02-18T04:42:25Z"
+      },
+      {
+        "sha": "e03142e",
+        "message": "Merge pull request #129 from waymondrang/touch-up",
+        "date": "2026-02-13T00:37:22Z"
+      },
+      {
+        "sha": "652846b",
+        "message": "catch git exec in webpack config, update funding.yml formatting",
+        "date": "2026-02-13T00:34:25Z"
+      },
+      {
+        "sha": "0ea6af6",
+        "message": "use web-ext config file instead of command-line args",
+        "date": "2026-02-12T19:24:56Z"
+      },
+      {
+        "sha": "f895933",
+        "message": "update funding.yml",
+        "date": "2026-02-12T18:50:56Z"
+      },
+      {
+        "sha": "d5982ba",
+        "message": "Merge remote-tracking branch 'origin' into touch-up",
+        "date": "2026-02-12T18:38:34Z"
+      },
+      {
+        "sha": "f5d532e",
+        "message": "Merge pull request #127 from waymondrang/button-z",
+        "date": "2026-02-12T00:09:51Z"
+      },
+      {
+        "sha": "bdd5e30",
+        "message": "increase z-index of toggle button",
+        "date": "2026-02-12T00:05:32Z"
+      },
+      {
+        "sha": "d492b6a",
+        "message": "update README.md",
+        "date": "2026-02-11T00:49:35Z"
+      },
+      {
+        "sha": "8d12397",
+        "message": "Merge pull request #122 from waymondrang/touch-up",
+        "date": "2026-02-04T18:45:49Z"
+      },
+      {
+        "sha": "e5b46e2",
+        "message": "Merge remote-tracking branch 'origin' into touch-up",
+        "date": "2026-02-04T18:44:07Z"
+      },
+      {
+        "sha": "e45834c",
+        "message": "add README.md",
+        "date": "2026-02-04T18:42:58Z"
+      },
+      {
+        "sha": "6bd34b7",
+        "message": "Merge pull request #121 from waymondrang/touch-up",
+        "date": "2026-02-04T18:36:37Z"
+      },
+      {
+        "sha": "7d12832",
+        "message": "update readme, remove --check from package.ts, update npm run build",
+        "date": "2026-02-04T18:34:48Z"
+      },
+      {
+        "sha": "94e0de2",
+        "message": "Merge pull request #120 from waymondrang/release-link",
+        "date": "2026-02-04T18:01:50Z"
+      },
+      {
+        "sha": "a3d3016",
+        "message": "update README.md",
+        "date": "2026-02-04T17:57:26Z"
+      },
+      {
+        "sha": "bb4e1e4",
+        "message": "add section in README.md about versions and tag names",
+        "date": "2026-02-04T17:56:25Z"
+      },
+      {
+        "sha": "1cbbf8b",
+        "message": "navigate to specific release tag instead of all releases",
+        "date": "2026-02-04T17:44:01Z"
+      },
+      {
+        "sha": "a29016e",
+        "message": "Merge pull request #118 from waymondrang/tab-opener",
+        "date": "2026-02-04T02:08:32Z"
+      },
+      {
+        "sha": "fc7f235",
+        "message": "update build script to check manifest.json after webpack",
+        "date": "2026-02-04T02:07:33Z"
+      },
+      {
+        "sha": "03b751d",
+        "message": "update popup link buttons to use tabs api, popup html",
+        "date": "2026-02-04T01:59:33Z"
+      },
+      {
+        "sha": "9b2618a",
+        "message": "update scss comments",
+        "date": "2026-02-04T01:58:20Z"
+      },
+      {
+        "sha": "ae54448",
+        "message": "update build script to first check for package existence",
+        "date": "2026-02-04T01:57:12Z"
+      },
+      {
+        "sha": "5c4042a",
+        "message": "Merge pull request #117 from waymondrang/midnight-fix",
+        "date": "2026-02-03T22:39:25Z"
+      },
+      {
+        "sha": "435c7c3",
+        "message": "move shared dark mode declarations to _dark.scss",
+        "date": "2026-02-03T22:29:15Z"
+      },
+      {
+        "sha": "bbb125e",
+        "message": "Merge pull request #116 from waymondrang/package-script",
+        "date": "2026-02-01T20:15:53Z"
+      },
+      {
+        "sha": "582d91f",
+        "message": "add ignoreFiles field to config",
+        "date": "2026-02-01T20:13:42Z"
+      },
+      {
+        "sha": "7c011bd",
+        "message": "Merge pull request #115 from waymondrang/publish-and-gemini",
+        "date": "2026-02-01T19:55:01Z"
+      },
+      {
+        "sha": "69f9c61",
+        "message": "update version to sync with package.json, update build script to read built manifest.json version",
+        "date": "2026-02-01T19:53:56Z"
+      },
+      {
+        "sha": "e33d57f",
+        "message": "update gemini sidebar appearance",
+        "date": "2026-02-01T19:53:16Z"
+      },
+      {
+        "sha": "1859a4b",
+        "message": "crude solution to published doc appearance and begin work on gemini sidebar",
+        "date": "2026-02-01T18:54:12Z"
+      },
+      {
+        "sha": "748ba04",
+        "message": "Merge pull request #113 from waymondrang/popup-layout",
+        "date": "2026-01-30T02:00:37Z"
+      },
+      {
+        "sha": "b00e9a7",
+        "message": "update popup styling to fix footer and scrollbar",
+        "date": "2026-01-30T01:56:11Z"
+      },
+      {
+        "sha": "fbd88d0",
+        "message": "Merge pull request #111 from JacksonZ03/preserve-color-v2",
+        "date": "2026-01-30T01:15:46Z"
+      },
+      {
+        "sha": "6104e4d",
+        "message": "renamed preserve_colors to colorful",
+        "date": "2026-01-29T21:52:57Z"
+      },
+      {
+        "sha": "f1eb016",
+        "message": "Feature: Add Preserve colors option in dark mode",
+        "date": "2026-01-27T07:55:20Z"
+      },
+      {
+        "sha": "f5ba98c",
+        "message": "Merge pull request #110 from waymondrang/popup-design",
+        "date": "2026-01-27T03:06:18Z"
+      },
+      {
+        "sha": "196a1a9",
+        "message": "touch up popup design, rework invert component (again), simplify border section",
+        "date": "2026-01-27T03:03:32Z"
+      },
+      {
+        "sha": "1426ac7",
+        "message": "Merge pull request #108 from waymondrang/popup-design",
+        "date": "2026-01-27T00:43:02Z"
+      },
+      {
+        "sha": "434f7d6",
+        "message": "update button hover and tone down font weights",
+        "date": "2026-01-27T00:38:48Z"
+      },
+      {
+        "sha": "14e2245",
+        "message": "move components/popup/ to popup/",
+        "date": "2026-01-27T00:33:15Z"
+      },
+      {
+        "sha": "8b565d3",
+        "message": "update README.md formatting",
+        "date": "2026-01-27T00:30:55Z"
+      },
+      {
+        "sha": "0c7e6a7",
+        "message": "update README.md",
+        "date": "2026-01-27T00:30:07Z"
+      },
+      {
+        "sha": "d46ded2",
+        "message": "update README.md",
+        "date": "2026-01-27T00:26:58Z"
+      },
+      {
+        "sha": "288a952",
+        "message": "reorganize _popup.scss into popup scss directory, update popup icons",
+        "date": "2026-01-27T00:23:12Z"
+      },
+      {
+        "sha": "822003f",
+        "message": "Merge remote-tracking branch 'refs/remotes/origin/main' into popup-design",
+        "date": "2026-01-26T23:49:26Z"
+      },
+      {
+        "sha": "7859e4d",
+        "message": "redesign settings popup, update invert data schema (deprecated old type), fix document metric widget watcher",
+        "date": "2026-01-26T23:48:22Z"
+      },
+      {
+        "sha": "a362490",
+        "message": "update fix scripts names",
+        "date": "2026-01-26T07:09:25Z"
+      },
+      {
+        "sha": "094819f",
+        "message": "Merge pull request #107 from waymondrang/define-plugin",
+        "date": "2026-01-26T03:17:36Z"
+      },
+      {
+        "sha": "f9826f0",
+        "message": "update eslint config, add unused private class members rule",
+        "date": "2026-01-24T19:24:48Z"
+      },
+      {
+        "sha": "44379d7",
+        "message": "add define plugin, change log level in production to info, create global.d.ts, change sanity log messages to info level",
+        "date": "2026-01-24T19:03:42Z"
+      },
+      {
+        "sha": "646f07f",
+        "message": "Merge pull request #105 from waymondrang/auto-button",
+        "date": "2026-01-24T18:23:52Z"
+      },
+      {
+        "sha": "f654659",
+        "message": "update toggle button to auto-raise, remove raise button html and extension data, update z-index",
+        "date": "2026-01-24T18:22:03Z"
+      },
+      {
+        "sha": "2490b0c",
+        "message": "Merge pull request #104 from waymondrang/lint-css",
+        "date": "2026-01-24T01:05:55Z"
+      },
+      {
+        "sha": "eec00ce",
+        "message": "add stylelint, fix scss linting errors, update default custom_bg to beige and document_bg change behavior",
+        "date": "2026-01-24T01:03:24Z"
+      },
+      {
+        "sha": "fa9e8b6",
+        "message": "Merge pull request #103 from waymondrang/turn-in-button",
+        "date": "2026-01-23T23:17:10Z"
+      },
+      {
+        "sha": "0054828",
+        "message": "update appearance of turn-in button for google classroom documents",
+        "date": "2026-01-23T22:17:01Z"
+      },
+      {
+        "sha": "63766ca",
+        "message": "Merge pull request #102 from waymondrang/rework",
+        "date": "2026-01-23T21:32:55Z"
+      },
+      {
+        "sha": "0ad305f",
+        "message": "update README.md",
+        "date": "2026-01-23T21:16:15Z"
+      },
+      {
+        "sha": "8138a51",
+        "message": "update dev and create firefox scripts, update popup styling to be less visually dense",
+        "date": "2026-01-23T21:13:07Z"
+      },
+      {
+        "sha": "688dd96",
+        "message": "update README.md to remove distracting bold text",
+        "date": "2026-01-23T00:41:50Z"
+      },
+      {
+        "sha": "dd8ce43",
+        "message": "update README.md license",
+        "date": "2026-01-23T00:36:36Z"
+      },
+      {
+        "sha": "8f29721",
+        "message": "update README.md and add LICENSE",
+        "date": "2026-01-23T00:35:37Z"
+      },
+      {
+        "sha": "0f1ad9f",
+        "message": "adjust popup spacing, misc changes",
+        "date": "2026-01-22T20:45:48Z"
+      },
+      {
+        "sha": "577f6ae",
+        "message": "update popup styling, turn dark invert off by default, update readme",
+        "date": "2026-01-22T19:15:38Z"
+      },
+      {
+        "sha": "f830935",
+        "message": "implement temp toggle button",
+        "date": "2026-01-22T02:50:48Z"
+      },
+      {
+        "sha": "3b0bec2",
+        "message": "delete unused build_config.json",
+        "date": "2026-01-22T02:48:54Z"
+      },
+      {
+        "sha": "8953c10",
+        "message": "fix stylesheet inserted url, clean up unused files (remove manifest v2), update popup unstable text styling",
+        "date": "2026-01-21T22:57:58Z"
+      },
+      {
+        "sha": "8c25f39",
+        "message": "rewrite package.js in typescript (.ts), rename webpack.config.js to .cjs, update npm run build, .gitignore",
+        "date": "2026-01-21T22:55:56Z"
+      },
+      {
+        "sha": "f83fe32",
+        "message": "create default injected stylesheet, update notification style, edit npm dev and build scripts",
+        "date": "2026-01-21T07:47:18Z"
+      },
+      {
+        "sha": "ca7c739",
+        "message": "rename global browser variable to browser_ns in popup.ts and docs.ts",
+        "date": "2026-01-20T22:38:17Z"
+      },
+      {
+        "sha": "5ba683e",
+        "message": "declare global const browser_ns in util.ts",
+        "date": "2026-01-20T22:37:09Z"
+      },
+      {
+        "sha": "9d32399",
+        "message": "add src/assets to webpack copy targets",
+        "date": "2026-01-20T20:56:33Z"
+      },
+      {
+        "sha": "e6cb1ae",
+        "message": "add github button link and turn donate button into anchor element",
+        "date": "2026-01-20T20:55:55Z"
+      },
+      {
+        "sha": "9783e3b",
+        "message": "rename ExtensionOperation enum to ExtensionMode and its keys",
+        "date": "2026-01-20T20:35:55Z"
+      }
+    ]
+  },
+  {
+    "name": "PodcastSync-Local-Mac-App",
+    "fullName": "shay2000/PodcastSync-Local-Mac-App",
+    "description": "Turn YouTube channels and playlists into a private podcast feed on your Wi‑Fi. Downloads MP3s locally, keeps them organised, and works with normal podcast apps. Built for Mac (menu bar app + small server).",
+    "url": "https://github.com/shay2000/PodcastSync-Local-Mac-App",
+    "homepage": null,
+    "language": "Python",
+    "languages": [
+      {
+        "name": "Python",
+        "bytes": 122558,
+        "percent": 44.93
+      },
+      {
+        "name": "JavaScript",
+        "bytes": 53518,
+        "percent": 19.62
+      },
+      {
+        "name": "CSS",
+        "bytes": 44823,
+        "percent": 16.43
+      },
+      {
+        "name": "HTML",
+        "bytes": 19300,
+        "percent": 7.08
+      },
+      {
+        "name": "Swift",
+        "bytes": 16493,
+        "percent": 6.05
+      },
+      {
+        "name": "Shell",
+        "bytes": 16058,
+        "percent": 5.89
+      }
+    ],
+    "stars": 1,
+    "forks": 0,
+    "watchers": 1,
+    "openIssues": 0,
+    "topics": [],
+    "license": "MIT",
+    "isFork": false,
+    "isArchived": false,
+    "createdAt": "2026-04-04T16:08:42Z",
+    "pushedAt": "2026-09-12T13:13:50Z",
+    "sizeKb": 94021,
+    "hasPages": false,
+    "hasWiki": true,
+    "defaultBranch": "main",
+    "featured": true,
+    "commits": [
+      {
+        "sha": "6480059",
+        "message": "Move Buy Me a Coffee shield to top of README",
+        "date": "2026-09-12T13:13:50Z"
+      },
+      {
+        "sha": "92a708d",
+        "message": "Add Buy Me a Coffee support links",
+        "date": "2026-09-12T12:58:23Z"
+      },
+      {
+        "sha": "5840144",
+        "message": "Merge pull request #4 from shay2000/refactor/structural-cleanup",
+        "date": "2026-08-22T02:29:02Z"
+      },
+      {
+        "sha": "e441806",
+        "message": "Create missing GitHub releases from tags",
+        "date": "2026-08-22T02:28:53Z"
+      },
+      {
+        "sha": "4f48674",
+        "message": "Merge pull request #3 from shay2000/refactor/structural-cleanup",
+        "date": "2026-08-22T02:26:10Z"
+      },
+      {
+        "sha": "f783561",
+        "message": "Prepare v0.2.0 release",
+        "date": "2026-08-22T02:26:00Z"
+      },
+      {
+        "sha": "a9f1e28",
+        "message": "Merge pull request #2 from shay2000/refactor/structural-cleanup",
+        "date": "2026-08-22T02:17:52Z"
+      },
+      {
+        "sha": "c986d59",
+        "message": "Fix Swift concurrency for release builds",
+        "date": "2026-08-22T02:17:36Z"
+      },
+      {
+        "sha": "205fa06",
+        "message": "Merge pull request #1 from shay2000/refactor/structural-cleanup",
+        "date": "2026-08-22T02:14:55Z"
+      },
+      {
+        "sha": "80988f2",
+        "message": "Add macOS DMG release workflow",
+        "date": "2026-08-22T02:14:18Z"
+      },
+      {
+        "sha": "eae102f",
+        "message": "Add characterization tests ahead of the structural refactor",
+        "date": "2026-08-21T15:48:27Z"
+      },
+      {
+        "sha": "1fe5265",
+        "message": "Add YouTube cookie authentication",
+        "date": "2026-08-21T15:05:17Z"
+      },
+      {
+        "sha": "5428c7e",
+        "message": "Use static release/download badges",
+        "date": "2026-04-06T23:45:35Z"
+      },
+      {
+        "sha": "46c5c20",
+        "message": "Add release badges to README",
+        "date": "2026-04-06T23:44:13Z"
+      },
+      {
+        "sha": "9531c3d",
+        "message": "Add MIT license and README badges",
+        "date": "2026-04-06T23:43:15Z"
+      },
+      {
+        "sha": "f612da6",
+        "message": "Remove tracked local build artifacts and virtualenv",
+        "date": "2026-04-06T23:41:33Z"
+      },
+      {
+        "sha": "be6009c",
+        "message": "Bundle a polished standalone macOS release",
+        "date": "2026-04-06T23:31:22Z"
+      },
+      {
+        "sha": "5d8db55",
+        "message": "the the front end UI has been massively overhauled and now looks very nice visually",
+        "date": "2026-04-06T22:55:02Z"
+      },
+      {
+        "sha": "54ac68e",
+        "message": "bug fixes to ensure that it can always be followed",
+        "date": "2026-04-06T20:43:28Z"
+      },
+      {
+        "sha": "2a70957",
+        "message": "bug fixes, now has download complete bar and button to stop all downloads as well as function to select and delete videos",
+        "date": "2026-04-06T19:59:26Z"
+      },
+      {
+        "sha": "03be067",
+        "message": "Bug fix: Website no longer flickers when updating and now the channel icon is what is showed in a podcast app as opposed to whatever the latest video thumbnail was.",
+        "date": "2026-04-06T18:27:40Z"
+      },
+      {
+        "sha": "4d245bc",
+        "message": "Works now when ran through the terminal and following the readme guide",
+        "date": "2026-04-06T14:19:56Z"
+      },
+      {
+        "sha": "7552b7e",
+        "message": "Fix PyInstaller bundling: pass app object directly to uvicorn, add lazy imports for slow modules",
+        "date": "2026-04-05T16:40:39Z"
+      },
+      {
+        "sha": "937a814",
+        "message": "Complete M6: packaging as .dmg, improve project root discovery, add build scripts",
+        "date": "2026-04-04T20:07:31Z"
+      },
+      {
+        "sha": "1cc0026",
+        "message": "Initial commit: PodcastSync backend, web UI, and macOS menu bar scaffold",
+        "date": "2026-04-04T16:09:32Z"
+      }
+    ]
+  },
+  {
+    "name": "METAR-Translator",
+    "fullName": "shay2000/METAR-Translator",
+    "description": "METAR Viewer is a Windows application that translates raw METAR Data into a more \"human-friendly\" format. FOR FLIGHT SIM ONLY",
+    "url": "https://github.com/shay2000/METAR-Translator",
+    "homepage": null,
+    "language": "C#",
+    "languages": [
+      {
+        "name": "C#",
+        "bytes": 256660,
+        "percent": 55.82
+      },
+      {
+        "name": "JavaScript",
+        "bytes": 153214,
+        "percent": 33.32
+      },
+      {
+        "name": "Python",
+        "bytes": 20891,
+        "percent": 4.54
+      },
+      {
+        "name": "Shell",
+        "bytes": 9937,
+        "percent": 2.16
+      },
+      {
+        "name": "CSS",
+        "bytes": 7390,
+        "percent": 1.61
+      },
+      {
+        "name": "HTML",
+        "bytes": 6812,
+        "percent": 1.48
+      },
+      {
+        "name": "Batchfile",
+        "bytes": 3234,
+        "percent": 0.7
+      },
+      {
+        "name": "PowerShell",
+        "bytes": 1662,
+        "percent": 0.36
+      }
+    ],
+    "stars": 0,
+    "forks": 0,
+    "watchers": 0,
+    "openIssues": 0,
+    "topics": [],
+    "license": "MIT",
+    "isFork": false,
+    "isArchived": false,
+    "createdAt": "2026-03-28T12:30:36Z",
+    "pushedAt": "2026-09-12T13:13:47Z",
+    "sizeKb": 128197,
+    "hasPages": false,
+    "hasWiki": false,
+    "defaultBranch": "main",
+    "featured": false,
+    "commits": [
+      {
+        "sha": "e324473",
+        "message": "Move Buy Me a Coffee shield to top of README",
+        "date": "2026-09-12T13:13:47Z"
+      },
+      {
+        "sha": "ead82ec",
+        "message": "Add Buy Me a Coffee support links",
+        "date": "2026-09-12T12:57:51Z"
+      },
+      {
+        "sha": "beccca1",
+        "message": "feat(platform): enhance release documentation with platform-specific icons and beta labeling",
+        "date": "2026-08-21T01:35:30Z"
+      },
+      {
+        "sha": "bd4680a",
+        "message": "fix(ci): pass MSFS package version correctly [skip ci]",
+        "date": "2026-08-21T01:28:36Z"
+      },
+      {
+        "sha": "1cd85c0",
+        "message": "ci: version platform releases independently [skip ci]",
+        "date": "2026-08-21T01:26:02Z"
+      },
+      {
+        "sha": "1d1dbd5",
+        "message": "docs: remove references to archived branches",
+        "date": "2026-08-21T01:09:01Z"
+      },
+      {
+        "sha": "665f5bc",
+        "message": "docs: update platform release versions and documentation to reflect v1.0.7 consistency",
+        "date": "2026-08-21T01:02:54Z"
+      },
+      {
+        "sha": "df42a7a",
+        "message": "fix(macos): retry DMG creation when hdiutil reports \"Resource busy\"",
+        "date": "2026-08-21T00:46:58Z"
+      },
+      {
+        "sha": "8dc87c6",
+        "message": "ci: split releases into three independent platform tracks",
+        "date": "2026-08-21T00:39:10Z"
+      },
+      {
+        "sha": "8044620",
+        "message": "Make the MSFS SDK build manual so it stops failing every push to main",
+        "date": "2026-08-20T15:43:02Z"
+      },
+      {
+        "sha": "02be321",
+        "message": "Stop the MSFS SDK build failing on a dead vendor download URL",
+        "date": "2026-08-20T15:36:34Z"
+      },
+      {
+        "sha": "c63a249",
+        "message": "Clarify the three versions in the README and fix stale CI triggers",
+        "date": "2026-08-20T15:30:02Z"
+      },
+      {
+        "sha": "4742e5f",
+        "message": "Merge pull request #5 from shay2000/consolidation",
+        "date": "2026-08-20T15:04:12Z"
+      },
+      {
+        "sha": "bbc5b12",
+        "message": "Document the consolidated multi-project layout",
+        "date": "2026-08-20T14:49:03Z"
+      },
+      {
+        "sha": "64e5fc1",
+        "message": "Point CI and macOS packaging at the renamed Avalonia project",
+        "date": "2026-08-20T14:41:15Z"
+      },
+      {
+        "sha": "284c088",
+        "message": "Consolidate platform branches into sibling projects in one solution",
+        "date": "2026-08-20T14:37:24Z"
+      },
+      {
+        "sha": "1ac9d69",
+        "message": "Carry over in-progress release workflow and VS Code SDK settings",
+        "date": "2026-08-20T14:27:53Z"
+      },
+      {
+        "sha": "5e7fed2",
+        "message": "Add SDK-free MSFS package builder and separate release tracks",
+        "date": "2026-08-20T13:56:26Z"
+      },
+      {
+        "sha": "481ade4",
+        "message": "Document local .NET SDK setup and fix MSFS build paths",
+        "date": "2026-08-20T13:12:26Z"
+      },
+      {
+        "sha": "c1762a5",
+        "message": "Enforce Node.js version check with executable script",
+        "date": "2026-08-20T10:31:45Z"
+      },
+      {
+        "sha": "e7e5185",
+        "message": "Document GitHub Actions packaging and source-only installation workflow",
+        "date": "2026-08-20T10:24:48Z"
+      },
+      {
+        "sha": "7591ba1",
+        "message": "Document MSFS 2020 package installation and build workflow",
+        "date": "2026-08-20T10:09:37Z"
+      },
+      {
+        "sha": "18a4149",
+        "message": "Add MSFS 2020 toolbar integration",
+        "date": "2026-08-20T08:49:08Z"
+      },
+      {
+        "sha": "04c2da3",
+        "message": "Fix DMG architecture checks on CI",
+        "date": "2026-08-20T01:18:21Z"
+      },
+      {
+        "sha": "2e24c71",
+        "message": "Optimize macOS app and harden DMG packaging",
+        "date": "2026-08-20T01:14:08Z"
+      },
+      {
+        "sha": "f5e3b76",
+        "message": "Merge pull request #3 from shay2000/codex/add-mac-version-in-separate-branch-with-action",
+        "date": "2026-08-18T11:17:48Z"
+      },
+      {
+        "sha": "8aaee6b",
+        "message": "Add native macOS app and DMG release workflow",
+        "date": "2026-08-18T11:05:34Z"
+      },
+      {
+        "sha": "19aa6bf",
+        "message": "Add auto-release workflow and fix paths for refactored codebase",
+        "date": "2026-08-18T10:34:38Z"
+      },
+      {
+        "sha": "43ce357",
+        "message": "Merge pull request #2 from shay2000/phase-impl",
+        "date": "2026-08-18T10:13:10Z"
+      },
+      {
+        "sha": "4203424",
+        "message": "Add a Phase 5 handoff document for the deferred UI refactor",
+        "date": "2026-08-18T09:48:55Z"
+      },
+      {
+        "sha": "a38e427",
+        "message": "Point the release workflow and README at the new project paths",
+        "date": "2026-08-18T09:38:43Z"
+      },
+      {
+        "sha": "198f75b",
+        "message": "Phase 6: add unit tests for the seams opened up by the refactor",
+        "date": "2026-08-18T09:37:07Z"
+      },
+      {
+        "sha": "19f67ea",
+        "message": "Phase 4: split AirportLookupService into focused types",
+        "date": "2026-08-18T09:17:31Z"
+      },
+      {
+        "sha": "0bcaca7",
+        "message": "Phase 3: consolidate caching and HTTP client wiring",
+        "date": "2026-08-18T08:52:19Z"
+      },
+      {
+        "sha": "ae20d81",
+        "message": "Phase 2: extract shared METAR domain logic",
+        "date": "2026-08-18T08:40:11Z"
+      },
+      {
+        "sha": "09e2167",
+        "message": "Phase 1.5: add characterization tests for RawMetarParser",
+        "date": "2026-08-18T08:06:05Z"
+      },
+      {
+        "sha": "7ccf2a0",
+        "message": "Phase 1: split into MetarViewer.Core/App/Tests projects",
+        "date": "2026-08-18T08:01:20Z"
+      },
+      {
+        "sha": "63616e7",
+        "message": "docs: Added comprehensive XML documentation and inline comments across the codebase for improved maintainability.",
+        "date": "2026-03-31T18:13:36Z"
+      },
+      {
+        "sha": "b2ad261",
+        "message": "Added flightsim.to link to readme.",
+        "date": "2026-03-29T13:04:09Z"
+      },
+      {
+        "sha": "64d0edf",
+        "message": "Revert \"Optimize self-contained publish: trimming, ReadyToRun, x64-only, Release symbols off\"",
+        "date": "2026-03-28T21:40:28Z"
+      },
+      {
+        "sha": "728d35d",
+        "message": "Revert \"Disable publish trimming — WinUI/WinRT fails to launch when trimmed\"",
+        "date": "2026-03-28T21:40:28Z"
+      },
+      {
+        "sha": "9a9edc2",
+        "message": "Disable publish trimming — WinUI/WinRT fails to launch when trimmed",
+        "date": "2026-03-28T21:32:59Z"
+      },
+      {
+        "sha": "c628504",
+        "message": "Optimize self-contained publish: trimming, ReadyToRun, x64-only, Release symbols off",
+        "date": "2026-03-28T21:26:51Z"
+      },
+      {
+        "sha": "c2fe7ef",
+        "message": "Update disclaimer section in README.md",
+        "date": "2026-03-28T19:19:27Z"
+      },
+      {
+        "sha": "82ba6b0",
+        "message": "Added legal use disclaimer to README.md",
+        "date": "2026-03-28T19:16:02Z"
+      },
+      {
+        "sha": "342fb13",
+        "message": "Readme Update",
+        "date": "2026-03-28T19:11:44Z"
+      },
+      {
+        "sha": "8c6c4cb",
+        "message": "Simplified the Readme",
+        "date": "2026-03-28T19:06:31Z"
+      },
+      {
+        "sha": "26169e1",
+        "message": "Fix solution paths for CI release workflow",
+        "date": "2026-03-28T18:51:00Z"
+      },
+      {
+        "sha": "0c667b3",
+        "message": "Fix release workflow restore step",
+        "date": "2026-03-28T18:44:59Z"
+      },
+      {
+        "sha": "41c4320",
+        "message": "Add GitHub release workflow",
+        "date": "2026-03-28T18:42:02Z"
+      },
+      {
+        "sha": "cd5b8c1",
+        "message": "Clean up repo for public release",
+        "date": "2026-03-28T18:29:47Z"
+      },
+      {
+        "sha": "9d93441",
+        "message": "Merge pull request #1 from shay2000/VATSIM-METAR-API",
+        "date": "2026-03-28T18:12:22Z"
+      },
+      {
+        "sha": "ebbcfda",
+        "message": "Use VATSIM METAR service with Aviation Weather fallback",
+        "date": "2026-03-28T18:11:35Z"
+      },
+      {
+        "sha": "dfb39f9",
+        "message": "Add fuzzy airport suggestions and ICAO-name formatting",
+        "date": "2026-03-28T17:57:17Z"
+      },
+      {
+        "sha": "3bea7cb",
+        "message": "Prioritize AirportsAPI search and refresh theme toggle icons",
+        "date": "2026-03-28T17:16:36Z"
+      },
+      {
+        "sha": "f36a563",
+        "message": "Switch METAR app to Aviation Weather Center API",
+        "date": "2026-03-28T16:59:43Z"
+      },
+      {
+        "sha": "5e8c230",
+        "message": "Add AirportsAPI fallback and refresh Windows release package",
+        "date": "2026-03-28T13:26:40Z"
+      },
+      {
+        "sha": "4fb8bbd",
+        "message": "README.md updated and corrected.",
+        "date": "2026-03-28T12:39:40Z"
+      },
+      {
+        "sha": "c9d0e21",
+        "message": "first commit",
+        "date": "2026-03-28T12:33:14Z"
+      }
+    ]
+  },
+  {
+    "name": "family-tree-site",
+    "fullName": "shay2000/family-tree-site",
+    "description": "Bhimjiyani Family Tree — built site (family data AES-encrypted)",
+    "url": "https://github.com/shay2000/family-tree-site",
+    "homepage": null,
+    "language": "JavaScript",
+    "languages": [
+      {
+        "name": "JavaScript",
+        "bytes": 2740,
+        "percent": 77.62
+      },
+      {
+        "name": "HTML",
+        "bytes": 790,
+        "percent": 22.38
+      }
+    ],
+    "stars": 0,
+    "forks": 0,
+    "watchers": 0,
+    "openIssues": 0,
+    "topics": [],
+    "license": null,
+    "isFork": false,
+    "isArchived": false,
+    "createdAt": "2026-08-28T13:58:17Z",
+    "pushedAt": "2026-09-12T13:12:57Z",
+    "sizeKb": 10958,
+    "hasPages": true,
+    "hasWiki": true,
+    "defaultBranch": "main",
+    "featured": false,
+    "commits": [
+      {
+        "sha": "a870d7b",
+        "message": "Remove support links from family tree site",
+        "date": "2026-09-12T13:12:57Z"
+      },
+      {
+        "sha": "24fc14d",
+        "message": "Remove support links from family tree site",
+        "date": "2026-09-12T13:12:54Z"
+      },
+      {
+        "sha": "17c13cb",
+        "message": "Add Buy Me a Coffee support links",
+        "date": "2026-09-12T13:00:24Z"
+      },
+      {
+        "sha": "cd21064",
+        "message": "Deploy 2026-09-01T23:34:41Z",
+        "date": "2026-09-01T23:34:41Z"
+      }
+    ]
+  },
+  {
+    "name": "LumaControl",
+    "fullName": "shay2000/LumaControl",
+    "description": "Modern macOS display control with extended XDR brightness, display-aware sync, and active maintenance for current macOS releases.",
+    "url": "https://github.com/shay2000/LumaControl",
+    "homepage": "https://github.com/shay2000/LumaControl#readme",
+    "language": "Swift",
+    "languages": [
+      {
+        "name": "Swift",
+        "bytes": 352783,
+        "percent": 86.45
+      },
+      {
+        "name": "HTML",
+        "bytes": 39251,
+        "percent": 9.62
+      },
+      {
+        "name": "Python",
+        "bytes": 6784,
+        "percent": 1.66
+      },
+      {
+        "name": "Shell",
+        "bytes": 5793,
+        "percent": 1.42
+      },
+      {
+        "name": "Objective-C",
+        "bytes": 3454,
+        "percent": 0.85
+      }
+    ],
+    "stars": 0,
+    "forks": 0,
+    "watchers": 0,
+    "openIssues": 0,
+    "topics": [
+      "brightness",
+      "display",
+      "macos",
+      "menu-bar-app",
+      "monitorcontrol",
+      "swift",
+      "xdr"
+    ],
+    "license": "MIT",
+    "isFork": false,
+    "isArchived": false,
+    "createdAt": "2026-04-08T00:43:06Z",
+    "pushedAt": "2026-09-12T13:06:12Z",
+    "sizeKb": 32965,
+    "hasPages": false,
+    "hasWiki": true,
+    "defaultBranch": "main",
+    "featured": true,
+    "commits": [
+      {
+        "sha": "234345d",
+        "message": "appcast: LumaControl 1.0.0 (build 46) [skip ci]",
+        "date": "2026-09-12T13:06:10Z"
+      },
+      {
+        "sha": "cb41655",
+        "message": "Merge pull request #3 from shay2000/migrate/lumacontrol-identity-v1",
+        "date": "2026-09-12T12:58:48Z"
+      },
+      {
+        "sha": "3878bd1",
+        "message": "Keep CFBundleVersion above every published and installed build",
+        "date": "2026-09-12T12:49:03Z"
+      },
+      {
+        "sha": "cc04952",
+        "message": "Adopt LumaControl bundle identity and start the 1.0.0 line",
+        "date": "2026-09-12T12:45:43Z"
+      },
+      {
+        "sha": "cf88498",
+        "message": "Merge pull request #2 from shay2000/fix/settings-panes-module-name-mismatch",
+        "date": "2026-09-12T12:32:37Z"
+      },
+      {
+        "sha": "ef02876",
+        "message": "Fix \"Settings could not be opened\" after the LumaControl rename",
+        "date": "2026-09-12T12:27:52Z"
+      },
+      {
+        "sha": "0616c59",
+        "message": "Add Buy Me a Coffee badge to README and register funding link",
+        "date": "2026-09-12T12:13:40Z"
+      },
+      {
+        "sha": "35c51a2",
+        "message": "Update install script for the renamed source folder",
+        "date": "2026-09-12T12:05:02Z"
+      },
+      {
+        "sha": "6209caa",
+        "message": "Bump build number to 39 to match the published 0.3.0",
+        "date": "2026-09-12T11:52:53Z"
+      },
+      {
+        "sha": "88cc99f",
+        "message": "appcast: LumaControl 0.3.0 (build 39) [skip ci]",
+        "date": "2026-09-12T11:25:23Z"
+      },
+      {
+        "sha": "542e00c",
+        "message": "Rebrand project as LumaControl",
+        "date": "2026-09-12T01:54:25Z"
+      },
+      {
+        "sha": "7cfe9b9",
+        "message": "Fix CI test job hanging forever and unblock releases",
+        "date": "2026-09-12T01:21:17Z"
+      },
+      {
+        "sha": "95e2304",
+        "message": "Point GitHub Sponsor button at maintainer's Buy Me a Coffee",
+        "date": "2026-09-12T01:11:27Z"
+      },
+      {
+        "sha": "65618d0",
+        "message": "Bump build number to 34 (local dev build after the v0.2.0 release)",
+        "date": "2026-09-12T01:04:57Z"
+      },
+      {
+        "sha": "bf54e8b",
+        "message": "appcast: XDRMonitorControl 0.2.0 (build 33)",
+        "date": "2026-09-12T01:02:40Z"
+      },
+      {
+        "sha": "52e5594",
+        "message": "Update app icons and bundle versions",
+        "date": "2026-09-11T20:14:39Z"
+      },
+      {
+        "sha": "3823bd4",
+        "message": "Fix unit test build: drop cleanup of the removed xdrProbed pref",
+        "date": "2026-09-11T19:09:31Z"
+      },
+      {
+        "sha": "a08ae1a",
+        "message": "Release v0.2.0",
+        "date": "2026-09-11T19:05:44Z"
+      },
+      {
+        "sha": "f202ed1",
+        "message": "README: rewrite for first-time readers and lead with the new features",
+        "date": "2026-09-11T18:58:13Z"
+      },
+      {
+        "sha": "5741c31",
+        "message": "About page: redesign and fix the override that was hiding edits",
+        "date": "2026-09-11T17:26:57Z"
+      },
+      {
+        "sha": "2b1fd24",
+        "message": "About page tidy-up + point Sparkle at this fork's GitHub releases",
+        "date": "2026-09-11T17:16:30Z"
+      },
+      {
+        "sha": "c065e16",
+        "message": "Add XDR extended brightness, fix stuck brightness HUD",
+        "date": "2026-09-11T16:42:11Z"
+      },
+      {
+        "sha": "33c10a3",
+        "message": "Set fork version to 0.1.0",
+        "date": "2026-09-11T11:17:48Z"
+      },
+      {
+        "sha": "827b619",
+        "message": "Merge pull request #1 from shay2000/fix/xdr-bugs-liquid-glass-ci",
+        "date": "2026-09-11T11:16:22Z"
+      },
+      {
+        "sha": "8c670e0",
+        "message": "Order Xcode selection by full version, not just the major",
+        "date": "2026-09-11T04:33:46Z"
+      },
+      {
+        "sha": "3e18b3c",
+        "message": "Mark stubbed test display property private to match its private type",
+        "date": "2026-09-11T04:32:24Z"
+      },
+      {
+        "sha": "f7e01b3",
+        "message": "Fix XDR tests with stubbed brightness; make Xcode selection POSIX-portable",
+        "date": "2026-09-11T04:23:30Z"
+      },
+      {
+        "sha": "44a452e",
+        "message": "Fix test compile error: removePref requires a key argument",
+        "date": "2026-09-11T04:08:27Z"
+      },
+      {
+        "sha": "d72bc12",
+        "message": "Address Greptile review: fix XDR cancel path, probe caching, update UI leftovers, CI hardening",
+        "date": "2026-09-11T04:06:40Z"
+      },
+      {
+        "sha": "e363158",
+        "message": "Exclude build directory from SwiftFormat and SwiftLint",
+        "date": "2026-09-11T04:01:45Z"
+      },
+      {
+        "sha": "f6ce302",
+        "message": "Fix XDR bugs, add Liquid Glass support, tests and CI DMG builds",
+        "date": "2026-09-11T03:48:09Z"
+      },
+      {
+        "sha": "55baf28",
+        "message": "Merge remote-tracking branch 'upstream/main' into fix/xdr-bugs-liquid-glass-ci",
+        "date": "2026-09-11T03:28:26Z"
+      },
+      {
+        "sha": "f16d90f",
+        "message": "Validate maximum DDC overrides (#1878)",
+        "date": "2026-08-11T12:43:27Z"
+      },
+      {
+        "sha": "485e925",
+        "message": "Stop inactive custom shortcuts from capturing keys (#1891)",
+        "date": "2026-08-11T12:28:11Z"
+      },
+      {
+        "sha": "3cfc405",
+        "message": "v4.3.4 (#1861)",
+        "date": "2026-04-19T06:37:34Z"
+      },
+      {
+        "sha": "8258501",
+        "message": "Fix ad-hoc signed builds, update icons, add handoff",
+        "date": "2026-04-08T13:15:41Z"
+      },
+      {
+        "sha": "b183cab",
+        "message": "Rename app to XDRMonitorControl and refresh branding",
+        "date": "2026-04-08T12:17:38Z"
+      },
+      {
+        "sha": "81963f9",
+        "message": "Rename app to XDRMonitorBrightness",
+        "date": "2026-04-08T11:39:05Z"
+      },
+      {
+        "sha": "fc19ce2",
+        "message": "Update README.md",
+        "date": "2026-02-09T09:32:15Z"
+      },
+      {
+        "sha": "e72fab4",
+        "message": "Fix build error (#1830)",
+        "date": "2026-01-15T11:46:44Z"
+      },
+      {
+        "sha": "195a8e8",
+        "message": "sorting by name added (#1774)",
+        "date": "2025-11-16T09:59:58Z"
+      },
+      {
+        "sha": "d4309e6",
+        "message": "feat: support \"only when external display show menu bar icon\" option (#1817)",
+        "date": "2025-11-16T09:58:59Z"
+      },
+      {
+        "sha": "f62c7e6",
+        "message": "Fix typo in Spanish translation in Localizable.strings (#1806)",
+        "date": "2025-11-16T09:57:44Z"
+      },
+      {
+        "sha": "2f1a2e0",
+        "message": "Update Main.strings (#1777)",
+        "date": "2025-07-25T21:43:10Z"
+      },
+      {
+        "sha": "a421603",
+        "message": "Update Localizable.strings (#1776)",
+        "date": "2025-07-25T21:42:29Z"
+      },
+      {
+        "sha": "796ab5a",
+        "message": "Update InternetAccessPolicy.strings (#1775)",
+        "date": "2025-07-25T21:41:57Z"
+      },
+      {
+        "sha": "81170cd",
+        "message": "Update README.md (#1727)",
+        "date": "2025-02-06T10:29:09Z"
+      },
+      {
+        "sha": "4676c81",
+        "message": "Merge pull request #1721 from MonitorControl/waydabber-patch-1",
+        "date": "2025-01-20T12:33:51Z"
+      },
+      {
+        "sha": "667e3d9",
+        "message": "Update README.md",
+        "date": "2025-01-20T12:33:34Z"
+      },
+      {
+        "sha": "9ed1e3e",
+        "message": "Update README.md",
+        "date": "2025-01-20T12:31:45Z"
+      },
+      {
+        "sha": "d62a2df",
+        "message": "Merge pull request #1717 from rattrayalex/patch-1",
+        "date": "2025-01-20T12:26:50Z"
+      },
+      {
+        "sha": "8382a60",
+        "message": "Merge pull request #1716 from pmarell/main",
+        "date": "2025-01-20T12:25:52Z"
+      },
+      {
+        "sha": "6e7acf0",
+        "message": "Make v4.2.0->v4.3.3 migration more prominent in README",
+        "date": "2025-01-11T22:27:03Z"
+      },
+      {
+        "sha": "51429f2",
+        "message": "Add ability to drag out status item to remove",
+        "date": "2025-01-04T13:17:54Z"
+      },
+      {
+        "sha": "71b8c5a",
+        "message": "Merge pull request #1646 from MonitorControl/develop",
+        "date": "2024-10-04T10:51:10Z"
+      },
+      {
+        "sha": "0ebb40c",
+        "message": "Changed Preferences to Settings, fixed visible gamma enforcer",
+        "date": "2024-10-04T10:24:31Z"
+      },
+      {
+        "sha": "1fce77e",
+        "message": "Fixed swapped Show as text/icon setting, fixed Spanish menu item length",
+        "date": "2024-10-04T09:57:05Z"
+      },
+      {
+        "sha": "c77ec0e",
+        "message": "Merge remote-tracking branch 'refs/remotes/origin/develop'",
+        "date": "2024-10-04T09:34:33Z"
+      },
+      {
+        "sha": "b16b2b5",
+        "message": "Update README.md",
+        "date": "2024-10-02T17:24:21Z"
+      },
+      {
+        "sha": "36e51e1",
+        "message": "Update README.md",
+        "date": "2024-10-02T17:24:04Z"
+      },
+      {
+        "sha": "105a347",
+        "message": "Update README.md",
+        "date": "2024-10-02T17:20:31Z"
+      },
+      {
+        "sha": "12c78e7",
+        "message": "Update FUNDING.yml",
+        "date": "2024-10-02T17:15:52Z"
+      },
+      {
+        "sha": "c389da0",
+        "message": "Delete .github/workflows directory",
+        "date": "2024-10-02T17:12:21Z"
+      },
+      {
+        "sha": "56ab622",
+        "message": "Update README.md",
+        "date": "2024-10-02T17:10:46Z"
+      },
+      {
+        "sha": "b05b537",
+        "message": "Update main.yml",
+        "date": "2024-10-02T17:06:54Z"
+      },
+      {
+        "sha": "bfed1f1",
+        "message": "Update README.md",
+        "date": "2024-10-02T16:56:35Z"
+      },
+      {
+        "sha": "9be5047",
+        "message": "Update README.md",
+        "date": "2024-10-02T13:54:06Z"
+      },
+      {
+        "sha": "0bcc6a3",
+        "message": "Various fixes and updates for Sequoia - v4.3.2 (#1632)",
+        "date": "2024-10-02T13:30:47Z"
+      },
+      {
+        "sha": "e5b672e",
+        "message": "Updated Sparkle public key",
+        "date": "2024-10-02T13:22:10Z"
+      },
+      {
+        "sha": "e4af9a5",
+        "message": "Various fixes and updates for Sequoia",
+        "date": "2024-10-02T11:46:54Z"
+      },
+      {
+        "sha": "f625dc1",
+        "message": "Fix typo in italian Main.strings (#1579)",
+        "date": "2024-06-29T14:24:39Z"
+      },
+      {
+        "sha": "d7444c6",
+        "message": "Polish GHA using (#1576)",
+        "date": "2024-06-25T08:12:32Z"
+      },
+      {
+        "sha": "f83b1f6",
+        "message": "Update README.md (#1567)",
+        "date": "2024-06-05T07:06:01Z"
+      },
+      {
+        "sha": "bbf907d",
+        "message": "Update README.md (#1555)",
+        "date": "2024-06-04T18:59:07Z"
+      },
+      {
+        "sha": "3b89905",
+        "message": "Update Ru translation. (#1540)",
+        "date": "2024-04-22T20:45:24Z"
+      },
+      {
+        "sha": "a87b015",
+        "message": "Update Fr (#1508)",
+        "date": "2024-02-15T06:05:30Z"
+      },
+      {
+        "sha": "16dd559",
+        "message": "Update Fr (#1507)",
+        "date": "2024-02-15T06:05:21Z"
+      },
+      {
+        "sha": "b2164f7",
+        "message": "Added Slovak language + minor version bump (#1498)",
+        "date": "2024-01-04T19:25:03Z"
+      },
+      {
+        "sha": "caf0368",
+        "message": "Update es Localizable.strings (#1493)",
+        "date": "2024-01-04T17:35:53Z"
+      },
+      {
+        "sha": "687114f",
+        "message": "Update zh-Hant-TW Main.strings (#1496)",
+        "date": "2024-01-04T17:35:44Z"
+      },
+      {
+        "sha": "8e9d56e",
+        "message": "Update zh_Hant-TW Localizable.strings (#1495)",
+        "date": "2024-01-04T17:35:36Z"
+      },
+      {
+        "sha": "d2e7cdd",
+        "message": "Update es Main.strings (#1494)",
+        "date": "2024-01-04T17:35:28Z"
+      },
+      {
+        "sha": "3c6cdc4",
+        "message": "Turkish translations were complated (#1441)",
+        "date": "2023-11-06T17:47:51Z"
+      },
+      {
+        "sha": "6f28c7c",
+        "message": "Added the pt-PT language (#1447)",
+        "date": "2023-11-06T17:47:14Z"
+      },
+      {
+        "sha": "8e43f75",
+        "message": "Add Hindi translation (#1462)",
+        "date": "2023-11-06T15:37:29Z"
+      },
+      {
+        "sha": "8409761",
+        "message": "add translation of Japanese (#1438)",
+        "date": "2023-09-28T15:23:11Z"
+      },
+      {
+        "sha": "4a98d15",
+        "message": "Update README.md with changes reflecting v4.2.0 (#1427)",
+        "date": "2023-09-10T16:16:52Z"
+      },
+      {
+        "sha": "e38f8c4",
+        "message": "fix: correct zh-TW translation in #1417 (#1426)",
+        "date": "2023-09-10T10:37:47Z"
+      },
+      {
+        "sha": "b5d0e8e",
+        "message": "chore: increase version and build numbers for 4.2.0 (#1424)",
+        "date": "2023-09-09T13:58:32Z"
+      },
+      {
+        "sha": "e038b89",
+        "message": "Update translations for Simplified Chinese and Traditional Chinese (#1417)",
+        "date": "2023-08-24T21:12:39Z"
+      },
+      {
+        "sha": "c5c8bf1",
+        "message": "DDC support for high-end M2 (Pro/Max/Ultra) systems (#1404)",
+        "date": "2023-08-14T16:08:27Z"
+      },
+      {
+        "sha": "be1f2e3",
+        "message": "Fix typo in README (#1375)",
+        "date": "2023-07-31T15:18:38Z"
+      },
+      {
+        "sha": "03355a0",
+        "message": "String changed, since it changed in System Settings (#1353)",
+        "date": "2023-04-11T12:22:52Z"
+      },
+      {
+        "sha": "087c92b",
+        "message": "Update: Korean translation (#1358)",
+        "date": "2023-04-11T07:57:58Z"
+      },
+      {
+        "sha": "f5bec7b",
+        "message": "Fix typo in Italian translation (#1325)",
+        "date": "2023-03-28T12:48:33Z"
+      },
+      {
+        "sha": "bbc617f",
+        "message": "Update README for Homebrew (#1317)",
+        "date": "2023-03-28T12:46:18Z"
+      },
+      {
+        "sha": "ec84460",
+        "message": "Refine Simplified Chinese localization (#1319)",
+        "date": "2023-03-28T12:45:32Z"
+      },
+      {
+        "sha": "31365af",
+        "message": "Fix typo (#1256)",
+        "date": "2022-12-29T22:25:17Z"
+      },
+      {
+        "sha": "25b53b6",
+        "message": "Fix typo (cs_cz) (#1249)",
+        "date": "2022-12-29T22:22:41Z"
+      },
+      {
+        "sha": "db81db8",
+        "message": "Add GitHub Sponsors (#1197)",
+        "date": "2022-10-05T15:19:24Z"
+      }
+    ]
+  },
+  {
+    "name": "PodcastSync-VPS",
+    "fullName": "shay2000/PodcastSync-VPS",
+    "description": "Private collaboration repository for PodcastSync",
+    "url": "https://github.com/shay2000/PodcastSync-VPS",
+    "homepage": null,
+    "language": "Python",
+    "languages": [
+      {
+        "name": "Python",
+        "bytes": 162077,
+        "percent": 52.3
+      },
+      {
+        "name": "JavaScript",
+        "bytes": 56278,
+        "percent": 18.16
+      },
+      {
+        "name": "CSS",
+        "bytes": 52778,
+        "percent": 17.03
+      },
+      {
+        "name": "HTML",
+        "bytes": 22592,
+        "percent": 7.29
+      },
+      {
+        "name": "Shell",
+        "bytes": 14207,
+        "percent": 4.58
+      },
+      {
+        "name": "Dockerfile",
+        "bytes": 1944,
+        "percent": 0.63
+      }
+    ],
+    "stars": 0,
+    "forks": 0,
+    "watchers": 0,
+    "openIssues": 4,
+    "topics": [],
+    "license": "MIT",
+    "isFork": false,
+    "isArchived": false,
+    "createdAt": "2026-09-04T11:18:15Z",
+    "pushedAt": "2026-09-12T13:01:01Z",
+    "sizeKb": 420,
+    "hasPages": false,
+    "hasWiki": true,
+    "defaultBranch": "main",
+    "featured": false,
+    "commits": [
+      {
+        "sha": "aa4c055",
+        "message": "Add Buy Me a Coffee support links",
+        "date": "2026-09-12T13:00:55Z"
+      },
+      {
+        "sha": "cde48cf",
+        "message": "perf: sync/feed hot-path fixes (event-loop blocking, N+1, rolling delete batching) (#7)",
+        "date": "2026-09-11T01:57:00Z"
+      },
+      {
+        "sha": "0646bcc",
+        "message": "fix: installer auto-detects cookies.txt and includes the overlay",
+        "date": "2026-09-10T20:41:47Z"
+      },
+      {
+        "sha": "36954ac",
+        "message": "fix: installer update re-run must not clobber a customized deployment",
+        "date": "2026-09-10T20:36:11Z"
+      },
+      {
+        "sha": "d9e821d",
+        "message": "fix: installer .env drift on re-run; portable sed; cut v0.3.0 image",
+        "date": "2026-09-10T20:22:14Z"
+      },
+      {
+        "sha": "622296a",
+        "message": "docs: add SETUP.md agent runbook; slim README agent line; rename to PodcastSync-VPS",
+        "date": "2026-09-10T19:58:26Z"
+      },
+      {
+        "sha": "77f4d04",
+        "message": "docs: agents with a browser MCP can offer to do the DuckDNS setup",
+        "date": "2026-09-10T18:59:51Z"
+      },
+      {
+        "sha": "61f776f",
+        "message": "fix: hermetic bind-address test — no Docker/network on CI runners",
+        "date": "2026-09-10T18:15:58Z"
+      },
+      {
+        "sha": "870d4e2",
+        "message": "docs: document the DuckDNS path for public feeds (Overcast) without owning a domain",
+        "date": "2026-09-10T18:14:14Z"
+      },
+      {
+        "sha": "f61de44",
+        "message": "docs: add copy-paste agent prompt to the top of the README",
+        "date": "2026-09-10T18:05:43Z"
+      },
+      {
+        "sha": "bf0ecf5",
+        "message": "docs: rewrite README in plain language for non-technical readers",
+        "date": "2026-09-10T17:53:47Z"
+      },
+      {
+        "sha": "bc048e2",
+        "message": "Merge pull request #6 from shay2000/refactor/linux-docker-only",
+        "date": "2026-09-10T17:52:14Z"
+      },
+      {
+        "sha": "9b6d3b0",
+        "message": "fix: address review findings on release pipeline and installer",
+        "date": "2026-09-10T17:46:09Z"
+      },
+      {
+        "sha": "7fca9ea",
+        "message": "refactor: remove macOS app, ship Docker-on-Linux releases",
+        "date": "2026-09-10T17:31:51Z"
+      },
+      {
+        "sha": "d1378ce",
+        "message": "merge: bring Hermes dashboard deploy work into main",
+        "date": "2026-09-10T17:11:32Z"
+      },
+      {
+        "sha": "b2ecafe",
+        "message": "Merge pull request #4 from shay2000/dependabot/pip/runtime-6577f2fa5f",
+        "date": "2026-09-10T17:09:40Z"
+      },
+      {
+        "sha": "450ab03",
+        "message": "Merge pull request #3 from shay2000/dependabot/github_actions/actions/setup-python-7",
+        "date": "2026-09-10T17:09:36Z"
+      },
+      {
+        "sha": "25308bb",
+        "message": "Merge pull request #2 from shay2000/dependabot/github_actions/actions/upload-artifact-7",
+        "date": "2026-09-10T17:09:32Z"
+      },
+      {
+        "sha": "7b78934",
+        "message": "Merge pull request #1 from shay2000/dependabot/github_actions/actions/checkout-7",
+        "date": "2026-09-10T17:09:13Z"
+      },
+      {
+        "sha": "14f2fcd",
+        "message": "Merge pull request #5 from shay2000/refactor/hardening-and-consistency",
+        "date": "2026-09-10T17:09:08Z"
+      },
+      {
+        "sha": "bb2910a",
+        "message": "style: satisfy ruff format in migration runner",
+        "date": "2026-09-10T17:05:24Z"
+      },
+      {
+        "sha": "cc88938",
+        "message": "refactor: harden dynamic SQL, transactional migrations, flatten settings PATCH",
+        "date": "2026-09-10T16:56:31Z"
+      },
+      {
+        "sha": "7f4519d",
+        "message": "docs: add Tailscale VPS onboarding prompt for Hermes",
+        "date": "2026-09-05T20:55:37Z"
+      },
+      {
+        "sha": "72abfaa",
+        "message": "feat: automate Docker cookie mounting",
+        "date": "2026-09-05T17:55:58Z"
+      },
+      {
+        "sha": "93c6a7f",
+        "message": "fix: allow private interface bind for Hermes",
+        "date": "2026-09-05T17:35:21Z"
+      },
+      {
+        "sha": "6dfab2b",
+        "message": "feat: refresh dashboard and package Hermes deployment",
+        "date": "2026-09-05T17:15:35Z"
+      },
+      {
+        "sha": "934d002",
+        "message": "chore(deps): update pyinstaller requirement in the runtime group",
+        "date": "2026-09-04T11:20:25Z"
+      },
+      {
+        "sha": "9446c80",
+        "message": "chore(deps): bump actions/setup-python from 6 to 7",
+        "date": "2026-09-04T11:19:06Z"
+      },
+      {
+        "sha": "d3506e7",
+        "message": "chore(deps): bump actions/upload-artifact from 6 to 7",
+        "date": "2026-09-04T11:19:00Z"
+      },
+      {
+        "sha": "cb2cd2d",
+        "message": "chore(deps): bump actions/checkout from 6 to 7",
+        "date": "2026-09-04T11:18:55Z"
+      },
+      {
+        "sha": "b5771f4",
+        "message": "chore: publish audited PodcastSync snapshot",
+        "date": "2026-09-04T11:18:00Z"
+      }
+    ]
+  },
+  {
+    "name": "helium-dia",
+    "fullName": "shay2000/helium-dia",
+    "description": "A process to make helium feel and look more like Dia",
+    "url": "https://github.com/shay2000/helium-dia",
+    "homepage": "https://helium.computer",
+    "language": "C++",
+    "languages": [
+      {
+        "name": "C++",
+        "bytes": 3346272,
+        "percent": 93.05
+      },
+      {
+        "name": "Python",
+        "bytes": 244467,
+        "percent": 6.8
+      },
+      {
+        "name": "Shell",
+        "bytes": 3895,
+        "percent": 0.11
+      },
+      {
+        "name": "JavaScript",
+        "bytes": 1283,
+        "percent": 0.04
+      },
+      {
+        "name": "Nix",
+        "bytes": 175,
+        "percent": 0
+      }
+    ],
+    "stars": 0,
+    "forks": 0,
+    "watchers": 0,
+    "openIssues": 0,
+    "topics": [],
+    "license": "GPL-3.0",
+    "isFork": true,
+    "isArchived": false,
+    "createdAt": "2026-08-23T23:36:09Z",
+    "pushedAt": "2026-09-12T13:00:20Z",
+    "sizeKb": 29347,
+    "hasPages": false,
+    "hasWiki": false,
+    "defaultBranch": "main",
+    "featured": false,
+    "commits": [
+      {
+        "sha": "1f79874",
+        "message": "Add Buy Me a Coffee support links",
+        "date": "2026-09-12T13:00:11Z"
+      },
+      {
+        "sha": "857eec1",
+        "message": "Delete of agents file for my own Ai benefit. This is not gonna be PR'd back to the original repo so I do not care about AI being stopped",
+        "date": "2026-08-23T23:54:28Z"
+      },
+      {
+        "sha": "208a56b",
+        "message": "helium/ui: show tabs from non-account sync backends (#2373)",
+        "date": "2026-08-23T09:58:46Z"
+      },
+      {
+        "sha": "8eb7fa4",
+        "message": "helium/core/sync: clean up stale history when it expires (#2374)",
+        "date": "2026-08-23T09:58:39Z"
+      },
+      {
+        "sha": "e863b7e",
+        "message": "helium/core/sync: add NOTREACHED() to all enum mapper functions (#2372)",
+        "date": "2026-08-22T13:51:13Z"
+      },
+      {
+        "sha": "dece6b2",
+        "message": "helium/core/sync: name vault structural limits precisely (#2368)",
+        "date": "2026-08-22T11:51:11Z"
+      },
+      {
+        "sha": "4fb8387",
+        "message": "helium/core/sync: use chromium ownership helpers in vault encryption (#2369)",
+        "date": "2026-08-22T11:50:35Z"
+      },
+      {
+        "sha": "8fcd982",
+        "message": "helium/core/sync: connect private vaults to the sync engine (#2360)",
+        "date": "2026-08-21T12:55:03Z"
+      },
+      {
+        "sha": "e01cfb2",
+        "message": "helium/core/sync: support in-memory LoopbackServer (#2359)",
+        "date": "2026-08-21T09:33:36Z"
+      },
+      {
+        "sha": "c8984fe",
+        "message": "merge: update to chromium 151.0.7922.173 (#2358)",
+        "date": "2026-08-21T09:32:42Z"
+      },
+      {
+        "sha": "9271df7",
+        "message": "patches: refresh for chromium 151.0.7922.173",
+        "date": "2026-08-21T08:11:01Z"
+      },
+      {
+        "sha": "8bcc721",
+        "message": "merge: update ungoogled-chromium to 151.0.7922.173",
+        "date": "2026-08-21T07:46:17Z"
+      },
+      {
+        "sha": "2607905",
+        "message": "helium/onboarding: bump version, permit kOther (#2357)",
+        "date": "2026-08-21T07:33:05Z"
+      },
+      {
+        "sha": "4087f48",
+        "message": "Update to Chromium 151.0.7922.173",
+        "date": "2026-08-20T22:43:39Z"
+      },
+      {
+        "sha": "2cc325e",
+        "message": "revision: bump to 6 (#2345)",
+        "date": "2026-08-19T19:18:41Z"
+      },
+      {
+        "sha": "857b3f7",
+        "message": "merge: update to chromium 151.0.7922.169 (#2344)",
+        "date": "2026-08-19T19:00:02Z"
+      },
+      {
+        "sha": "b80e90c",
+        "message": "helium/core/sync/vault: initialize and commit private vault state (#2314)",
+        "date": "2026-08-19T18:50:48Z"
+      },
+      {
+        "sha": "d2fae0f",
+        "message": "patches: refresh for chromium 151.0.7922.169",
+        "date": "2026-08-19T18:48:04Z"
+      },
+      {
+        "sha": "4c778fc",
+        "message": "merge: update ungoogled-chromium to 151.0.7922.169",
+        "date": "2026-08-19T18:41:19Z"
+      },
+      {
+        "sha": "6f09e99",
+        "message": "Update to Chromium 151.0.7922.169",
+        "date": "2026-08-18T19:32:22Z"
+      },
+      {
+        "sha": "0ae15ad",
+        "message": "revision: bump to 5 (#2332)",
+        "date": "2026-08-15T16:38:52Z"
+      },
+      {
+        "sha": "3213f5e",
+        "message": "helium/core: add starlark config for rbe builds (#2329)",
+        "date": "2026-08-15T07:09:35Z"
+      },
+      {
+        "sha": "63e8e1e",
+        "message": "helium/ui: expose additional shortcut actions (#2324)",
+        "date": "2026-08-14T22:22:25Z"
+      },
+      {
+        "sha": "5f6becb",
+        "message": "deps: bump ublock to 1.73.0 (#2328)",
+        "date": "2026-08-14T21:25:25Z"
+      },
+      {
+        "sha": "e2b538a",
+        "message": "helium/ui: add more zoom presets (#2323)",
+        "date": "2026-08-14T21:09:17Z"
+      },
+      {
+        "sha": "50f49b4",
+        "message": "helium/ui: reduce split view drag and drop delay to 500ms (#2322)",
+        "date": "2026-08-14T19:20:13Z"
+      },
+      {
+        "sha": "b53163d",
+        "message": "ci: cache domsub/pruning list check (#2327)",
+        "date": "2026-08-14T19:17:38Z"
+      },
+      {
+        "sha": "4ce588f",
+        "message": "helium/core: add flag to ignore system proxy (#2321)",
+        "date": "2026-08-14T19:03:26Z"
+      },
+      {
+        "sha": "9e95fa4",
+        "message": "helium/core: add open-all confirmation flag (#2319)",
+        "date": "2026-08-14T18:51:37Z"
+      },
+      {
+        "sha": "57620ec",
+        "message": "patches: reformat and split up helium flags (#2326)",
+        "date": "2026-08-14T18:13:55Z"
+      },
+      {
+        "sha": "d1665c8",
+        "message": "devutils: use portable bash shebangs (#2318)",
+        "date": "2026-08-14T14:34:56Z"
+      },
+      {
+        "sha": "299be51",
+        "message": "i18n: refine Thai (th) translation (#2241)",
+        "date": "2026-08-14T11:32:32Z"
+      },
+      {
+        "sha": "c50b517",
+        "message": "revision: bump to 4 (#2307)",
+        "date": "2026-08-11T23:42:52Z"
+      },
+      {
+        "sha": "4db31f6",
+        "message": "merge: update to chromium 151.0.7922.137 (#2306)",
+        "date": "2026-08-11T23:29:54Z"
+      },
+      {
+        "sha": "0338d01",
+        "message": "patches: refresh for chromium 151.0.7922.137",
+        "date": "2026-08-11T23:10:47Z"
+      },
+      {
+        "sha": "d7fd203",
+        "message": "merge: update ungoogled-chromium to 151.0.7922.137",
+        "date": "2026-08-11T23:02:25Z"
+      },
+      {
+        "sha": "e241025",
+        "message": "Update to Chromium 151.0.7922.137",
+        "date": "2026-08-11T22:57:49Z"
+      },
+      {
+        "sha": "5ed12fc",
+        "message": "helium/ui/layout: rephrase address bar toggles (#2305)",
+        "date": "2026-08-11T22:37:46Z"
+      },
+      {
+        "sha": "3609047",
+        "message": "helium/core/sync/vault: read authenticated private vault state (#2295)",
+        "date": "2026-08-11T22:15:00Z"
+      },
+      {
+        "sha": "6e9ce91",
+        "message": "helium/network: re-enable doh by default, update dns providers (#2304)",
+        "date": "2026-08-11T22:13:17Z"
+      },
+      {
+        "sha": "2defeb1",
+        "message": "helium/core/network: add experimental TLS ClientHello splitting (#2298)",
+        "date": "2026-08-11T19:45:28Z"
+      },
+      {
+        "sha": "5fac103",
+        "message": "helium/core/sync/vault: set up private vault object encryption (#2294)",
+        "date": "2026-08-09T17:17:52Z"
+      },
+      {
+        "sha": "9094f64",
+        "message": "helium/core/sync/vault: define the private vault format (#2271)",
+        "date": "2026-08-09T17:02:10Z"
+      },
+      {
+        "sha": "22358cf",
+        "message": "helium/core/network: add a flag for forcing QUIC to v2 on HTTP/3 (#2289)",
+        "date": "2026-08-09T16:33:16Z"
+      },
+      {
+        "sha": "55b71c4",
+        "message": "helium/core/sync: init custom sync backend foundation (#2269)",
+        "date": "2026-08-09T15:39:24Z"
+      },
+      {
+        "sha": "6212115",
+        "message": "revision: bump to 3 (#2290)",
+        "date": "2026-08-07T22:13:31Z"
+      },
+      {
+        "sha": "39d1887",
+        "message": "helium/settings: remove new autofill pages (#2286)",
+        "date": "2026-08-07T21:08:47Z"
+      },
+      {
+        "sha": "b51e059",
+        "message": "helium/core: add global privacy control and network settings UI (#2284)",
+        "date": "2026-08-07T20:30:29Z"
+      },
+      {
+        "sha": "df7a042",
+        "message": "helium/settings: add GPC toggle, \"Security\" -> \"Network and security\"",
+        "date": "2026-08-07T19:26:27Z"
+      },
+      {
+        "sha": "a4c2225",
+        "message": "helium/core: backport global privacy control, add helium pref and wiring",
+        "date": "2026-08-07T18:17:11Z"
+      },
+      {
+        "sha": "ceaddaa",
+        "message": "helium/core/network: move the ech flag to network subdir and after noise",
+        "date": "2026-08-07T16:59:51Z"
+      },
+      {
+        "sha": "1b718a7",
+        "message": "helium/core: disable webui omnibox (#2283)",
+        "date": "2026-08-07T16:44:36Z"
+      },
+      {
+        "sha": "3299629",
+        "message": "merge: update to chromium 151.0.7922.108 (#2277)",
+        "date": "2026-08-07T10:26:26Z"
+      },
+      {
+        "sha": "90e5b02",
+        "message": "patches: refresh for chromium 151.0.7922.108",
+        "date": "2026-08-06T22:00:21Z"
+      },
+      {
+        "sha": "79928ca",
+        "message": "merge: update ungoogled-chromium to 151.0.7922.108",
+        "date": "2026-08-07T09:43:55Z"
+      },
+      {
+        "sha": "ecbcc4c",
+        "message": "Update to Chromium 151.0.7922.108",
+        "date": "2026-08-06T21:42:51Z"
+      },
+      {
+        "sha": "8b24606",
+        "message": "revision: bump to 2 (#2273)",
+        "date": "2026-08-05T19:13:46Z"
+      },
+      {
+        "sha": "a62a68a",
+        "message": "helium/ui: fix side panel visual bugs (#2274)",
+        "date": "2026-08-05T19:00:37Z"
+      },
+      {
+        "sha": "cdce7f8",
+        "message": "helium/ui/zen: fix side panel radius when VTS is floating",
+        "date": "2026-08-05T18:45:25Z"
+      },
+      {
+        "sha": "a634d0d",
+        "message": "helium/ui: fix side panel clipping with right-aligned tabs",
+        "date": "2026-08-05T18:05:05Z"
+      },
+      {
+        "sha": "45e1d81",
+        "message": "merge: update chromium to 151.0.7922.75 (#2270)",
+        "date": "2026-08-05T17:34:30Z"
+      },
+      {
+        "sha": "06c960b",
+        "message": "merge: update ungoogled-chromium to 151.0.7922.75",
+        "date": "2026-08-05T15:39:20Z"
+      },
+      {
+        "sha": "5de9dd1",
+        "message": "Update to Chromium 151.0.7922.75",
+        "date": "2026-08-04T20:42:08Z"
+      },
+      {
+        "sha": "bbe89c5",
+        "message": "Disable GCM: fail fast PushManager.subscribe() without a token (#3888)",
+        "date": "2026-08-04T18:02:11Z"
+      },
+      {
+        "sha": "74fc291",
+        "message": "Fix incidental build breakage from block-requests.patch (#3893)",
+        "date": "2026-08-04T13:04:29Z"
+      },
+      {
+        "sha": "bf9c78f",
+        "message": "devutils/namesub: remove ios and android from ignored dirs (#2256)",
+        "date": "2026-08-03T13:41:34Z"
+      },
+      {
+        "sha": "0c30a42",
+        "message": "helium/ui/flags-webui: add default states, fix mobile scale (#2255)",
+        "date": "2026-08-03T13:34:52Z"
+      },
+      {
+        "sha": "63d6642",
+        "message": "revision: bump to 1 (#2237)",
+        "date": "2026-07-30T20:40:15Z"
+      },
+      {
+        "sha": "635d1c9",
+        "message": "i18n: validate placeholders during linting, fix broken message (#2235)",
+        "date": "2026-07-30T20:18:11Z"
+      },
+      {
+        "sha": "61ee273",
+        "message": "deps: update onboarding, update/clear stale i18n strings (#2231)",
+        "date": "2026-07-30T20:06:57Z"
+      },
+      {
+        "sha": "2796bdb",
+        "message": "helium/ui/side-panel: reduce minimum width (#2233)",
+        "date": "2026-07-30T19:30:25Z"
+      },
+      {
+        "sha": "545b869",
+        "message": "merge: update to chromium 151.0.7922.71 (#2230)",
+        "date": "2026-07-30T19:16:55Z"
+      },
+      {
+        "sha": "0709ab1",
+        "message": "helium/ui/vertical: fix tab mute button hit testing (#2232)",
+        "date": "2026-07-30T18:14:53Z"
+      },
+      {
+        "sha": "a0017b7",
+        "message": "i18n: translate new strings (#2161)",
+        "date": "2026-07-30T15:02:36Z"
+      },
+      {
+        "sha": "270fe30",
+        "message": "merge: update ungoogled-chromium to 151.0.7922.71",
+        "date": "2026-07-30T14:49:26Z"
+      },
+      {
+        "sha": "f999624",
+        "message": "helium/core/exclude-flags: update for chromium 151 (#2229)",
+        "date": "2026-07-30T14:46:37Z"
+      },
+      {
+        "sha": "a3c8212",
+        "message": "patches: cleanup and fixes after 151 refresh (#2227)",
+        "date": "2026-07-30T13:46:09Z"
+      },
+      {
+        "sha": "f2038df",
+        "message": "Update to Chromium 151.0.7922.71",
+        "date": "2026-07-22T19:37:46Z"
+      },
+      {
+        "sha": "9bedc9b",
+        "message": "merge: update to chromium 151.0.7922.47 (#2215)",
+        "date": "2026-07-29T08:15:55Z"
+      },
+      {
+        "sha": "632d3a5",
+        "message": "revision: reset to 0",
+        "date": "2026-07-29T08:01:13Z"
+      },
+      {
+        "sha": "1d6407a",
+        "message": "patches: refresh and update for chromium 151.0.7922.47",
+        "date": "2026-07-27T20:39:16Z"
+      },
+      {
+        "sha": "08cb1ba",
+        "message": "domain_substitution: regenerate for 151",
+        "date": "2026-07-27T09:52:31Z"
+      },
+      {
+        "sha": "4097abc",
+        "message": "merge: update to ungoogled-chromium 151.0.7922.47",
+        "date": "2026-07-27T09:44:32Z"
+      },
+      {
+        "sha": "d82cfa2",
+        "message": "i18n/README: we don't take submissions for new translations (#2199)",
+        "date": "2026-07-25T14:40:27Z"
+      },
+      {
+        "sha": "b580fd7",
+        "message": ".github: add crash id field to bug report template (#2200)",
+        "date": "2026-07-25T14:40:15Z"
+      },
+      {
+        "sha": "6fda5bc",
+        "message": "Update to Chromium 151.0.7922.47",
+        "date": "2026-07-22T19:37:46Z"
+      },
+      {
+        "sha": "68d6cf7",
+        "message": "revision: bump to 9 (#2196)",
+        "date": "2026-07-24T22:33:45Z"
+      },
+      {
+        "sha": "756a225",
+        "message": "deps: update search_engines_data and onboarding (#2193)",
+        "date": "2026-07-24T22:25:28Z"
+      },
+      {
+        "sha": "1bfcb15",
+        "message": "i18n/source: update for new onboarding version",
+        "date": "2026-07-24T22:11:57Z"
+      },
+      {
+        "sha": "20a8a32",
+        "message": "deps: update search_engines_data and onboarding",
+        "date": "2026-07-24T22:09:48Z"
+      },
+      {
+        "sha": "119f865",
+        "message": "helium/core/search: add startpage and brave search (#2192)",
+        "date": "2026-07-24T22:05:56Z"
+      },
+      {
+        "sha": "335b9af",
+        "message": "merge: update to chromium 150.0.7871.186 (#2191)",
+        "date": "2026-07-24T12:49:45Z"
+      },
+      {
+        "sha": "1d1425f",
+        "message": "revert: utils/depot_tools.patch: refresh (#2183)",
+        "date": "2026-07-24T12:02:11Z"
+      },
+      {
+        "sha": "5069062",
+        "message": "merge: update ungoogled-chromium to 150.0.7871.186",
+        "date": "2026-07-24T12:01:38Z"
+      },
+      {
+        "sha": "fd0378e",
+        "message": "Update to Chromium 150.0.7871.186",
+        "date": "2026-07-23T21:39:29Z"
+      },
+      {
+        "sha": "dee5600",
+        "message": "helium/core/search: update google image search url (#2186)",
+        "date": "2026-07-23T14:02:32Z"
+      },
+      {
+        "sha": "2c97e8c",
+        "message": "utils/depot_tools.patch: refresh (#2183)",
+        "date": "2026-07-22T20:07:26Z"
+      },
+      {
+        "sha": "81bb021",
+        "message": "revision: bump to 8 (#2181)",
+        "date": "2026-07-22T19:04:46Z"
+      },
+      {
+        "sha": "a9ee371",
+        "message": "helium/noise: add settings for fingerprinting protection (#2177)",
+        "date": "2026-07-22T18:53:01Z"
+      },
+      {
+        "sha": "2da7804",
+        "message": "merge: update to chromium 150.0.7871.181 (#2179)",
+        "date": "2026-07-22T14:18:29Z"
+      }
+    ]
+  },
+  {
+    "name": "zotero-ai-plugin",
+    "fullName": "shay2000/zotero-ai-plugin",
+    "description": "Explicit, privacy-aware AI summaries and cross-checks for Zotero 9+.",
+    "url": "https://github.com/shay2000/zotero-ai-plugin",
+    "homepage": null,
+    "language": "JavaScript",
+    "languages": [
+      {
+        "name": "JavaScript",
+        "bytes": 359042,
+        "percent": 93.11
+      },
+      {
+        "name": "Fluent",
+        "bytes": 9705,
+        "percent": 2.52
+      },
+      {
+        "name": "Python",
+        "bytes": 9285,
+        "percent": 2.41
+      },
+      {
+        "name": "HTML",
+        "bytes": 4702,
+        "percent": 1.22
+      },
+      {
+        "name": "CSS",
+        "bytes": 2879,
+        "percent": 0.75
+      }
+    ],
+    "stars": 0,
+    "forks": 0,
+    "watchers": 0,
+    "openIssues": 0,
+    "topics": [],
+    "license": null,
+    "isFork": false,
+    "isArchived": false,
+    "createdAt": "2026-08-12T08:22:30Z",
+    "pushedAt": "2026-09-12T12:59:38Z",
+    "sizeKb": 119,
+    "hasPages": false,
+    "hasWiki": false,
+    "defaultBranch": "main",
+    "featured": true,
+    "commits": [
+      {
+        "sha": "aef096a",
+        "message": "Add Buy Me a Coffee support links",
+        "date": "2026-09-12T12:59:27Z"
+      },
+      {
+        "sha": "d665ba3",
+        "message": "Backup: checkpoint outstanding work and notes",
+        "date": "2026-09-04T00:55:45Z"
+      },
+      {
+        "sha": "8d8f577",
+        "message": "Initial standalone Zotero AI plugin",
+        "date": "2026-08-12T08:24:23Z"
+      }
+    ]
+  },
+  {
+    "name": "Mac-TreeSpace",
+    "fullName": "shay2000/Mac-TreeSpace",
+    "description": null,
+    "url": "https://github.com/shay2000/Mac-TreeSpace",
+    "homepage": null,
+    "language": "Swift",
+    "languages": [
+      {
+        "name": "Swift",
+        "bytes": 109326,
+        "percent": 97.95
+      },
+      {
+        "name": "Shell",
+        "bytes": 2285,
+        "percent": 2.05
+      }
+    ],
+    "stars": 0,
+    "forks": 0,
+    "watchers": 0,
+    "openIssues": 0,
+    "topics": [],
+    "license": null,
+    "isFork": false,
+    "isArchived": false,
+    "createdAt": "2026-04-24T21:25:40Z",
+    "pushedAt": "2026-09-12T12:58:55Z",
+    "sizeKb": 191,
+    "hasPages": false,
+    "hasWiki": true,
+    "defaultBranch": "main",
+    "featured": true,
+    "commits": [
+      {
+        "sha": "49bcaa8",
+        "message": "Add Buy Me a Coffee support links",
+        "date": "2026-09-12T12:58:50Z"
+      },
+      {
+        "sha": "e63f56d",
+        "message": "Add handoff notes and ignore tooling dirs",
+        "date": "2026-09-04T00:57:26Z"
+      },
+      {
+        "sha": "955b221",
+        "message": "Fix coverage bar overflowing its container",
+        "date": "2026-04-28T11:29:09Z"
+      },
+      {
+        "sha": "228982b",
+        "message": "Merge pull request #2 from shay2000/claude/category-drilldown-auth",
+        "date": "2026-04-28T11:25:18Z"
+      },
+      {
+        "sha": "b43b51d",
+        "message": "Add category drill-down, Touch ID gate, and Security settings section",
+        "date": "2026-04-28T11:21:39Z"
+      },
+      {
+        "sha": "9302791",
+        "message": "Merge pull request #1 from shay2000/claude/recursing-williams-163808",
+        "date": "2026-04-28T11:10:11Z"
+      },
+      {
+        "sha": "0a5aa2d",
+        "message": "Add menu bar mode, background periodic scanning, and disk name fixes",
+        "date": "2026-04-28T11:07:38Z"
+      },
+      {
+        "sha": "012bf62",
+        "message": "Initial TreeSpace macOS app scaffold with core scanning features.",
+        "date": "2026-04-27T15:07:32Z"
+      }
+    ]
+  },
+  {
+    "name": "brightintosh---Removing-IAP-Merging-with-Monitor-Control",
+    "fullName": "shay2000/brightintosh---Removing-IAP-Merging-with-Monitor-Control",
+    "description": "Unlock the full brightness of the XDR display of your MacBook Pro",
+    "url": "https://github.com/shay2000/brightintosh---Removing-IAP-Merging-with-Monitor-Control",
+    "homepage": "https://brightintosh.de",
+    "language": "Swift",
+    "languages": [
+      {
+        "name": "Swift",
+        "bytes": 128407,
+        "percent": 99.58
+      },
+      {
+        "name": "Shell",
+        "bytes": 545,
+        "percent": 0.42
+      }
+    ],
+    "stars": 0,
+    "forks": 0,
+    "watchers": 0,
+    "openIssues": 1,
+    "topics": [],
+    "license": "GPL-3.0",
+    "isFork": true,
+    "isArchived": false,
+    "createdAt": "2026-04-13T00:49:35Z",
+    "pushedAt": "2026-09-12T12:58:44Z",
+    "sizeKb": 4138,
+    "hasPages": false,
+    "hasWiki": true,
+    "defaultBranch": "main",
+    "featured": false,
+    "commits": [
+      {
+        "sha": "9b088d9",
+        "message": "Add Buy Me a Coffee support links",
+        "date": "2026-09-12T12:58:39Z"
+      },
+      {
+        "sha": "c593383",
+        "message": "Merge pull request #1 from shay2000/claude/add-claude-documentation-yaBfr",
+        "date": "2026-04-13T00:55:30Z"
+      },
+      {
+        "sha": "ee7506b",
+        "message": "Add CLAUDE.md with comprehensive codebase documentation",
+        "date": "2026-04-13T00:54:27Z"
+      },
+      {
+        "sha": "1bf210b",
+        "message": "fix brightness cli overwriting brightness (#273)",
+        "date": "2026-03-31T18:02:58Z"
+      },
+      {
+        "sha": "b0f7fd7",
+        "message": "269 support for studio display xdr (#270)",
+        "date": "2026-03-23T15:57:56Z"
+      },
+      {
+        "sha": "76cb1ce",
+        "message": "Update App Store link in README",
+        "date": "2026-03-09T10:27:55Z"
+      },
+      {
+        "sha": "b1a9a9d",
+        "message": "adds new m5 macs and bump version (#268)",
+        "date": "2026-03-08T19:17:51Z"
+      },
+      {
+        "sha": "3436af7",
+        "message": "bump version",
+        "date": "2026-02-28T14:23:33Z"
+      },
+      {
+        "sha": "d1224ee",
+        "message": "Merge pull request #266 from niklasr22/263-update-icon",
+        "date": "2026-02-28T13:59:43Z"
+      },
+      {
+        "sha": "630a504",
+        "message": "update colors",
+        "date": "2026-02-28T13:58:49Z"
+      },
+      {
+        "sha": "e45f8a7",
+        "message": "Update icon in Readme",
+        "date": "2026-02-28T13:54:30Z"
+      },
+      {
+        "sha": "3d55fc1",
+        "message": "Merge pull request #265 from niklasr22/218-improve-report-generation",
+        "date": "2026-02-28T13:52:14Z"
+      },
+      {
+        "sha": "c3e7037",
+        "message": "add timeouts to report generation",
+        "date": "2026-02-28T13:51:36Z"
+      },
+      {
+        "sha": "0367ceb",
+        "message": "Merge pull request #264 from niklasr22/263-update-icon",
+        "date": "2026-02-28T13:43:13Z"
+      },
+      {
+        "sha": "0f1ada7",
+        "message": "update icons",
+        "date": "2026-02-28T13:39:03Z"
+      },
+      {
+        "sha": "6a2e147",
+        "message": "Merge pull request #262 from niklasr22/256-extend-cli-install-cmds",
+        "date": "2026-02-28T13:31:25Z"
+      },
+      {
+        "sha": "3787502",
+        "message": "update cli install command",
+        "date": "2026-02-28T13:30:51Z"
+      },
+      {
+        "sha": "9ad8677",
+        "message": "add trigger",
+        "date": "2026-02-19T20:57:07Z"
+      },
+      {
+        "sha": "da1749c",
+        "message": "bump version",
+        "date": "2026-02-19T20:02:07Z"
+      },
+      {
+        "sha": "1d25f64",
+        "message": "Merge pull request #259 from niklasr22/258-violent-screen-flickerstobing",
+        "date": "2026-02-19T19:54:42Z"
+      },
+      {
+        "sha": "335eba2",
+        "message": "fix flickering when changing brightness",
+        "date": "2026-02-19T19:54:19Z"
+      },
+      {
+        "sha": "4e4f011",
+        "message": "remove website deployment",
+        "date": "2026-02-17T16:18:39Z"
+      },
+      {
+        "sha": "ee42904",
+        "message": "bump version",
+        "date": "2026-02-15T17:11:05Z"
+      },
+      {
+        "sha": "e1148dd",
+        "message": "Merge pull request #255 from niklasr22/prettier-settings",
+        "date": "2026-02-15T17:09:11Z"
+      },
+      {
+        "sha": "8f800a7",
+        "message": "improve settings view",
+        "date": "2026-02-15T17:06:16Z"
+      },
+      {
+        "sha": "f3c5a27",
+        "message": "bump version",
+        "date": "2026-02-15T14:17:59Z"
+      },
+      {
+        "sha": "332c12e",
+        "message": "clean up",
+        "date": "2026-02-15T14:01:55Z"
+      },
+      {
+        "sha": "4ce49ad",
+        "message": "Merge pull request #254 from niklasr22/154-add-settings-to-dock-icon",
+        "date": "2026-02-15T13:50:48Z"
+      },
+      {
+        "sha": "c72d207",
+        "message": "adds new show-in-dock setting",
+        "date": "2026-02-15T13:44:00Z"
+      },
+      {
+        "sha": "f737910",
+        "message": "clean up",
+        "date": "2026-02-15T13:41:18Z"
+      },
+      {
+        "sha": "f5d7485",
+        "message": "Merge pull request #253 from niklasr22/control_center",
+        "date": "2026-02-14T15:57:51Z"
+      },
+      {
+        "sha": "10d51fc",
+        "message": "adds translations",
+        "date": "2026-02-14T14:45:28Z"
+      },
+      {
+        "sha": "cd5397b",
+        "message": "clean up cli integration",
+        "date": "2026-02-14T14:32:02Z"
+      },
+      {
+        "sha": "514b035",
+        "message": "fix control icon appearance",
+        "date": "2026-02-14T13:03:46Z"
+      },
+      {
+        "sha": "c4fbff2",
+        "message": "improve control center toggle",
+        "date": "2026-02-13T10:50:18Z"
+      },
+      {
+        "sha": "6579897",
+        "message": "adds a control center brightintosh toggle",
+        "date": "2025-10-18T11:05:05Z"
+      },
+      {
+        "sha": "605f41d",
+        "message": "Merge pull request #252 from niklasr22/rm-glass-effect",
+        "date": "2026-02-12T11:21:49Z"
+      },
+      {
+        "sha": "6df5e3c",
+        "message": "removes liquid glass",
+        "date": "2026-02-12T11:19:56Z"
+      },
+      {
+        "sha": "8d8d8d0",
+        "message": "Merge pull request #249 from gy6543721/enhancement/tc-translation-modification",
+        "date": "2026-01-12T10:00:19Z"
+      },
+      {
+        "sha": "cb2a37a",
+        "message": "bump build no",
+        "date": "2026-01-10T22:25:48Z"
+      },
+      {
+        "sha": "49a9074",
+        "message": "[Enhancement] TC translation update",
+        "date": "2026-01-10T15:35:10Z"
+      },
+      {
+        "sha": "8ca1dd4",
+        "message": "bump build no",
+        "date": "2026-01-09T14:14:19Z"
+      },
+      {
+        "sha": "b5655df",
+        "message": "bump version",
+        "date": "2026-01-09T14:05:46Z"
+      },
+      {
+        "sha": "88c589d",
+        "message": "adds zh-Hant store info",
+        "date": "2026-01-09T14:05:39Z"
+      },
+      {
+        "sha": "ba39300",
+        "message": "Merge pull request #247 from gy6543721/feature/add-traditional-chinese",
+        "date": "2026-01-04T13:20:05Z"
+      },
+      {
+        "sha": "0e3ce39",
+        "message": "#246 [Feature] Add Traditional Chinese language support",
+        "date": "2025-12-29T12:56:09Z"
+      },
+      {
+        "sha": "bab24b3",
+        "message": "bump version",
+        "date": "2025-12-24T10:44:02Z"
+      },
+      {
+        "sha": "e2ea9f5",
+        "message": "Merge pull request #245 from niklasr22/244-improve-disable-when-running-on-battery-enable-when-connected-to-power",
+        "date": "2025-12-23T12:41:28Z"
+      },
+      {
+        "sha": "51778ee",
+        "message": "change power automation to restore previous state",
+        "date": "2025-12-18T09:35:54Z"
+      },
+      {
+        "sha": "9a10b2b",
+        "message": "Add configuration for GitHub",
+        "date": "2025-12-04T21:34:16Z"
+      },
+      {
+        "sha": "55dc67d",
+        "message": "Merge pull request #242 from niklasr22/add-m5",
+        "date": "2025-10-20T13:19:01Z"
+      },
+      {
+        "sha": "1d59f8d",
+        "message": "update store descriptions",
+        "date": "2025-10-20T13:17:49Z"
+      },
+      {
+        "sha": "06641bd",
+        "message": "Merge pull request #241 from niklasr22/add-m5",
+        "date": "2025-10-20T12:49:21Z"
+      },
+      {
+        "sha": "0ef01c9",
+        "message": "bump version",
+        "date": "2025-10-20T12:48:51Z"
+      },
+      {
+        "sha": "2f4c87b",
+        "message": "Merge pull request #240 from niklasr22/add-m5",
+        "date": "2025-10-20T12:42:40Z"
+      },
+      {
+        "sha": "e1fdcd5",
+        "message": "bump version",
+        "date": "2025-10-20T12:41:11Z"
+      },
+      {
+        "sha": "5dbab7b",
+        "message": "adds new m5 macbook pro",
+        "date": "2025-10-20T12:41:01Z"
+      },
+      {
+        "sha": "7f71e06",
+        "message": "bump version",
+        "date": "2025-09-17T21:23:45Z"
+      },
+      {
+        "sha": "2b8dc4d",
+        "message": "fix status bar menu layout",
+        "date": "2025-09-17T21:23:37Z"
+      },
+      {
+        "sha": "05be047",
+        "message": "Merge pull request #233 from okrt/main",
+        "date": "2025-09-14T17:27:12Z"
+      },
+      {
+        "sha": "b690122",
+        "message": "add missing translation",
+        "date": "2025-09-14T17:24:53Z"
+      },
+      {
+        "sha": "bd15799",
+        "message": "adds power adapter automation translations",
+        "date": "2025-09-14T17:05:12Z"
+      },
+      {
+        "sha": "24a74e0",
+        "message": "moved some duplicate code",
+        "date": "2025-09-14T17:05:03Z"
+      },
+      {
+        "sha": "42171a5",
+        "message": "rename some vars and change power adapter check frequency",
+        "date": "2025-09-14T17:04:26Z"
+      },
+      {
+        "sha": "4aecac3",
+        "message": "Add power adapter automation for brightness control",
+        "date": "2025-08-08T17:08:06Z"
+      },
+      {
+        "sha": "9f9f6b7",
+        "message": "Merge pull request #238 from niklasr22/tahoe",
+        "date": "2025-09-14T15:08:48Z"
+      },
+      {
+        "sha": "68ad4f5",
+        "message": "improve menu slider sizing",
+        "date": "2025-09-14T14:33:11Z"
+      },
+      {
+        "sha": "949c5d5",
+        "message": "liquid glass design for error msgs and cards in welcome window",
+        "date": "2025-06-16T11:17:44Z"
+      },
+      {
+        "sha": "9e0e30c",
+        "message": "remove comment",
+        "date": "2025-06-16T09:53:43Z"
+      },
+      {
+        "sha": "0e4e4f8",
+        "message": "Add Logo to menu",
+        "date": "2025-06-16T09:49:35Z"
+      },
+      {
+        "sha": "5894bc5",
+        "message": "Revert \"tahoe tests\"",
+        "date": "2025-06-16T09:33:40Z"
+      },
+      {
+        "sha": "e43cfeb",
+        "message": "new liquid glass icon",
+        "date": "2025-06-16T09:20:01Z"
+      },
+      {
+        "sha": "ffba2d0",
+        "message": "Fix brightness value position",
+        "date": "2025-06-16T07:59:35Z"
+      },
+      {
+        "sha": "52673c9",
+        "message": "macOS default slider only for macos 26",
+        "date": "2025-06-16T07:51:46Z"
+      },
+      {
+        "sha": "b202301",
+        "message": "Adds icons to important menu items",
+        "date": "2025-06-16T07:42:21Z"
+      },
+      {
+        "sha": "d9be92d",
+        "message": "tahoe tests",
+        "date": "2025-06-11T12:13:40Z"
+      },
+      {
+        "sha": "35de91d",
+        "message": "Merge pull request #236 from niklasr22/235-fix-confusing-ui-in-welcome-window",
+        "date": "2025-08-16T12:48:45Z"
+      },
+      {
+        "sha": "8421d0b",
+        "message": "bump version",
+        "date": "2025-08-16T12:34:18Z"
+      },
+      {
+        "sha": "7f58930",
+        "message": "improve restoring",
+        "date": "2025-08-16T12:34:11Z"
+      },
+      {
+        "sha": "aa9c153",
+        "message": "improve welcome ui for the case when a user is already entitled",
+        "date": "2025-08-14T15:07:57Z"
+      },
+      {
+        "sha": "1c71d35",
+        "message": "bump project version to 76 and marketing version to 4.5.0",
+        "date": "2025-07-05T15:46:53Z"
+      },
+      {
+        "sha": "87468e1",
+        "message": "Merge pull request #231 from niklasr22/entitlement-cleanup",
+        "date": "2025-07-05T13:34:40Z"
+      },
+      {
+        "sha": "a7a79fc",
+        "message": "using published status fields from entitlment and trial handler",
+        "date": "2025-07-05T13:30:51Z"
+      },
+      {
+        "sha": "5a060f4",
+        "message": "fix typo",
+        "date": "2025-07-05T13:18:47Z"
+      },
+      {
+        "sha": "17465f2",
+        "message": "update localizations",
+        "date": "2025-07-05T13:02:42Z"
+      },
+      {
+        "sha": "48c1090",
+        "message": "update localizations",
+        "date": "2025-07-05T10:59:36Z"
+      },
+      {
+        "sha": "c54af62",
+        "message": "untangle entitlement checking",
+        "date": "2025-07-05T10:36:33Z"
+      },
+      {
+        "sha": "9b34454",
+        "message": "Merge pull request #230 from zly2006/zh-hans",
+        "date": "2025-07-05T11:25:25Z"
+      },
+      {
+        "sha": "8ab74c5",
+        "message": "fix",
+        "date": "2025-07-05T01:39:32Z"
+      },
+      {
+        "sha": "c5fffc8",
+        "message": "fix",
+        "date": "2025-07-05T01:35:31Z"
+      },
+      {
+        "sha": "ba1562f",
+        "message": "Support zh-Hans",
+        "date": "2025-07-05T01:33:29Z"
+      },
+      {
+        "sha": "2bb6ca3",
+        "message": "adds todos",
+        "date": "2025-06-12T11:37:13Z"
+      },
+      {
+        "sha": "9ef62ea",
+        "message": "cache restricate state for offline usage",
+        "date": "2025-06-12T11:35:02Z"
+      },
+      {
+        "sha": "701fe6d",
+        "message": "fixed brightness manager behaviour to only enable brightness when user is unrestricted",
+        "date": "2025-06-12T11:33:38Z"
+      },
+      {
+        "sha": "ae990eb",
+        "message": "separated fetching and transaction erros for brightintosh store",
+        "date": "2025-06-12T11:32:41Z"
+      },
+      {
+        "sha": "9689337",
+        "message": "moved project metadata info",
+        "date": "2025-06-04T14:33:24Z"
+      },
+      {
+        "sha": "452ef60",
+        "message": "moved project metadata info",
+        "date": "2025-06-04T14:27:51Z"
+      },
+      {
+        "sha": "d25371e",
+        "message": "add app store texts",
+        "date": "2025-06-04T14:25:41Z"
+      },
+      {
+        "sha": "1cf75f3",
+        "message": "moved project metadata info",
+        "date": "2025-06-04T14:25:29Z"
+      },
+      {
+        "sha": "c04bd58",
+        "message": "bump version",
+        "date": "2025-06-04T14:23:46Z"
+      }
+    ]
+  },
+  {
+    "name": "flipoff-Aeroplanes",
+    "fullName": "shay2000/flipoff-Aeroplanes",
+    "description": "Free split-flap display emulator for any TV. The classic flip-board look, without the $3,500 hardware.",
+    "url": "https://github.com/shay2000/flipoff-Aeroplanes",
+    "homepage": null,
+    "language": "JavaScript",
+    "languages": [
+      {
+        "name": "JavaScript",
+        "bytes": 16526,
+        "percent": 59.93
+      },
+      {
+        "name": "CSS",
+        "bytes": 9291,
+        "percent": 33.69
+      },
+      {
+        "name": "HTML",
+        "bytes": 1760,
+        "percent": 6.38
+      }
+    ],
+    "stars": 0,
+    "forks": 0,
+    "watchers": 0,
+    "openIssues": 0,
+    "topics": [],
+    "license": null,
+    "isFork": true,
+    "isArchived": false,
+    "createdAt": "2026-03-28T13:25:07Z",
+    "pushedAt": "2026-09-12T12:57:41Z",
+    "sizeKb": 672,
+    "hasPages": false,
+    "hasWiki": true,
+    "defaultBranch": "main",
+    "featured": true,
+    "commits": [
+      {
+        "sha": "4a08c49",
+        "message": "Add Buy Me a Coffee support links",
+        "date": "2026-09-12T12:57:37Z"
+      },
+      {
+        "sha": "ebd8f26",
+        "message": "Initial release: FlipOff split-flap display web app",
+        "date": "2026-03-26T12:46:21Z"
+      }
+    ]
+  }
+]

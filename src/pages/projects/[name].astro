@@ -1,0 +1,562 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import LangBar from '../../components/LangBar.astro';
+import { getCollection, render } from 'astro:content';
+import { repos, getRepo } from '../../lib/data';
+import { langColor, formatDate, relativeTime, formatBytes } from '../../lib/site';
+
+export async function getStaticPaths() {
+  return repos.map((repo) => ({ params: { name: repo.name } }));
+}
+
+const { name } = Astro.params;
+const repo = getRepo(name!)!;
+
+// Editorial notes + README are looked up from content collections.
+const [allNotes, allReadmes] = await Promise.all([
+  getCollection('projects'),
+  getCollection('readmes'),
+]);
+
+const noteEntry = allNotes.find((n) => n.data.repo === repo.name);
+// Match on the frontmatter `repo` field, not `id`: the glob loader slugifies
+// ids to lowercase, which would miss names like `Mac-TreeSpace`.
+const readmeEntry = allReadmes.find((r) => r.data.repo === repo.name);
+
+// Astro treats a capitalised variable as a component and a lowercase one as a
+// literal HTML tag, so these must stay capitalised.
+const Note = noteEntry ? (await render(noteEntry)).Content : null;
+const Readme = readmeEntry ? (await render(readmeEntry)).Content : null;
+
+// Siblings that share the primary language.
+const related = repos
+  .filter((r) => r.name !== repo.name && r.language && r.language === repo.language)
+  .slice(0, 3);
+
+const cloneUrl = `git clone ${repo.url}.git`;
+const created = formatDate(repo.createdAt);
+const pushed = relativeTime(repo.pushedAt);
+
+const status = repo.isArchived
+  ? 'Archived'
+  : Date.now() - new Date(repo.pushedAt).getTime() < 30 * 86_400_000
+    ? 'Actively developed'
+    : 'Quiet';
+---
+
+<BaseLayout
+  title={repo.name}
+  description={repo.description || `Source and notes for ${repo.name}.`}
+  type="article"
+  tags={[repo.language, ...repo.topics].filter(Boolean) as string[]}
+>
+  <article class="shell detail">
+    <!-- ---------- Header ---------- -->
+    <header class="detail__head">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="/projects" class="crumbs__link">Builds</a>
+        <span class="crumbs__sep" aria-hidden="true">/</span>
+        <span class="crumbs__here">{repo.name}</span>
+      </nav>
+
+      <h1 class="detail__title">{repo.name}</h1>
+
+      {repo.description && <p class="detail__lede">{repo.description}</p>}
+
+      <div class="detail__badges">
+        <span class="badge">
+          <span class="badge__dot" style={`background:${langColor(repo.language)}`}></span>
+          {repo.language ?? 'Mixed'}
+        </span>
+        <span class="badge">{status}</span>
+        {repo.license && <span class="badge">{repo.license}</span>}
+        {repo.isFork && <span class="badge badge--dim">fork</span>}
+        <span class="badge badge--dim">pushed {pushed}</span>
+      </div>
+
+      <div class="detail__actions">
+        <a class="btn btn--accent" href={repo.url} target="_blank" rel="noopener noreferrer">
+          View on GitHub <span aria-hidden="true">↗</span>
+        </a>
+        {repo.homepage && (
+          <a class="btn btn--ghost" href={repo.homepage} target="_blank" rel="noopener noreferrer">
+            Live site <span aria-hidden="true">↗</span>
+          </a>
+        )}
+        <button class="btn btn--ghost" id="copy-clone" type="button" data-clone={cloneUrl}>
+          <span class="copy-label">Copy clone</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="detail__grid">
+      <!-- ---------- Main ---------- -->
+      <div class="detail__main">
+        {Note && (
+          <section class="block">
+            <div class="block__head">
+              <span class="label label--accent">Field notes</span>
+              <h2 class="block__title">Why this exists</h2>
+            </div>
+            <div class="prose">
+              <Note />
+            </div>
+          </section>
+        )}
+
+        {Readme && (
+          <section class="block">
+            <div class="block__head">
+              <span class="label label--accent">From the repository</span>
+              <h2 class="block__title">README</h2>
+              {readmeEntry?.data.source && (
+                <a
+                  class="block__src mono"
+                  href={readmeEntry.data.source}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  source ↗
+                </a>
+              )}
+            </div>
+            <div class="prose prose--readme">
+              <Readme />
+            </div>
+          </section>
+        )}
+
+        {!Note && !Readme && (
+          <section class="block">
+            <p class="prose">
+              This repository doesn't have a README yet. The source is on
+              <a href={repo.url} target="_blank" rel="noopener noreferrer">GitHub</a>.
+            </p>
+          </section>
+        )}
+      </div>
+
+      <!-- ---------- Sidebar ---------- -->
+      <aside class="detail__aside" aria-label="Repository details">
+        <div class="side-card">
+          <p class="label">Languages</p>
+          <LangBar languages={repo.languages} height={8} max={6} />
+          <ul class="langs" role="list">
+            {repo.languages.slice(0, 6).map((l) => (
+              <li class="langs__row">
+                <span class="langs__name">
+                  <span class="langs__dot" style={`background:${langColor(l.name)}`}></span>
+                  {l.name}
+                </span>
+                <span class="langs__pct mono tnum">{l.percent.toFixed(1)}%</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="side-card">
+          <p class="label">At a glance</p>
+          <dl class="facts">
+            <div class="facts__row">
+              <dt>Stars</dt>
+              <dd class="tnum">{repo.stars}</dd>
+            </div>
+            <div class="facts__row">
+              <dt>Forks</dt>
+              <dd class="tnum">{repo.forks}</dd>
+            </div>
+            <div class="facts__row">
+              <dt>Open issues</dt>
+              <dd class="tnum">{repo.openIssues}</dd>
+            </div>
+            <div class="facts__row">
+              <dt>Repo size</dt>
+              <dd class="tnum">{formatBytes(repo.sizeKb * 1024)}</dd>
+            </div>
+            <div class="facts__row">
+              <dt>Created</dt>
+              <dd>{created}</dd>
+            </div>
+            <div class="facts__row">
+              <dt>Default branch</dt>
+              <dd class="mono">{repo.defaultBranch}</dd>
+            </div>
+          </dl>
+        </div>
+
+        {repo.topics.length > 0 && (
+          <div class="side-card">
+            <p class="label">Topics</p>
+            <div class="tags">
+              {repo.topics.map((t) => (
+                <span class="pill">{t}</span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {repo.commits.length > 0 && (
+          <div class="side-card">
+            <p class="label">Recent commits</p>
+            <ul class="commits" role="list">
+              {repo.commits.slice(0, 8).map((c) => (
+                <li class="commits__item">
+                  <span class="commits__msg">{c.message}</span>
+                  <span class="commits__meta mono">
+                    {c.sha} · {c.date ? relativeTime(c.date) : '—'}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        <div class="side-card side-card--quiet">
+          <p class="label">Clone</p>
+          <code class="clone mono">{cloneUrl}</code>
+        </div>
+      </aside>
+    </div>
+
+    {related.length > 0 && (
+      <section class="related">
+        <div class="sec-head">
+          <span class="sec-head__num">↳</span>
+          <h2 class="sec-head__title">More in {repo.language}</h2>
+          <a class="sec-head__link" href="/projects">All builds <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="related__grid">
+          {related.map((r) => (
+            <ProjectCard repo={r} />
+          ))}
+        </div>
+      </section>
+    )}
+  </article>
+</BaseLayout>
+
+<style>
+  .detail {
+    padding-top: var(--sp-6);
+  }
+
+  /* ---- head ---- */
+  .detail__head {
+    max-width: 76ch;
+    padding-bottom: var(--sp-6);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .crumbs {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    color: var(--ink-mute);
+    margin-bottom: 1rem;
+  }
+
+  .crumbs__link:hover {
+    color: var(--accent);
+  }
+
+  .crumbs__sep {
+    color: var(--ink-faint);
+  }
+
+  .crumbs__here {
+    color: var(--ink-soft);
+  }
+
+  .detail__title {
+    font-family: var(--font-mono);
+    font-size: var(--step-4);
+    font-weight: 600;
+    letter-spacing: -0.045em;
+    line-height: 1.02;
+    word-break: break-word;
+  }
+
+  .detail__lede {
+    margin-top: 1rem;
+    font-size: var(--step-1);
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 62ch;
+  }
+
+  .detail__badges {
+    display: flex;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+    margin-top: 1.25rem;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.42em;
+    padding: 0.3em 0.72em;
+    border: 1px solid var(--line-mid);
+    border-radius: var(--r-full);
+    background: var(--bg-elev);
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    color: var(--ink-soft);
+  }
+
+  .badge--dim {
+    color: var(--ink-faint);
+    background: transparent;
+  }
+
+  .badge__dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+  }
+
+  .detail__actions {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+  }
+
+  /* ---- layout ---- */
+  .detail__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: clamp(2rem, 5vw, 4.5rem);
+    padding-top: var(--sp-7);
+    align-items: start;
+  }
+
+  @media (max-width: 980px) {
+    .detail__grid {
+      grid-template-columns: 1fr;
+      gap: var(--sp-7);
+    }
+  }
+
+  .detail__main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-8);
+    min-width: 0;
+  }
+
+  .block__head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+    margin-bottom: var(--sp-5);
+    padding-bottom: var(--sp-3);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .block__title {
+    font-size: var(--step-2);
+    flex: 1;
+  }
+
+  .block__src {
+    font-size: var(--step--2);
+    color: var(--ink-mute);
+    transition: color var(--dur-fast);
+  }
+
+  .block__src:hover {
+    color: var(--accent);
+  }
+
+  /* READMEs often start with a wall of badges — keep them tidy. */
+  .prose--readme :global(p > img),
+  .prose--readme :global(p > a > img) {
+    display: inline-block;
+    height: 20px;
+    width: auto;
+    margin: 0 3px 4px 0;
+    border: 0;
+    border-radius: 3px;
+    vertical-align: middle;
+  }
+
+  .prose--readme :global(h1) {
+    display: none;
+  }
+
+  /* ---- sidebar ---- */
+  .detail__aside {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+    position: sticky;
+    top: calc(var(--header-h) + 1.5rem);
+  }
+
+  @media (max-width: 980px) {
+    .detail__aside {
+      position: static;
+    }
+  }
+
+  .side-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    padding: var(--sp-4) var(--sp-5);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    background: var(--bg-elev);
+  }
+
+  .side-card--quiet {
+    background: transparent;
+  }
+
+  .langs {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .langs__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.36rem 0;
+    border-bottom: 1px solid var(--line);
+    font-size: var(--step--2);
+  }
+
+  .langs__row:last-child {
+    border-bottom: 0;
+  }
+
+  .langs__name {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    color: var(--ink-soft);
+  }
+
+  .langs__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .langs__pct {
+    color: var(--ink-mute);
+    font-size: 10px;
+  }
+
+  .facts {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .facts__row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.42rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .facts__row:last-child {
+    border-bottom: 0;
+  }
+
+  .facts dt {
+    font-size: var(--step--2);
+    color: var(--ink-mute);
+  }
+
+  .facts dd {
+    font-size: var(--step--2);
+    color: var(--ink);
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .commits {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .commits__item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.45rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .commits__item:last-child {
+    border-bottom: 0;
+  }
+
+  .commits__msg {
+    font-size: var(--step--2);
+    color: var(--ink-soft);
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .commits__meta {
+    font-size: 10px;
+    color: var(--ink-faint);
+  }
+
+  .clone {
+    font-size: 10px;
+    color: var(--ink-mute);
+    word-break: break-all;
+    line-height: 1.6;
+  }
+
+  /* ---- related ---- */
+  .related {
+    margin-top: var(--sp-8);
+    padding-top: var(--sp-6);
+    border-top: 1px solid var(--line);
+  }
+
+  .related__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: var(--sp-4);
+  }
+</style>
+
+<script>
+  const btn = document.getElementById('copy-clone');
+  btn?.addEventListener('click', async () => {
+    const text = btn.dataset.clone || '';
+    const label = btn.querySelector('.copy-label');
+    try {
+      await navigator.clipboard.writeText(text);
+      if (label) {
+        label.textContent = 'Copied ✓';
+        setTimeout(() => (label.textContent = 'Copy clone'), 1800);
+      }
+    } catch {
+      if (label) label.textContent = 'Press ⌘C';
+    }
+  });
+</script>

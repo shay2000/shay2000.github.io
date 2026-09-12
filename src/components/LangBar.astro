@@ -1,0 +1,54 @@
+---
+/**
+ * Proportional language bar, GitHub-style but on-theme.
+ * Pass either a full `languages` breakdown or a single language name.
+ */
+import { langColor } from '../lib/site';
+
+interface Props {
+  languages?: { name: string; percent: number }[];
+  language?: string | null;
+  height?: number;
+  max?: number;
+  showTitle?: boolean;
+}
+
+const { languages = [], language, height = 6, max = 4, showTitle = true } = Astro.props;
+
+// Fall back to a single-segment bar when only a primary language is known.
+const slices =
+  languages.length > 0
+    ? languages.slice(0, max)
+    : language
+      ? [{ name: language, percent: 100 }]
+      : [];
+
+const rest =
+  languages.length > max
+    ? languages.slice(max).reduce((a, l) => a + l.percent, 0)
+    : 0;
+---
+
+{slices.length > 0 && (
+  <div
+    class="langbar"
+    style={`height:${height}px`}
+    role="img"
+    aria-label={`Languages: ${slices.map((s) => `${s.name} ${s.percent}%`).join(', ')}`}
+  >
+    {slices.map((s) => (
+      <span
+        class="langbar__seg"
+        style={`width:${s.percent}%;background:${langColor(s.name)}`}
+        title={showTitle ? `${s.name} ${s.percent.toFixed(1)}%` : undefined}
+      ></span>
+    ))}
+    {rest > 0 && (
+      <span
+        class="langbar__seg"
+        style={`width:${rest}%;background:var(--ink-faint)`}
+        title={showTitle ? `Other ${rest.toFixed(1)}%` : undefined}
+      ></span>
+    )}
+  </div>
+)}

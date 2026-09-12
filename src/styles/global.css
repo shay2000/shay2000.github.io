@@ -1,0 +1,951 @@
+/* ==================================================================
+   shay2000 — design system
+   ------------------------------------------------------------------
+   Concept: "The Workshop" — an editorial engineering log.
+   Warm paper & ink in light mode, deep charcoal in dark mode, with a
+   single ember accent and GitHub's real language colours carrying the
+   rest of the palette.
+   ================================================================== */
+
+/* ---------- 1. Reset ------------------------------------------------ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  /*
+   * Smooth scrolling is opted into after load (see `html.is-ready`). Leaving
+   * it on from the start makes a direct hit on /#section animate from the top
+   * of the page, which is disorienting — the jump should be instant, and only
+   * in-page navigation should glide.
+   */
+  scroll-behavior: auto;
+  scroll-padding-top: 6rem;
+}
+
+html.is-ready {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html,
+  html.is-ready {
+    scroll-behavior: auto;
+  }
+}
+
+img,
+picture,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+  padding: 0;
+}
+
+/* ---------- 2. Tokens ---------------------------------------------- */
+
+:root {
+  /* Type */
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system,
+    'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Fraunces Variable', ui-serif, Georgia, 'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, SFMono-Regular,
+    'SF Mono', Menlo, monospace;
+
+  /* Fluid scale */
+  --step--2: clamp(0.69rem, 0.68rem + 0.05vw, 0.72rem);
+  --step--1: clamp(0.8rem, 0.78rem + 0.1vw, 0.86rem);
+  --step-0: clamp(0.95rem, 0.92rem + 0.15vw, 1.05rem);
+  --step-1: clamp(1.15rem, 1.08rem + 0.35vw, 1.35rem);
+  --step-2: clamp(1.4rem, 1.26rem + 0.7vw, 1.85rem);
+  --step-3: clamp(1.75rem, 1.45rem + 1.5vw, 2.75rem);
+  --step-4: clamp(2.2rem, 1.6rem + 3vw, 4rem);
+  --step-5: clamp(2.75rem, 1.6rem + 5.5vw, 6rem);
+
+  /* Space */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+  --sp-8: 4rem;
+  --sp-9: 6rem;
+  --sp-10: 8rem;
+
+  /* Shell */
+  --shell: 1280px;
+  --shell-narrow: 760px;
+  --gutter: clamp(1.15rem, 4vw, 3rem);
+  --header-h: 68px;
+
+  /* Radii */
+  --r-sm: 6px;
+  --r-md: 12px;
+  --r-lg: 18px;
+  --r-xl: 26px;
+  --r-full: 999px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast: 140ms;
+  --dur: 260ms;
+  --dur-slow: 620ms;
+
+  /* Ember accent (shared hue, tuned per theme) */
+  --accent-h: 14;
+}
+
+/* --- Light: warm paper ------------------------------------------- */
+html[data-theme='light'] {
+  color-scheme: light;
+
+  --bg: #f6f4f0;
+  --bg-elev: #fffefc;
+  --bg-sunken: #eeeae3;
+  --bg-inset: #e7e2d9;
+
+  --ink: #17140f;
+  --ink-soft: #4b433a;
+  --ink-mute: #8a7f70;
+  --ink-faint: #b3a99a;
+
+  --line: rgba(23, 20, 15, 0.1);
+  --line-mid: rgba(23, 20, 15, 0.16);
+  --line-strong: rgba(23, 20, 15, 0.28);
+
+  --accent: hsl(var(--accent-h) 78% 46%);
+  --accent-ink: #fff8f4;
+  --accent-soft: hsl(var(--accent-h) 78% 46% / 0.09);
+  --accent-line: hsl(var(--accent-h) 78% 46% / 0.28);
+
+  --shadow-sm: 0 1px 2px rgba(23, 20, 15, 0.05);
+  --shadow: 0 2px 4px rgba(23, 20, 15, 0.04),
+    0 12px 28px -12px rgba(23, 20, 15, 0.16);
+  --shadow-lg: 0 4px 8px rgba(23, 20, 15, 0.05),
+    0 32px 64px -24px rgba(23, 20, 15, 0.24);
+
+  --grain-opacity: 0.035;
+  --spotlight: rgba(23, 20, 15, 0.05);
+
+  --heat-0: #e7e2d9;
+  --heat-1: hsl(var(--accent-h) 70% 86%);
+  --heat-2: hsl(var(--accent-h) 74% 70%);
+  --heat-3: hsl(var(--accent-h) 78% 54%);
+  --heat-4: hsl(var(--accent-h) 82% 42%);
+}
+
+/* --- Dark: deep charcoal ----------------------------------------- */
+html[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bg: #0c0b0a;
+  --bg-elev: #151311;
+  --bg-sunken: #070706;
+  --bg-inset: #1d1a17;
+
+  --ink: #f4f1ec;
+  --ink-soft: #b6ada1;
+  --ink-mute: #7d7468;
+  --ink-faint: #57504a;
+
+  --line: rgba(244, 241, 236, 0.11);
+  --line-mid: rgba(244, 241, 236, 0.17);
+  --line-strong: rgba(244, 241, 236, 0.3);
+
+  --accent: hsl(var(--accent-h) 88% 60%);
+  --accent-ink: #1a0a04;
+  --accent-soft: hsl(var(--accent-h) 88% 60% / 0.13);
+  --accent-line: hsl(var(--accent-h) 88% 60% / 0.34);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow: 0 2px 6px rgba(0, 0, 0, 0.45), 0 16px 36px -14px rgba(0, 0, 0, 0.7);
+  --shadow-lg: 0 6px 12px rgba(0, 0, 0, 0.5), 0 40px 80px -28px rgba(0, 0, 0, 0.85);
+
+  --grain-opacity: 0.055;
+  --spotlight: rgba(244, 241, 236, 0.07);
+
+  --heat-0: #1d1a17;
+  --heat-1: hsl(var(--accent-h) 60% 26%);
+  --heat-2: hsl(var(--accent-h) 72% 38%);
+  --heat-3: hsl(var(--accent-h) 84% 52%);
+  --heat-4: hsl(var(--accent-h) 92% 66%);
+}
+
+/* ---------- 3. Base ------------------------------------------------- */
+
+body {
+  min-height: 100svh;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--step-0);
+  line-height: 1.65;
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  transition: background-color var(--dur) var(--ease-out),
+    color var(--dur) var(--ease-out);
+}
+
+/* Grain — a whisper of texture so flat colour feels like paper. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: -50%;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- 4. Typography ------------------------------------------ */
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.022em;
+  font-variation-settings: 'SOFT' 0, 'WONK' 0, 'opsz' 60;
+  text-wrap: balance;
+  color: var(--ink);
+}
+
+h1 {
+  font-size: var(--step-4);
+}
+h2 {
+  font-size: var(--step-3);
+}
+h3 {
+  font-size: var(--step-2);
+}
+h4 {
+  font-size: var(--step-1);
+}
+
+p {
+  text-wrap: pretty;
+}
+
+strong {
+  font-weight: 620;
+  color: var(--ink);
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* Small uppercase mono label — the site's connective tissue. */
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  font-weight: 500;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-feature-settings: 'ss01';
+}
+
+.label--accent {
+  color: var(--accent);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  font-feature-settings: 'zero' 1;
+}
+
+/* ---------- 5. Layout ---------------------------------------------- */
+
+.shell {
+  width: 100%;
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.shell--narrow {
+  max-width: var(--shell-narrow);
+}
+
+.section {
+  padding-block: clamp(3.5rem, 8vw, 7rem);
+}
+
+.section + .section {
+  border-top: 1px solid var(--line);
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Numbered editorial section head: "01 — Selected builds" */
+.sec-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-6);
+  padding-bottom: var(--sp-4);
+  border-bottom: 1px solid var(--line);
+}
+
+.sec-head__num {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  padding-top: 0.35em;
+}
+
+.sec-head__title {
+  font-size: var(--step-2);
+  flex: 1;
+}
+
+.sec-head__link {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: var(--ink-mute);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  transition: color var(--dur-fast) var(--ease-out),
+    gap var(--dur) var(--ease-out);
+}
+
+.sec-head__link:hover {
+  color: var(--accent);
+  gap: 0.7em;
+}
+
+/* ---------- 6. Links ----------------------------------------------- */
+
+.link {
+  position: relative;
+  color: var(--ink);
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-repeat: no-repeat;
+  background-size: 0% 1.5px;
+  background-position: 0 100%;
+  transition: background-size var(--dur) var(--ease-out), color var(--dur-fast);
+}
+
+.link:hover {
+  background-size: 100% 1.5px;
+  color: var(--accent);
+}
+
+.link--accent {
+  color: var(--accent);
+  background-size: 100% 1.5px;
+}
+
+/* ---------- 7. Buttons --------------------------------------------- */
+
+.btn {
+  --btn-bg: var(--ink);
+  --btn-fg: var(--bg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55em;
+  padding: 0.68em 1.25em;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  border: 1px solid var(--btn-bg);
+  border-radius: var(--r-full);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out), background-color var(--dur) var(--ease-out),
+    color var(--dur) var(--ease-out), border-color var(--dur) var(--ease-out);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn--accent {
+  --btn-bg: var(--accent);
+  --btn-fg: var(--accent-ink);
+}
+
+.btn--ghost {
+  --btn-bg: transparent;
+  --btn-fg: var(--ink);
+  border-color: var(--line-mid);
+}
+
+.btn--ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: none;
+}
+
+.btn--sm {
+  padding: 0.45em 0.85em;
+  font-size: var(--step--2);
+}
+
+/* ---------- 8. Pills & tags ---------------------------------------- */
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.28em 0.68em;
+  border: 1px solid var(--line-mid);
+  border-radius: var(--r-full);
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  color: var(--ink-soft);
+  background: var(--bg-elev);
+  white-space: nowrap;
+  transition: border-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out), background-color var(--dur-fast);
+}
+
+a.pill:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.pill--accent {
+  border-color: var(--accent-line);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.pill__count {
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- 9. Cards ----------------------------------------------- */
+
+.card {
+  position: relative;
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  transition: border-color var(--dur) var(--ease-out),
+    transform var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out);
+}
+
+/* Pointer-tracked spotlight. --mx/--my are set by JS on pointermove. */
+.card--spot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    340px circle at var(--mx, 50%) var(--my, 50%),
+    var(--spotlight),
+    transparent 70%
+  );
+  transition: opacity var(--dur) var(--ease-out);
+}
+
+.card--spot:hover::after {
+  opacity: 1;
+}
+
+.card--spot:hover {
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow);
+}
+
+/* ---------- 10. Language bar --------------------------------------- */
+
+.langbar {
+  display: flex;
+  height: 6px;
+  width: 100%;
+  border-radius: var(--r-full);
+  overflow: hidden;
+  background: var(--bg-inset);
+}
+
+.langbar__seg {
+  height: 100%;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+
+.langbar__seg:hover {
+  opacity: 0.7;
+}
+
+/* ---------- 11. Prose (Markdown output) ---------------------------- */
+
+.prose {
+  font-size: var(--step-0);
+  line-height: 1.75;
+  color: var(--ink-soft);
+  max-width: 68ch;
+}
+
+.prose > * + * {
+  margin-top: 1.35em;
+}
+
+.prose h2,
+.prose h3,
+.prose h4 {
+  color: var(--ink);
+  margin-top: 2.4em;
+  margin-bottom: 0.6em;
+  scroll-margin-top: 6rem;
+}
+
+.prose h2 {
+  font-size: var(--step-2);
+  padding-bottom: 0.4em;
+  border-bottom: 1px solid var(--line);
+}
+
+.prose h3 {
+  font-size: var(--step-1);
+}
+
+.prose h4 {
+  font-family: var(--font-sans);
+  font-size: var(--step-0);
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.prose strong {
+  color: var(--ink);
+}
+
+.prose a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  text-decoration-color: var(--accent-line);
+  transition: text-decoration-color var(--dur-fast) var(--ease-out);
+}
+
+.prose a:hover {
+  text-decoration-color: var(--accent);
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.35em;
+}
+
+.prose li + li {
+  margin-top: 0.45em;
+}
+
+.prose li::marker {
+  color: var(--accent);
+  font-family: var(--font-mono);
+}
+
+.prose blockquote {
+  margin-inline: 0;
+  padding: 0.2em 0 0.2em 1.25em;
+  border-left: 2px solid var(--accent);
+  font-family: var(--font-serif);
+  font-size: var(--step-1);
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.prose hr {
+  border: 0;
+  height: 1px;
+  background: var(--line);
+  margin-block: 3em;
+}
+
+.prose img {
+  border-radius: var(--r-md);
+  border: 1px solid var(--line);
+  margin-inline: auto;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--step--1);
+  font-family: var(--font-sans);
+  display: block;
+  overflow-x: auto;
+}
+
+.prose th,
+.prose td {
+  padding: 0.65em 0.9em;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+
+.prose th {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-mute);
+  font-weight: 500;
+}
+
+.prose tbody tr:hover {
+  background: var(--accent-soft);
+}
+
+/* Inline code */
+.prose :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  padding: 0.16em 0.42em;
+  border-radius: var(--r-sm);
+  background: var(--bg-inset);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.prose kbd {
+  font-family: var(--font-mono);
+  font-size: 0.8em;
+  padding: 0.2em 0.5em;
+  border: 1px solid var(--line-mid);
+  border-bottom-width: 2px;
+  border-radius: var(--r-sm);
+  background: var(--bg-elev);
+  color: var(--ink);
+}
+
+/* Code blocks — dual Shiki theme */
+.prose pre,
+pre.astro-code {
+  position: relative;
+  padding: 1.15rem 1.3rem;
+  border-radius: var(--r-md);
+  border: 1px solid var(--line);
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  line-height: 1.65;
+  tab-size: 2;
+  -webkit-overflow-scrolling: touch;
+}
+
+pre.astro-code {
+  background-color: var(--shiki-light-bg);
+  color: var(--shiki-light);
+}
+
+pre.astro-code span {
+  color: var(--shiki-light);
+  font-style: var(--shiki-light-font-style);
+  font-weight: var(--shiki-light-font-weight);
+  text-decoration: var(--shiki-light-text-decoration);
+}
+
+html[data-theme='dark'] pre.astro-code {
+  background-color: var(--shiki-dark-bg);
+  color: var(--shiki-dark);
+}
+
+html[data-theme='dark'] pre.astro-code span {
+  color: var(--shiki-dark);
+  font-style: var(--shiki-dark-font-style);
+  font-weight: var(--shiki-dark-font-weight);
+  text-decoration: var(--shiki-dark-text-decoration);
+}
+
+.prose pre code {
+  font-family: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  white-space: pre;
+}
+
+/* ---------- 12. Reveal on scroll ----------------------------------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ---------- 13. Utilities ------------------------------------------ */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: var(--sp-4);
+  z-index: 10000;
+  padding: 0.7em 1.1em;
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-radius: var(--r-full);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  transition: top var(--dur) var(--ease-out);
+}
+
+.skip-link:focus-visible {
+  top: var(--sp-4);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* Divider that reads as a rule, not a gap */
+.rule {
+  height: 1px;
+  background: var(--line);
+  border: 0;
+}
+
+/* Tabular figures for stat readouts */
+.tnum {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+/* ==================================================================
+   14. Scroll flow
+   ------------------------------------------------------------------
+   A set of scroll-linked effects that give the page a continuous sense
+   of motion. Everything here degrades to "static but fine" and is
+   disabled entirely under prefers-reduced-motion.
+   ================================================================== */
+
+/* --- 14a. Reading progress, fixed to the top of the viewport ------- */
+
+.scroll-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 2px;
+  z-index: 400;
+  pointer-events: none;
+  background: transparent;
+}
+
+.scroll-progress__bar {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--accent) 55%, transparent),
+    var(--accent)
+  );
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  /* No transition: the rAF loop already runs at frame rate. */
+  will-change: transform;
+}
+
+/* --- 14b. Staggered, directional reveals -------------------------- */
+
+.reveal--left {
+  transform: translateX(-22px);
+}
+
+.reveal--right {
+  transform: translateX(22px);
+}
+
+.reveal--scale {
+  transform: translateY(14px) scale(0.985);
+}
+
+.reveal--fade {
+  transform: none;
+}
+
+/* --- 14c. Section headings that wake up as they enter ------------- */
+
+.sec-head {
+  position: relative;
+}
+
+.sec-head__num {
+  transition: color var(--dur) var(--ease-out), transform var(--dur-slow) var(--ease-spring);
+  display: inline-block;
+}
+
+.sec-head.is-lit .sec-head__num {
+  color: var(--accent);
+  transform: translateY(-1px) scale(1.18);
+}
+
+/* A hairline that draws itself across the rule under the heading. */
+.sec-head::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  height: 1px;
+  width: 100%;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 900ms var(--ease-out);
+  opacity: 0.55;
+}
+
+.sec-head.is-lit::after {
+  transform: scaleX(1);
+}
+
+/* --- 14d. Sticky section headings (opt-in) ------------------------ */
+
+.sec-head--sticky {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 90;
+  padding-top: var(--sp-3);
+  margin-top: calc(var(--sp-3) * -1);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+}
+
+/* --- 14e. Scroll-linked parallax ---------------------------------- */
+
+/*
+ * Uses the independent `translate` property rather than `transform`, so it
+ * composes cleanly with the transform-based reveal animations instead of
+ * fighting them.
+ */
+@keyframes flow-drift {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: 0 var(--drift, 0px);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    [data-drift] {
+      animation: flow-drift linear both;
+      animation-timeline: view();
+      animation-range: entry 0% exit 100%;
+    }
+  }
+}
+
+/* --- 14f. Scroll-velocity marquee --------------------------------- */
+
+/*
+ * The CSS animation is the no-JS baseline. Once the script takes over it
+ * adds .is-live, which parks the CSS animation and drives the track with a
+ * rAF loop whose speed and direction follow the scroll.
+ */
+.marquee__track.is-live {
+  animation: none;
+  will-change: transform;
+}
+
+/* --- 14g. Count-up readouts --------------------------------------- */
+
+[data-countup] {
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- 14h. Hero cards settle as they scroll away ------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .sec-head::after {
+    transform: scaleX(1);
+  }
+  .sec-head.is-lit .sec-head__num {
+    transform: none;
+  }
+}

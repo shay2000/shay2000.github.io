@@ -1,0 +1,596 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LangBar from '../components/LangBar.astro';
+import { profile, repos, originalRepos, sortedRepos } from '../lib/data';
+import { langColor, formatDate, relativeTime, compact, SITE } from '../lib/site';
+
+const yearOne = new Date(profile.joinedAt).getFullYear();
+const topLangs = profile.topLanguages.filter((l) => l.percent >= 0.5).slice(0, 10);
+
+// Group the work into themes, inferred from what the repos actually are.
+const themes = [
+  {
+    title: 'macOS, close to the metal',
+    body: 'Menu-bar utilities that read real hardware state — charger input, display brightness, disk usage — and put the number where you can see it. Swift, AppKit, and a healthy suspicion of vendor defaults.',
+    repos: repos.filter((r) => r.language === 'Swift').map((r) => r.name),
+  },
+  {
+    title: 'Self-hosted, quietly',
+    body: 'Services that run on your own hardware and stay private: podcast feeds built from YouTube channels, family archives, and the small servers that keep them going.',
+    repos: ['PodcastSync-Local-Mac-App', 'PodcastSync-VPS', 'family-tree-site'].filter((n) =>
+      repos.some((r) => r.name === n)
+    ),
+  },
+  {
+    title: 'Tooling for reading & research',
+    body: 'Zotero extensions that make AI summarisation explicit and privacy-aware — you bring your own agent, nothing leaves the machine without saying so.',
+    repos: ['zotero-ai-plugin', 'AI-Zotero'].filter((n) => repos.some((r) => r.name === n)),
+  },
+  {
+    title: 'Things built for the fun of it',
+    body: 'A split-flap display emulator for any television, a browser tweak, a flight-sim METAR translator. Not everything needs a business case.',
+    repos: ['flipoff-Aeroplanes', 'METAR-Translator', 'helium-dia', 'docsafterdark'].filter((n) =>
+      repos.some((r) => r.name === n)
+    ),
+  },
+];
+
+const principles = [
+  {
+    n: '01',
+    t: 'Small enough to read',
+    d: 'Every project here is something one person can hold in their head. Small tools get finished, and finished tools get used.',
+  },
+  {
+    n: '02',
+    t: 'Local first',
+    d: 'Data stays on the machine that made it. Self-hosted services, no accounts, no telemetry, nothing phoning home.',
+  },
+  {
+    n: '03',
+    t: 'Say what it actually does',
+    d: 'Numbers should come from the hardware, not from a spec sheet. If a charger claims 140 W, the tool should be able to check.',
+  },
+  {
+    n: '04',
+    t: 'Public by default',
+    d: 'If it was worth building, it is worth pushing. Every repository here is open, forks included.',
+  },
+];
+---
+
+<BaseLayout
+  title="About"
+  description={`About ${profile.name} — what they build, how the work is put together, and the tools behind it.`}
+>
+  <section class="shell about-head">
+    <p class="label label--accent">About</p>
+    <h1 class="about-head__title">
+      I build the small thing<br />that should already exist.
+    </h1>
+    <p class="about-head__lede">
+      Most of this starts the same way: a device reports something slightly wrong,
+      or a service holds data I'd rather keep, or a workflow has one step too many.
+      So a tool gets written. Then, because it might be useful to someone else, it
+      gets pushed.
+    </p>
+
+    <div class="about-head__meta">
+      <div class="m">
+        <span class="m__n tnum">{profile.stats.trackedRepos}</span>
+        <span class="label">Repos</span>
+      </div>
+      <div class="m">
+        <span class="m__n tnum">{yearOne}</span>
+        <span class="label">On GitHub since</span>
+      </div>
+      <div class="m">
+        <span class="m__n tnum">{profile.stats.distinctLanguages}</span>
+        <span class="label">Languages</span>
+      </div>
+      <div class="m">
+        <span class="m__n tnum">{profile.stats.totalCommitsSampled}</span>
+        <span class="label">Commits</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- Themes ---------- -->
+  <section class="shell section">
+    <div class="sec-head">
+      <span class="sec-head__num">01</span>
+      <h2 class="sec-head__title">What the work tends to be</h2>
+    </div>
+
+    <div class="themes">
+      {themes.map((t, i) => (
+        <article class="theme card card--spot reveal">
+          <span class="theme__n tnum">{String(i + 1).padStart(2, '0')}</span>
+          <h3 class="theme__title">{t.title}</h3>
+          <p class="theme__body">{t.body}</p>
+          {t.repos.length > 0 && (
+            <ul class="theme__repos" role="list">
+              {t.repos.map((name) => (
+                <li>
+                  <a class="theme__repo mono" href={`/projects/${name}`}>{name}</a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- ---------- Toolbox ---------- -->
+  <section class="shell section">
+    <div class="sec-head">
+      <span class="sec-head__num">02</span>
+      <h2 class="sec-head__title">Toolbox</h2>
+      <span class="sec-head__link">measured by bytes committed</span>
+    </div>
+
+    <div class="toolbox">
+      <div class="toolbox__bars">
+        <LangBar languages={topLangs} height={10} max={10} />
+        <ul class="toolbox__list" role="list">
+          {topLangs.map((l) => (
+            <li class="toolbox__row">
+              <span class="toolbox__name">
+                <span class="toolbox__dot" style={`background:${langColor(l.name)}`}></span>
+                {l.name}
+              </span>
+              <span class="toolbox__bar">
+                <span
+                  class="toolbox__fill"
+                  style={`width:${Math.max(l.percent, 1.5)}%;background:${langColor(l.name)}`}
+                ></span>
+              </span>
+              <span class="toolbox__pct mono tnum">{l.percent.toFixed(1)}%</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <aside class="toolbox__aside">
+        <div class="side-card">
+          <p class="label">Also in the stack</p>
+          <div class="pills">
+            {['Astro', 'Docker', 'Tailscale', 'Portainer', 'Homebrew', 'GitHub Actions'].map((t) => (
+              <span class="pill">{t}</span>
+            ))}
+          </div>
+        </div>
+
+        <div class="side-card">
+          <p class="label">Repository snapshot</p>
+          <dl class="facts">
+            <div class="facts__row">
+              <dt>Original work</dt>
+              <dd class="tnum">{profile.stats.originalRepos}</dd>
+            </div>
+            <div class="facts__row">
+              <dt>Forks with changes</dt>
+              <dd class="tnum">{profile.stats.forkedRepos}</dd>
+            </div>
+            <div class="facts__row">
+              <dt>Active days</dt>
+              <dd class="tnum">{profile.stats.activeDays}</dd>
+            </div>
+            <div class="facts__row">
+              <dt>First sampled commit</dt>
+              <dd>{profile.stats.firstCommit}</dd>
+            </div>
+            <div class="facts__row">
+              <dt>Latest push</dt>
+              <dd>{relativeTime(profile.stats.latestPush)}</dd>
+            </div>
+          </dl>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ---------- Principles ---------- -->
+  <section class="shell section">
+    <div class="sec-head">
+      <span class="sec-head__num">03</span>
+      <h2 class="sec-head__title">How it gets built</h2>
+    </div>
+
+    <div class="principles">
+      {principles.map((p) => (
+        <div class="principle reveal">
+          <span class="principle__n mono">{p.n}</span>
+          <h3 class="principle__t">{p.t}</h3>
+          <p class="principle__d">{p.d}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- ---------- Recent ---------- -->
+  <section class="shell section">
+    <div class="sec-head">
+      <span class="sec-head__num">04</span>
+      <h2 class="sec-head__title">Most recently touched</h2>
+      <a class="sec-head__link" href="/projects">All builds <span aria-hidden="true">→</span></a>
+    </div>
+
+    <ul class="recent" role="list">
+      {sortedRepos.slice(0, 8).map((r) => (
+        <li class="recent__item">
+          <a class="recent__link" href={`/projects/${r.name}`}>
+            <span class="recent__name mono">{r.name}</span>
+            <span class="recent__desc">{r.description}</span>
+            <span class="recent__lang mono">
+              {r.language && (
+                <span class="toolbox__dot" style={`background:${langColor(r.language)}`}></span>
+              )}
+              {r.language ?? '—'}
+            </span>
+            <span class="recent__time mono">{relativeTime(r.pushedAt)}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- ---------- CTA ---------- -->
+  <section class="shell section">
+    <div class="cta card card--spot reveal">
+      <div class="cta__inner">
+        <p class="label label--accent">Get in touch</p>
+        <h2 class="cta__title">Issues and pull requests are welcome.</h2>
+        <p class="cta__text">
+          Every repository is open. If something here is nearly useful to you,
+          open an issue and say what's missing.
+        </p>
+        <div class="cta__actions">
+          <a class="btn btn--accent" href={profile.url} target="_blank" rel="noopener noreferrer">
+            @{profile.login} on GitHub <span aria-hidden="true">↗</span>
+          </a>
+          <a class="btn btn--ghost" href="/rss.xml">Subscribe via RSS</a>
+          <a class="btn btn--ghost" href={SITE.coffee} target="_blank" rel="noopener noreferrer">
+            ☕ Buy me a coffee <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about-head {
+    padding-top: clamp(2.5rem, 6vw, 5rem);
+    padding-bottom: var(--sp-7);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .about-head__title {
+    font-size: var(--step-5);
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    margin-top: 0.7rem;
+    font-variation-settings: 'SOFT' 20, 'WONK' 1, 'opsz' 100;
+    max-width: 20ch;
+  }
+
+  .about-head__lede {
+    margin-top: 1.5rem;
+    max-width: 62ch;
+    color: var(--ink-soft);
+    font-size: var(--step-1);
+    line-height: 1.55;
+  }
+
+  .about-head__meta {
+    display: flex;
+    gap: var(--sp-6);
+    flex-wrap: wrap;
+    margin-top: var(--sp-7);
+  }
+
+  .m {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .m__n {
+    font-family: var(--font-serif);
+    font-size: var(--step-3);
+    line-height: 1;
+  }
+
+  /* ---- themes ---- */
+  .themes {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--sp-4);
+  }
+
+  .theme {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    padding: var(--sp-5);
+  }
+
+  .theme__n {
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    color: var(--accent);
+  }
+
+  .theme__title {
+    font-size: var(--step-1);
+  }
+
+  .theme__body {
+    font-size: var(--step--1);
+    color: var(--ink-soft);
+    line-height: 1.65;
+  }
+
+  .theme__repos {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-top: auto;
+    padding-top: var(--sp-3);
+    border-top: 1px solid var(--line);
+  }
+
+  .theme__repo {
+    font-size: var(--step--2);
+    color: var(--ink-mute);
+    transition: color var(--dur-fast);
+  }
+
+  .theme__repo:hover {
+    color: var(--accent);
+  }
+
+  /* ---- toolbox ---- */
+  .toolbox {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(240px, 1fr);
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+  }
+
+  @media (max-width: 900px) {
+    .toolbox {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .toolbox__bars {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-5);
+  }
+
+  .toolbox__list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .toolbox__row {
+    display: grid;
+    grid-template-columns: 130px minmax(0, 1fr) 56px;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.45rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .toolbox__row:last-child {
+    border-bottom: 0;
+  }
+
+  .toolbox__name {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    font-size: var(--step--1);
+    color: var(--ink-soft);
+  }
+
+  .toolbox__dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: inline-block;
+  }
+
+  .toolbox__bar {
+    height: 5px;
+    background: var(--bg-inset);
+    border-radius: var(--r-full);
+    overflow: hidden;
+  }
+
+  .toolbox__fill {
+    display: block;
+    height: 100%;
+    border-radius: var(--r-full);
+  }
+
+  .toolbox__pct {
+    font-size: var(--step--2);
+    color: var(--ink-mute);
+    text-align: right;
+  }
+
+  .toolbox__aside {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+  }
+
+  .side-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    padding: var(--sp-4) var(--sp-5);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    background: var(--bg-elev);
+  }
+
+  .pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .facts {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .facts__row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.42rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .facts__row:last-child {
+    border-bottom: 0;
+  }
+
+  .facts dt {
+    font-size: var(--step--2);
+    color: var(--ink-mute);
+  }
+
+  .facts dd {
+    font-size: var(--step--2);
+  }
+
+  /* ---- principles ---- */
+  .principles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: var(--sp-5);
+  }
+
+  .principle {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-top: var(--sp-4);
+    border-top: 2px solid var(--accent);
+  }
+
+  .principle__n {
+    font-size: var(--step--2);
+    color: var(--accent);
+  }
+
+  .principle__t {
+    font-size: var(--step-1);
+  }
+
+  .principle__d {
+    font-size: var(--step--1);
+    color: var(--ink-soft);
+    line-height: 1.65;
+  }
+
+  /* ---- recent ---- */
+  .recent {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--line);
+  }
+
+  .recent__link {
+    display: grid;
+    grid-template-columns: minmax(140px, 220px) minmax(0, 1fr) 120px 110px;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.85rem 0.5rem;
+    border-bottom: 1px solid var(--line);
+    transition: background-color var(--dur-fast) var(--ease-out),
+      padding-left var(--dur) var(--ease-out);
+  }
+
+  .recent__link:hover {
+    background: var(--accent-soft);
+    padding-left: 1rem;
+  }
+
+  .recent__name {
+    font-size: var(--step--1);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+
+  .recent__desc {
+    font-size: var(--step--2);
+    color: var(--ink-mute);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .recent__lang,
+  .recent__time {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    font-size: var(--step--2);
+    color: var(--ink-mute);
+  }
+
+  @media (max-width: 820px) {
+    .recent__link {
+      grid-template-columns: 1fr auto;
+      gap: 0.4rem 1rem;
+    }
+
+    .recent__desc {
+      grid-column: 1 / -1;
+      white-space: normal;
+    }
+
+    .recent__lang {
+      display: none;
+    }
+  }
+
+  /* ---- cta ---- */
+  .cta__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.85rem;
+    padding: clamp(1.75rem, 4vw, 3.25rem);
+  }
+
+  .cta__title {
+    font-size: var(--step-3);
+    max-width: 24ch;
+  }
+
+  .cta__text {
+    color: var(--ink-soft);
+    max-width: 54ch;
+    font-size: var(--step--1);
+  }
+
+  .cta__actions {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-top: 0.6rem;
+  }
+</style>

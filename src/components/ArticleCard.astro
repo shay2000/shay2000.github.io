@@ -1,0 +1,216 @@
+---
+/**
+ * Article card for the writing index and related-article rails.
+ */
+import { formatDate, readingTime, tagSlug } from '../lib/site';
+
+interface Props {
+  href: string;
+  title: string;
+  description: string;
+  date: Date;
+  tags?: string[];
+  body?: string;
+  glyph?: string;
+  tone?: 'ember' | 'moss' | 'iris' | 'sky' | 'sand';
+  featured?: boolean;
+  index?: number;
+}
+
+const {
+  href,
+  title,
+  description,
+  date,
+  tags = [],
+  body = '',
+  glyph = '◆',
+  tone = 'ember',
+  featured = false,
+  index,
+} = Astro.props;
+
+const mins = readingTime(body);
+---
+
+<article class:list={['card', 'card--spot', 'ac', `ac--${tone}`, { 'ac--featured': featured }, 'reveal']}>
+  <a class="ac__link" href={href}>
+    <div class="ac__aside">
+      <span class="ac__glyph" aria-hidden="true">{glyph}</span>
+      {index !== undefined && <span class="ac__num tnum">{String(index).padStart(2, '0')}</span>}
+    </div>
+
+    <div class="ac__body">
+      <div class="ac__meta">
+        <time datetime={date.toISOString()}>{formatDate(date)}</time>
+        <span class="ac__sep" aria-hidden="true">·</span>
+        <span>{mins} min read</span>
+      </div>
+
+      <h3 class="ac__title">{title}</h3>
+      <p class="ac__desc">{description}</p>
+
+      {tags.length > 0 && (
+        <div class="ac__tags">
+          {tags.slice(0, 4).map((t) => (
+            <span class="pill">{t}</span>
+          ))}
+        </div>
+      )}
+    </div>
+
+    <span class="ac__go" aria-hidden="true">↗</span>
+  </a>
+</article>
+
+<style>
+  .ac {
+    --tone: var(--accent);
+  }
+
+  .ac--moss { --tone: #4d7c0f; }
+  .ac--iris { --tone: #6d28d9; }
+  .ac--sky  { --tone: #0369a1; }
+  .ac--sand { --tone: #b45309; }
+
+  :global(html[data-theme='dark']) .ac--moss { --tone: #a3e635; }
+  :global(html[data-theme='dark']) .ac--iris { --tone: #a78bfa; }
+  :global(html[data-theme='dark']) .ac--sky  { --tone: #38bdf8; }
+  :global(html[data-theme='dark']) .ac--sand { --tone: #fbbf24; }
+
+  .ac::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--tone);
+    opacity: 0;
+    transition: opacity var(--dur) var(--ease-out);
+  }
+
+  .ac:hover::before {
+    opacity: 1;
+  }
+
+  .ac__link {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: var(--sp-5);
+    align-items: start;
+    padding: var(--sp-5);
+    height: 100%;
+    position: relative;
+    z-index: 1;
+  }
+
+  .ac--featured .ac__link {
+    padding: var(--sp-6);
+    gap: var(--sp-6);
+  }
+
+  .ac__aside {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    padding-top: 0.15rem;
+  }
+
+  .ac__glyph {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: var(--r-md);
+    background: color-mix(in srgb, var(--tone) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--tone) 26%, transparent);
+    color: var(--tone);
+    font-size: 1.05rem;
+    transition: transform var(--dur) var(--ease-spring);
+  }
+
+  .ac:hover .ac__glyph {
+    transform: rotate(-8deg) scale(1.06);
+  }
+
+  .ac__num {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-faint);
+  }
+
+  .ac__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    min-width: 0;
+  }
+
+  .ac__meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+
+  .ac__sep {
+    color: var(--ink-faint);
+  }
+
+  .ac__title {
+    font-size: var(--step-1);
+    line-height: 1.2;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  .ac--featured .ac__title {
+    font-size: var(--step-2);
+  }
+
+  .ac:hover .ac__title {
+    color: var(--tone);
+  }
+
+  .ac__desc {
+    font-size: var(--step--1);
+    color: var(--ink-soft);
+    line-height: 1.6;
+    max-width: 62ch;
+  }
+
+  .ac__tags {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin-top: 0.25rem;
+  }
+
+  .ac__go {
+    font-family: var(--font-mono);
+    color: var(--ink-faint);
+    transition: transform var(--dur) var(--ease-spring),
+      color var(--dur-fast) var(--ease-out);
+  }
+
+  .ac:hover .ac__go {
+    color: var(--tone);
+    transform: translate(2px, -2px);
+  }
+
+  @media (max-width: 620px) {
+    .ac__link {
+      grid-template-columns: auto 1fr;
+      gap: var(--sp-4);
+    }
+
+    .ac__go {
+      display: none;
+    }
+  }
+</style>

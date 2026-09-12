@@ -1,0 +1,211 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAllTags } from '../../lib/tags';
+import { langColor } from '../../lib/site';
+import { profile } from '../../lib/data';
+
+const tags = await getAllTags();
+
+const withArticles = tags.filter((t) => t.articles.length > 0);
+const rest = tags.filter((t) => t.articles.length === 0);
+
+const maxCount = Math.max(...tags.map((t) => t.count), 1);
+---
+
+<BaseLayout
+  title="Tags"
+  description={`Browse ${tags.length} topics across builds and writing — languages, tools, and themes.`}
+>
+  <section class="shell page-head">
+    <p class="label label--accent">Taxonomy</p>
+    <h1 class="page-head__title">Everything,<br />by topic.</h1>
+    <p class="page-head__lede">
+      {tags.length} tags gathered from article frontmatter, repository languages
+      and GitHub topics. Sorted by how much sits behind them.
+    </p>
+  </section>
+
+  {withArticles.length > 0 && (
+    <section class="shell section--tight">
+      <div class="sec-head">
+        <span class="sec-head__num">01</span>
+        <h2 class="sec-head__title">Written about</h2>
+      </div>
+
+      <div class="tag-grid">
+        {withArticles.map((t) => (
+          <a class="tag-card card card--spot reveal" href={`/tags/${t.slug}`}>
+            <span class="tag-card__name">
+              {langColor(t.name) !== 'var(--ink-faint)' && (
+                <span class="tag-card__dot" style={`background:${langColor(t.name)}`}></span>
+              )}
+              {t.name}
+            </span>
+            <span class="tag-card__counts">
+              {t.articles.length} article{t.articles.length === 1 ? '' : 's'}
+              {t.projects.length > 0 && ` · ${t.projects.length} build${t.projects.length === 1 ? '' : 's'}`}
+            </span>
+            <span
+              class="tag-card__meter"
+              style={`--fill:${(t.count / maxCount) * 100}%`}
+            ></span>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {rest.length > 0 && (
+    <section class="shell section--tight">
+      <div class="sec-head">
+        <span class="sec-head__num">02</span>
+        <h2 class="sec-head__title">Languages &amp; tools</h2>
+        <span class="sec-head__link">no articles yet</span>
+      </div>
+
+      <div class="pill-cloud">
+        {rest.map((t) => (
+          <a class="pill" href={`/tags/${t.slug}`}>
+            {langColor(t.name) !== 'var(--ink-faint)' && (
+              <span class="pill__dot" style={`background:${langColor(t.name)}`}></span>
+            )}
+            {t.name}
+            <span class="pill__count">{t.projects.length}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <section class="shell section--tight">
+    <div class="cta card card--spot reveal">
+      <div class="cta__inner">
+        <p class="label label--accent">Elsewhere</p>
+        <h2 class="cta__title">The full source lives on GitHub.</h2>
+        <p class="cta__text">
+          {profile.stats.trackedRepos} public repositories, {profile.stats.distinctLanguages} languages,
+          and every commit since {profile.stats.firstCommit}.
+        </p>
+        <a class="btn btn--accent" href={profile.url} target="_blank" rel="noopener noreferrer">
+          Open @{profile.login} <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-head {
+    padding-top: clamp(2.5rem, 6vw, 5rem);
+    padding-bottom: var(--sp-6);
+  }
+
+  .page-head__title {
+    font-size: var(--step-4);
+    margin-top: 0.6rem;
+    letter-spacing: -0.032em;
+  }
+
+  .page-head__lede {
+    margin-top: 1.1rem;
+    max-width: 56ch;
+    color: var(--ink-soft);
+    font-size: var(--step-1);
+    line-height: 1.5;
+  }
+
+  .section--tight {
+    padding-block: var(--sp-6);
+  }
+
+  .tag-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: var(--sp-3);
+  }
+
+  .tag-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: var(--sp-4) var(--sp-5);
+  }
+
+  .tag-card__name {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    font-family: var(--font-mono);
+    font-size: var(--step-0);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    transition: color var(--dur-fast);
+  }
+
+  .tag-card:hover .tag-card__name {
+    color: var(--accent);
+  }
+
+  .tag-card__dot,
+  .pill__dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .tag-card__counts {
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    color: var(--ink-mute);
+  }
+
+  .tag-card__meter {
+    position: relative;
+    height: 2px;
+    margin-top: 0.5rem;
+    background: var(--line);
+    border-radius: var(--r-full);
+    overflow: hidden;
+  }
+
+  .tag-card__meter::after {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: var(--fill);
+    background: var(--accent);
+    border-radius: var(--r-full);
+    transition: width var(--dur-slow) var(--ease-out);
+  }
+
+  .pill-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .cta {
+    margin-top: var(--sp-5);
+  }
+
+  .cta__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+    padding: clamp(1.75rem, 4vw, 3rem);
+  }
+
+  .cta__title {
+    font-size: var(--step-3);
+    max-width: 22ch;
+  }
+
+  .cta__text {
+    color: var(--ink-soft);
+    max-width: 52ch;
+    font-size: var(--step--1);
+  }
+</style>

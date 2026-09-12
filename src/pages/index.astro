@@ -1,0 +1,897 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import LangBar from '../components/LangBar.astro';
+import Heatmap from '../components/Heatmap.astro';
+import { getCollection } from 'astro:content';
+import {
+  profile,
+  repos,
+  sortedRepos,
+  originalRepos,
+  recentCommits,
+  longestStreak,
+  busiestMonth,
+} from '../lib/data';
+import { langColor, formatDate, relativeTime, compact, pad, SITE } from '../lib/site';
+
+const articles = (await getCollection('articles', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+
+// Six builds for the home rail: hand-picked first, then most recent originals.
+const featured = repos.filter((r) => r.featured && !r.isFork);
+const homeBuilds = [
+  ...featured,
+  ...originalRepos.filter((r) => !r.featured),
+].slice(0, 6);
+
+const latestArticles = articles.slice(0, 4);
+
+const streak = longestStreak(profile.dayCounts);
+const busiest = busiestMonth(profile.monthCounts);
+const busiestLabel = busiest.month
+  ? new Date(`${busiest.month}-01`).toLocaleString('en-GB', {
+      month: 'long',
+      year: 'numeric',
+    })
+  : '—';
+
+// The most recently touched repo drives the "currently" card.
+const active = sortedRepos[0];
+const activeLang = active?.languages[0];
+
+const yearOne = new Date(profile.joinedAt).getFullYear();
+const topLangs = profile.topLanguages.filter((l) => l.percent >= 0.6).slice(0, 7);
+---
+
+<BaseLayout>
+  <!-- ============ HERO BENTO ============ -->
+  <section class="shell hero">
+    <div class="bento">
+      <!-- Intro -->
+      <div class="b b-intro card card--spot reveal">
+        <div class="b-intro__inner">
+          <p class="label label--accent">Open source since {yearOne}</p>
+
+          <h1 class="b-intro__title">
+            Small tools that fix<br />
+            <em>specific</em> annoyances.
+          </h1>
+
+          <p class="b-intro__lede">
+            macOS menu-bar utilities, self-hosted services, and research tooling.
+            Everything here is public, deliberately small, and built because the
+            thing didn't quite exist yet.
+          </p>
+
+          <div class="b-intro__cta">
+            <a class="btn btn--accent" href="/projects">
+              Browse {profile.stats.trackedRepos} builds
+              <span aria-hidden="true">→</span>
+            </a>
+            <a class="btn btn--ghost" href="/writing">Read the notes</a>
+          </div>
+
+          <a
+            class="support"
+            href={SITE.coffee}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span class="support__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 8h1.4a2.6 2.6 0 0 1 0 5.2H17" />
+                <path d="M4 8h13v6.2A5.3 5.3 0 0 1 11.7 19.5H9.3A5.3 5.3 0 0 1 4 14.2V8Z" />
+                <path d="M8 2.6c-.5 1 .5 1.4 0 2.4M12 2.6c-.5 1 .5 1.4 0 2.4" />
+              </svg>
+            </span>
+            <span class="support__text">
+              <span class="support__title">Buy me a coffee</span>
+              <span class="support__sub">If one of these tools saved you an afternoon</span>
+            </span>
+            <span class="support__go" aria-hidden="true">↗</span>
+          </a>
+
+          <dl class="b-intro__facts">
+            <div class="fact">
+              <dt class="label">Primary language</dt>
+              <dd>{profile.topLanguages[0]?.name ?? '—'}</dd>
+            </div>
+            <div class="fact">
+              <dt class="label">Commits sampled</dt>
+              <dd class="tnum" data-countup={profile.stats.totalCommitsSampled}>
+                {profile.stats.totalCommitsSampled}
+              </dd>
+            </div>
+            <div class="fact">
+              <dt class="label">Languages touched</dt>
+              <dd class="tnum" data-countup={profile.stats.distinctLanguages}>
+                {profile.stats.distinctLanguages}
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+
+      <!-- Identity -->
+      <div class="b b-ident card card--spot reveal">
+        <div class="b-ident__inner">
+          <img
+            class="b-ident__avatar"
+            src={profile.avatar}
+            alt={`${profile.name} avatar`}
+            width="64"
+            height="64"
+            loading="eager"
+          />
+          <div class="b-ident__meta">
+            <p class="b-ident__handle">@{profile.login}</p>
+            <p class="b-ident__sub">Builder · occasional writer</p>
+          </div>
+
+          <a
+            class="btn btn--ghost btn--sm b-ident__link"
+            href={profile.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub profile <span aria-hidden="true">↗</span>
+          </a>
+
+          <div class="b-ident__rows">
+            <div class="row">
+              <span class="label">On GitHub since</span>
+              <span class="mono tnum">{yearOne}</span>
+            </div>
+            <div class="row">
+              <span class="label">Public repos</span>
+              <span class="mono tnum">{profile.publicRepos}</span>
+            </div>
+            <div class="row">
+              <span class="label">Latest push</span>
+              <span class="mono">{relativeTime(profile.stats.latestPush)}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="b b-stats card reveal" data-drift="-14px">
+        <div class="b-stats__inner">
+          <div class="tile">
+            <span class="tile__n tnum" data-countup={profile.stats.trackedRepos}>
+              {profile.stats.trackedRepos}
+            </span>
+            <span class="label">Builds tracked</span>
+          </div>
+          <div class="tile">
+            <span class="tile__n tnum" data-countup={profile.stats.originalRepos}>
+              {profile.stats.originalRepos}
+            </span>
+            <span class="label">Original</span>
+          </div>
+          <div class="tile">
+            <span class="tile__n tnum" data-countup={profile.stats.activeDays}>
+              {profile.stats.activeDays}
+            </span>
+            <span class="label">Active days</span>
+          </div>
+          <div class="tile">
+            <span class="tile__n tnum" data-countup={streak}>{streak}</span>
+            <span class="label">Day streak</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Heatmap -->
+      <div class="b b-heat card reveal" data-drift="-8px">
+        <div class="b-heat__inner">
+          <div class="b-head">
+            <h2 class="b-head__t">A year of commits</h2>
+            <p class="b-head__s mono">every public repository, last 52 weeks</p>
+          </div>
+          <Heatmap />
+        </div>
+      </div>
+
+      <!-- Languages -->
+      <div class="b b-langs card reveal" data-drift="-22px">
+        <div class="b-langs__inner">
+          <div class="b-head">
+            <h2 class="b-head__t">What it's written in</h2>
+          </div>
+
+          <LangBar languages={topLangs} height={8} max={7} />
+
+          <ul class="lang-list" role="list">
+            {topLangs.map((l) => (
+              <li class="lang-list__row">
+                <span class="lang-list__name">
+                  <span class="lang-list__dot" style={`background:${langColor(l.name)}`}></span>
+                  {l.name}
+                </span>
+                <span class="lang-list__pct mono tnum">{l.percent.toFixed(1)}%</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <!-- Currently -->
+      <div class="b b-focus card card--spot reveal" data-drift="-30px">
+        <div class="b-focus__inner">
+          <p class="label label--accent">Latest activity</p>
+
+          {active && (
+            <div class="focus__lead">
+              <h2 class="focus__repo">
+                <a class="link" href={`/projects/${active.name}`}>{active.name}</a>
+              </h2>
+              <p class="focus__desc">{active.description}</p>
+              {activeLang && (
+                <p class="focus__lang mono">
+                  <span class="lang-list__dot" style={`background:${langColor(activeLang.name)}`}></span>
+                  {activeLang.name} · {activeLang.percent.toFixed(0)}%
+                  <span class="focus__dim">· pushed {relativeTime(active.pushedAt)}</span>
+                </p>
+              )}
+            </div>
+          )}
+
+          <div class="feed">
+            <p class="label">Recent commits</p>
+            <ul class="feed__list" role="list">
+              {recentCommits.slice(0, 5).map((c) => (
+                <li class="feed__item">
+                  <span class="feed__sha mono">{c.sha}</span>
+                  <span class="feed__msg">{c.message}</span>
+                  <span class="feed__repo mono">{c.repo}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MARQUEE ============ -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      {[0, 1].map((dup) => (
+        <div class="marquee__group" data-dup={dup}>
+          {profile.topLanguages.slice(0, 12).map((l) => (
+            <span class="marquee__item">
+              <span class="lang-list__dot" style={`background:${langColor(l.name)}`}></span>
+              {l.name}
+            </span>
+          ))}
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- ============ BUILDS ============ -->
+  <section class="shell section" id="builds">
+    <div class="sec-head sec-head--sticky reveal">
+      <span class="sec-head__num">01</span>
+      <h2 class="sec-head__title">Selected builds</h2>
+      <a class="sec-head__link" href="/projects">
+        All {profile.stats.trackedRepos} <span aria-hidden="true">→</span>
+      </a>
+    </div>
+
+    <div class="build-grid" data-stagger>
+      {homeBuilds.map((repo, i) => (
+        <ProjectCard repo={repo} size={i === 0 ? 'lg' : 'md'} index={i} />
+      ))}
+    </div>
+  </section>
+
+  <!-- ============ WRITING ============ -->
+  <section class="shell section" id="writing">
+    <div class="sec-head sec-head--sticky reveal">
+      <span class="sec-head__num">02</span>
+      <h2 class="sec-head__title">Field notes</h2>
+      <a class="sec-head__link" href="/writing">
+        All writing <span aria-hidden="true">→</span>
+      </a>
+    </div>
+
+    {latestArticles.length > 0 ? (
+      <div class="article-grid" data-stagger>
+        {latestArticles.map((a, i) => (
+          <ArticleCard
+            href={`/writing/${a.id}`}
+            title={a.data.title}
+            description={a.data.description}
+            date={a.data.date}
+            tags={a.data.tags}
+            body={a.body}
+            glyph={a.data.glyph}
+            tone={a.data.tone}
+            featured={i === 0}
+            index={i + 1}
+          />
+        ))}
+      </div>
+    ) : (
+      <p class="empty">No articles published yet.</p>
+    )}
+  </section>
+
+  <!-- ============ NUMBERS ============ -->
+  <section class="shell section">
+    <div class="sec-head sec-head--sticky reveal">
+      <span class="sec-head__num">03</span>
+      <h2 class="sec-head__title">By the numbers</h2>
+    </div>
+
+    <div class="numbers reveal" data-stagger>
+      <div class="num-card card card--spot">
+        <span class="label">Busiest month</span>
+        <span class="num-card__v">{busiestLabel}</span>
+        <span class="num-card__s mono tnum">{busiest.count} commits</span>
+      </div>
+      <div class="num-card card card--spot">
+        <span class="label">Longest streak</span>
+        <span class="num-card__v tnum">{streak} days</span>
+        <span class="num-card__s mono">consecutive days with a commit</span>
+      </div>
+      <div class="num-card card card--spot">
+        <span class="label">First commit sampled</span>
+        <span class="num-card__v">{profile.stats.firstCommit}</span>
+        <span class="num-card__s mono">oldest in the public record</span>
+      </div>
+      <div class="num-card card card--spot">
+        <span class="label">Code volume</span>
+        <span class="num-card__v tnum">
+          {compact(repos.reduce((a, r) => a + r.sizeKb, 0))} KB
+        </span>
+        <span class="num-card__s mono">across {profile.stats.trackedRepos} repositories</span>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ---------- Hero bento ---------- */
+  .hero {
+    padding-top: clamp(2rem, 5vw, 4rem);
+    padding-bottom: clamp(2rem, 5vw, 4rem);
+  }
+
+  .bento {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--sp-4);
+    grid-template-areas:
+      'intro intro intro intro intro intro intro ident ident ident ident ident'
+      'intro intro intro intro intro intro intro stats stats stats stats stats'
+      'heat  heat  heat  heat  heat  heat  heat  heat  heat  heat  heat  heat'
+      'langs langs langs langs langs focus focus focus focus focus focus focus';
+  }
+
+  .b-intro { grid-area: intro; }
+  .b-ident { grid-area: ident; }
+  .b-stats { grid-area: stats; }
+  .b-heat  { grid-area: heat; }
+  .b-langs { grid-area: langs; }
+  .b-focus { grid-area: focus; }
+
+  @media (max-width: 1024px) {
+    .bento {
+      grid-template-areas:
+        'intro intro intro intro intro intro intro intro ident ident ident ident'
+        'stats stats stats stats stats stats stats stats stats stats stats stats'
+        'heat  heat  heat  heat  heat  heat  heat  heat  heat  heat  heat  heat'
+        'langs langs langs langs langs langs focus focus focus focus focus focus';
+    }
+  }
+
+  @media (max-width: 780px) {
+    .bento {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        'intro'
+        'ident'
+        'stats'
+        'heat'
+        'langs'
+        'focus';
+    }
+  }
+
+  .b {
+    position: relative;
+  }
+
+  .b > div {
+    padding: var(--sp-5);
+    height: 100%;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .b-intro > .b-intro__inner {
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    justify-content: flex-start;
+    gap: 1.35rem;
+  }
+
+  /* ---------- Support / Buy me a coffee ---------- */
+  .support {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.85rem 1.05rem;
+    border: 1px solid var(--line-mid);
+    border-radius: var(--r-md);
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--accent) 8%, transparent),
+      transparent 62%
+    );
+    transition: border-color var(--dur) var(--ease-out),
+      transform var(--dur) var(--ease-out),
+      box-shadow var(--dur) var(--ease-out);
+  }
+
+  .support:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+  }
+
+  .support__icon {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--r-full);
+    background: var(--accent-soft);
+    color: var(--accent);
+    flex-shrink: 0;
+    transition: transform var(--dur) var(--ease-spring);
+  }
+
+  .support:hover .support__icon {
+    transform: rotate(-10deg) scale(1.08);
+  }
+
+  .support__icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .support__text {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+  }
+
+  .support__title {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+
+  .support__sub {
+    font-size: var(--step--2);
+    color: var(--ink-mute);
+    line-height: 1.35;
+  }
+
+  .support__go {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--ink-faint);
+    transition: transform var(--dur) var(--ease-spring),
+      color var(--dur-fast) var(--ease-out);
+  }
+
+  .support:hover .support__go {
+    color: var(--accent);
+    transform: translate(2px, -2px);
+  }
+
+  /* ---------- Intro ---------- */
+  .b-intro__title {
+    font-size: var(--step-4);
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+    font-variation-settings: 'SOFT' 20, 'WONK' 1, 'opsz' 100;
+  }
+
+  .b-intro__title em {
+    font-style: italic;
+    color: var(--accent);
+    font-variation-settings: 'SOFT' 40, 'WONK' 1, 'opsz' 100;
+  }
+
+  .b-intro__lede {
+    max-width: 46ch;
+    color: var(--ink-soft);
+    font-size: var(--step-0);
+  }
+
+  .b-intro__cta {
+    display: flex;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+  }
+
+  .b-intro__facts {
+    display: flex;
+    gap: var(--sp-6);
+    flex-wrap: wrap;
+    padding-top: 1.1rem;
+    margin-top: auto;
+    border-top: 1px solid var(--line);
+  }
+
+  .fact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .fact dd {
+    font-family: var(--font-serif);
+    font-size: var(--step-1);
+    color: var(--ink);
+    line-height: 1.1;
+  }
+
+  /* ---------- Identity ---------- */
+  .b-ident__inner {
+    gap: 1rem;
+  }
+
+  .b-ident__avatar {
+    width: 58px;
+    height: 58px;
+    border-radius: var(--r-md);
+    border: 1px solid var(--line-mid);
+    filter: grayscale(1) contrast(1.05);
+    transition: filter var(--dur) var(--ease-out);
+  }
+
+  .b-ident:hover .b-ident__avatar {
+    filter: none;
+  }
+
+  .b-ident__handle {
+    font-family: var(--font-mono);
+    font-size: var(--step-1);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+
+  .b-ident__sub {
+    font-size: var(--step--1);
+    color: var(--ink-mute);
+  }
+
+  .b-ident__link {
+    align-self: flex-start;
+  }
+
+  .b-ident__rows {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: auto;
+    border-top: 1px solid var(--line);
+  }
+
+  .b-ident__rows .row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .b-ident__rows .row:last-child {
+    border-bottom: 0;
+  }
+
+  /* ---------- Stats ---------- */
+  .b-stats__inner {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    padding: 0 !important;
+  }
+
+  .tile {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: var(--sp-5);
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    transition: background-color var(--dur) var(--ease-out);
+  }
+
+  .tile:hover {
+    background: var(--accent-soft);
+  }
+
+  .tile:nth-child(2n) { border-right: 0; }
+  .tile:nth-child(n + 3) { border-bottom: 0; }
+
+  .tile__n {
+    font-family: var(--font-serif);
+    font-size: var(--step-3);
+    line-height: 1;
+    color: var(--ink);
+  }
+
+  /* ---------- Heat ---------- */
+  .b-heat__inner {
+    gap: 1.25rem;
+  }
+
+  .b-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .b-head__t {
+    font-size: var(--step-1);
+  }
+
+  .b-head__s {
+    font-size: var(--step--2);
+    color: var(--ink-mute);
+  }
+
+  /* ---------- Languages ---------- */
+  .b-langs__inner {
+    gap: 1.1rem;
+  }
+
+  .lang-list {
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
+  }
+
+  .lang-list__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid var(--line);
+    font-size: var(--step--1);
+  }
+
+  .lang-list__row:last-child {
+    border-bottom: 0;
+  }
+
+  .lang-list__name {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    color: var(--ink-soft);
+  }
+
+  .lang-list__dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: inline-block;
+  }
+
+  .lang-list__pct {
+    color: var(--ink-mute);
+    font-size: var(--step--2);
+  }
+
+  /* ---------- Focus ---------- */
+  .b-focus__inner {
+    gap: 1.25rem;
+  }
+
+  .focus__repo {
+    font-family: var(--font-mono);
+    font-size: var(--step-2);
+    letter-spacing: -0.035em;
+    margin-top: 0.5rem;
+  }
+
+  .focus__desc {
+    margin-top: 0.5rem;
+    color: var(--ink-soft);
+    font-size: var(--step--1);
+    max-width: 52ch;
+  }
+
+  .focus__lang {
+    display: flex;
+    align-items: center;
+    gap: 0.45em;
+    margin-top: 0.7rem;
+    font-size: var(--step--2);
+    color: var(--ink-mute);
+  }
+
+  .focus__dim {
+    color: var(--ink-faint);
+  }
+
+  .feed {
+    margin-top: auto;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .feed__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .feed__item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: baseline;
+    gap: 0.7rem;
+    padding: 0.42rem 0;
+    border-bottom: 1px solid var(--line);
+    font-size: var(--step--2);
+  }
+
+  .feed__item:last-child {
+    border-bottom: 0;
+  }
+
+  .feed__sha {
+    color: var(--accent);
+    font-size: 10px;
+  }
+
+  .feed__msg {
+    color: var(--ink-soft);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .feed__repo {
+    color: var(--ink-faint);
+    font-size: 10px;
+  }
+
+  /* ---------- Marquee ---------- */
+  .marquee {
+    overflow: hidden;
+    border-block: 1px solid var(--line);
+    padding-block: 0.9rem;
+    margin-block: var(--sp-4) 0;
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  .marquee__track {
+    display: flex;
+    width: max-content;
+    animation: slide 46s linear infinite;
+  }
+
+  .marquee:hover .marquee__track {
+    animation-play-state: paused;
+  }
+
+  @keyframes slide {
+    to { transform: translateX(-50%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee__track { animation: none; }
+  }
+
+  .marquee__group {
+    display: flex;
+    align-items: center;
+  }
+
+  .marquee__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    padding-inline: 1.4rem;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--ink-mute);
+    white-space: nowrap;
+  }
+
+  .marquee__item::after {
+    content: '/';
+    margin-left: 1.4rem;
+    color: var(--ink-faint);
+  }
+
+  /* ---------- Grids ---------- */
+  .build-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--sp-4);
+  }
+
+  .build-grid > :first-child {
+    grid-column: span 2;
+  }
+
+  @media (max-width: 700px) {
+    .build-grid {
+      grid-template-columns: 1fr;
+    }
+    .build-grid > :first-child {
+      grid-column: span 1;
+    }
+  }
+
+  .article-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: var(--sp-4);
+  }
+
+  .article-grid > :first-child {
+    grid-column: 1 / -1;
+  }
+
+  .numbers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: var(--sp-4);
+  }
+
+  .num-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: var(--sp-5);
+  }
+
+  .num-card__v {
+    font-family: var(--font-serif);
+    font-size: var(--step-2);
+    line-height: 1.05;
+    color: var(--ink);
+  }
+
+  .num-card__s {
+    font-size: var(--step--2);
+    color: var(--ink-mute);
+    margin-top: auto;
+  }
+
+  .empty {
+    color: var(--ink-mute);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+  }
+</style>

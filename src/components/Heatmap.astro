@@ -1,0 +1,213 @@
+---
+/**
+ * 52-week commit heatmap built from real GitHub activity.
+ * Columns are weeks, rows are weekdays — same grammar as GitHub's
+ * contribution graph, restyled to the site's ember palette.
+ */
+import { buildHeatmap, profile } from '../lib/data';
+
+interface Props {
+  weeks?: number;
+  compact?: boolean;
+}
+
+const { weeks = 52, compact = false } = Astro.props;
+const { cols, months, total, activeDays, max } = buildHeatmap(
+  profile.dayCounts,
+  weeks
+);
+
+const weekdayLabels = ['', 'Mon', '', 'Wed', '', 'Fri', ''];
+---
+
+<div class="heat" data-compact={compact ? 'true' : 'false'}>
+  <div class="heat__scroll">
+    <div class="heat__grid">
+      <div class="heat__months">
+        {months.map((m) => (
+          <span class="heat__month" style={`grid-column-start:${m.index + 1}`}>{m.label}</span>
+        ))}
+      </div>
+
+      <div class="heat__body">
+        <div class="heat__weekdays" aria-hidden="true">
+          {weekdayLabels.map((d) => (
+            <span class="heat__weekday">{d}</span>
+          ))}
+        </div>
+
+        <div class="heat__cols" role="img" aria-label={`${total} commits across ${activeDays} active days in the last year`}>
+          {cols.map((col) => (
+            <div class="heat__col">
+              {col.map((d) => (
+                <span
+                  class={`heat__cell heat__cell--l${d.level}`}
+                  data-date={d.date}
+                  data-commits={d.count}
+                  title={d.inRange ? `${d.count} commit${d.count === 1 ? '' : 's'} on ${d.date}` : ''}
+                  style={!d.inRange ? 'opacity:.28' : undefined}
+                ></span>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="heat__legend">
+    <span class="label">
+      {total} commits · {activeDays} active days
+    </span>
+    <span class="heat__scale" aria-hidden="true">
+      <span class="heat__cell heat__cell--l0"></span>
+      <span class="heat__cell heat__cell--l1"></span>
+      <span class="heat__cell heat__cell--l2"></span>
+      <span class="heat__cell heat__cell--l3"></span>
+      <span class="heat__cell heat__cell--l4"></span>
+    </span>
+  </div>
+</div>
+
+<style>
+  .heat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .heat__scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 4px;
+    scrollbar-width: thin;
+  }
+
+  .heat__grid {
+    min-width: max-content;
+  }
+
+  .heat__months {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 13px;
+    margin-left: 30px;
+    margin-bottom: 5px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+
+  .heat__month {
+    grid-row: 1;
+    white-space: nowrap;
+  }
+
+  .heat__body {
+    display: flex;
+    gap: 6px;
+  }
+
+  .heat__weekdays {
+    display: grid;
+    grid-template-rows: repeat(7, 11px);
+    gap: 2px;
+    width: 24px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--ink-mute);
+  }
+
+  .heat__weekday {
+    display: flex;
+    align-items: center;
+    height: 11px;
+  }
+
+  .heat__cols {
+    display: flex;
+    gap: 2px;
+  }
+
+  .heat__col {
+    display: grid;
+    grid-template-rows: repeat(7, 11px);
+    gap: 2px;
+  }
+
+  .heat__cell {
+    width: 11px;
+    height: 11px;
+    border-radius: 2.5px;
+    background: var(--heat-0);
+    transition: transform var(--dur-fast) var(--ease-spring),
+      outline-color var(--dur-fast);
+    outline: 1px solid transparent;
+  }
+
+  .heat__cell:hover {
+    transform: scale(1.55);
+    outline-color: var(--ink);
+    position: relative;
+    z-index: 2;
+  }
+
+  .heat__cell--l0 { background: var(--heat-0); }
+  .heat__cell--l1 { background: var(--heat-1); }
+  .heat__cell--l2 { background: var(--heat-2); }
+  .heat__cell--l3 { background: var(--heat-3); }
+  .heat__cell--l4 { background: var(--heat-4); }
+
+  .heat__legend {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .heat__scale {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+  }
+
+  .heat__scale .heat__cell:hover {
+    transform: none;
+    outline-color: transparent;
+  }
+
+  [data-compact='true'] .heat__cell {
+    width: 9px;
+    height: 9px;
+  }
+
+  [data-compact='true'] .heat__col,
+  [data-compact='true'] .heat__weekdays {
+    grid-template-rows: repeat(7, 9px);
+  }
+
+  [data-compact='true'] .heat__months {
+    grid-auto-columns: 11px;
+  }
+</style>
+
+<script>
+  /*
+   * On narrow screens the 52-week grid is wider than its container, so it
+   * becomes horizontally scrollable — but it starts at the far left, which is
+   * a year ago and mostly empty. Park it on the recent end instead, where the
+   * activity actually is. No-op on wide screens, where the whole grid fits.
+   */
+  const parkAtRecent = () => {
+    document.querySelectorAll<HTMLElement>('.heat__scroll').forEach((el) => {
+      if (el.scrollWidth <= el.clientWidth + 4) return;
+      el.scrollLeft = el.scrollWidth;
+    });
+  };
+
+  parkAtRecent();
+  document.addEventListener('astro:page-load', parkAtRecent);
+</script>

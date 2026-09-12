@@ -1,0 +1,95 @@
+---
+/**
+ * Theme switch. The actual preference is applied by a tiny blocking
+ * script in <head> so there is no flash of the wrong theme; this
+ * component only renders the control and wires up the click.
+ */
+---
+
+<button
+  class="tt"
+  id="theme-toggle"
+  type="button"
+  aria-label="Switch colour theme"
+  title="Switch theme"
+>
+  <span class="tt__icons" aria-hidden="true">
+    <!-- sun -->
+    <svg class="tt__sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+      <circle cx="12" cy="12" r="4.2" />
+      <path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4L17 7M7 17l-1.6 1.6" />
+    </svg>
+    <!-- moon -->
+    <svg class="tt__moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 14.2A8.4 8.4 0 1 1 9.8 4a6.7 6.7 0 0 0 10.2 10.2Z" />
+    </svg>
+  </span>
+</button>
+
+<style>
+  .tt {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: 1px solid var(--line-mid);
+    border-radius: var(--r-full);
+    background: transparent;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: color var(--dur-fast) var(--ease-out),
+      border-color var(--dur-fast) var(--ease-out),
+      transform var(--dur) var(--ease-spring);
+  }
+
+  .tt:hover {
+    color: var(--accent);
+    border-color: var(--accent-line);
+    transform: rotate(18deg);
+  }
+
+  .tt__icons {
+    position: relative;
+    display: block;
+    width: 17px;
+    height: 17px;
+  }
+
+  .tt svg {
+    position: absolute;
+    inset: 0;
+    width: 17px;
+    height: 17px;
+    transition: opacity var(--dur) var(--ease-out),
+      transform var(--dur) var(--ease-spring);
+  }
+
+  :global(html[data-theme='light']) .tt__moon,
+  :global(html[data-theme='dark']) .tt__sun {
+    opacity: 0;
+    transform: scale(0.55) rotate(-40deg);
+  }
+
+  :global(html[data-theme='light']) .tt__sun,
+  :global(html[data-theme='dark']) .tt__moon {
+    opacity: 1;
+    transform: none;
+  }
+</style>
+
+<script>
+  const KEY = 'theme';
+  const root = document.documentElement;
+
+  document.getElementById('theme-toggle')?.addEventListener('click', () => {
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try {
+      localStorage.setItem(KEY, next);
+    } catch {
+      /* private mode — session-only theme is fine */
+    }
+    document.dispatchEvent(new CustomEvent('themechange', { detail: next }));
+  });
+</script>

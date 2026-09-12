@@ -1,0 +1,171 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { sortedRepos } from '../lib/data';
+
+// Offer a few real destinations instead of a dead end.
+const suggestions = sortedRepos.slice(0, 3);
+---
+
+<BaseLayout
+  rawTitle="404 — nothing at this address"
+  description="That page doesn't exist. Here's the way back."
+  noindex
+>
+  <section class="shell nf">
+    <p class="label label--accent">Error 404</p>
+
+    <h1 class="nf__title">
+      <span class="nf__code">404</span>
+      <span class="nf__msg">This path doesn't resolve.</span>
+    </h1>
+
+    <p class="nf__lede">
+      The page was moved, renamed, or never existed. The links below all work.
+    </p>
+
+    <div class="nf__actions">
+      <a class="btn btn--accent" href="/">Back to the index <span aria-hidden="true">→</span></a>
+      <a class="btn btn--ghost" href="/projects">Browse builds</a>
+      <button class="btn btn--ghost" id="cmdk-404" type="button">Search <kbd>⌘K</kbd></button>
+    </div>
+
+    <div class="nf__suggest">
+      <p class="label">Try one of these</p>
+      <ul role="list">
+        {suggestions.map((r) => (
+          <li>
+            <a class="nf__link" href={`/projects/${r.name}`}>
+              <span class="mono nf__name">{r.name}</span>
+              <span class="nf__desc">{r.description}</span>
+              <span class="nf__go" aria-hidden="true">↗</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .nf {
+    padding-top: clamp(3rem, 9vw, 8rem);
+    padding-bottom: var(--sp-9);
+    max-width: 820px;
+  }
+
+  .nf__title {
+    display: flex;
+    align-items: baseline;
+    gap: clamp(1rem, 3vw, 2rem);
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+
+  .nf__code {
+    font-family: var(--font-serif);
+    font-size: clamp(4rem, 14vw, 9rem);
+    line-height: 0.85;
+    letter-spacing: -0.05em;
+    color: var(--accent);
+    font-variation-settings: 'SOFT' 30, 'WONK' 1, 'opsz' 144;
+  }
+
+  .nf__msg {
+    font-family: var(--font-serif);
+    font-size: var(--step-2);
+    color: var(--ink-soft);
+    max-width: 14ch;
+  }
+
+  .nf__lede {
+    margin-top: 1.5rem;
+    max-width: 48ch;
+    color: var(--ink-soft);
+    font-size: var(--step-1);
+    line-height: 1.5;
+  }
+
+  .nf__actions {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-top: var(--sp-5);
+  }
+
+  .nf__actions kbd {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    padding: 1px 4px;
+    border: 1px solid var(--line-mid);
+    border-radius: 3px;
+    margin-left: 0.3em;
+  }
+
+  .nf__suggest {
+    margin-top: var(--sp-8);
+    padding-top: var(--sp-5);
+    border-top: 1px solid var(--line);
+  }
+
+  .nf__suggest ul {
+    margin-top: var(--sp-4);
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--line);
+  }
+
+  .nf__link {
+    display: grid;
+    grid-template-columns: minmax(140px, 200px) minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem 0.4rem;
+    border-bottom: 1px solid var(--line);
+    transition: background-color var(--dur-fast), padding-left var(--dur) var(--ease-out);
+  }
+
+  .nf__link:hover {
+    background: var(--accent-soft);
+    padding-left: 0.9rem;
+  }
+
+  .nf__name {
+    font-size: var(--step--1);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+
+  .nf__desc {
+    font-size: var(--step--2);
+    color: var(--ink-mute);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .nf__go {
+    color: var(--ink-faint);
+    font-family: var(--font-mono);
+  }
+
+  .nf__link:hover .nf__go {
+    color: var(--accent);
+  }
+
+  @media (max-width: 620px) {
+    .nf__link {
+      grid-template-columns: 1fr auto;
+    }
+
+    .nf__desc {
+      grid-column: 1 / -1;
+      white-space: normal;
+    }
+  }
+</style>
+
+<script>
+  document.getElementById('cmdk-404')?.addEventListener('click', () => {
+    document.getElementById('cmdk-open')?.dispatchEvent(new Event('click'));
+  });
+</script>

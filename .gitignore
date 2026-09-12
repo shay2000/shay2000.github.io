@@ -1,0 +1,29 @@
+# build output
+dist/
+.astro/
+
+# agent working notes — internal, not part of the published site
+.workbuddy-ai/
+
+# dependencies
+node_modules/
+.npm-cache/
+.npm-tmp/
+
+# logs
+npm-debug.log*
+yarn-error.log*
+
+# environment
+.env
+.env.production
+.env.local
+
+# macOS
+.DS_Store
+
+# editors
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp

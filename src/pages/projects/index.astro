@@ -1,0 +1,305 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import LangBar from '../../components/LangBar.astro';
+import { repos, profile, sortedRepos } from '../../lib/data';
+import { langColor, relativeTime, compact } from '../../lib/site';
+
+// Languages actually present, with counts, for the filter bar.
+const langCounts = new Map<string, number>();
+for (const r of repos) {
+  for (const l of r.languages.slice(0, 2)) {
+    langCounts.set(l.name, (langCounts.get(l.name) || 0) + 1);
+  }
+}
+const languages = [...langCounts.entries()]
+  .sort((a, b) => b[1] - a[1])
+  .slice(0, 10);
+
+const originals = sortedRepos.filter((r) => !r.isFork);
+const forks = sortedRepos.filter((r) => r.isFork);
+---
+
+<BaseLayout
+  title="Builds"
+  description={`${profile.stats.trackedRepos} open-source repositories by shay2000 — ${profile.stats.distinctLanguages} languages, most recently pushed ${relativeTime(profile.stats.latestPush)}.`}
+>
+  <section class="shell page-head">
+    <p class="label label--accent">Index</p>
+    <h1 class="page-head__title">Every build,<br />out in the open.</h1>
+    <p class="page-head__lede">
+      {profile.stats.trackedRepos} repositories tracked live from GitHub —
+      {profile.stats.originalRepos} written from scratch,
+      {profile.stats.forkedRepos} forks carrying local changes.
+      Sorted by the most recent push.
+    </p>
+
+    <div class="head-stats">
+      <div class="hs">
+        <span class="hs__n tnum">{profile.stats.trackedRepos}</span>
+        <span class="label">Repos</span>
+      </div>
+      <div class="hs">
+        <span class="hs__n tnum">{profile.stats.distinctLanguages}</span>
+        <span class="label">Languages</span>
+      </div>
+      <div class="hs">
+        <span class="hs__n tnum">{profile.stats.totalCommitsSampled}</span>
+        <span class="label">Commits</span>
+      </div>
+      <div class="hs">
+        <span class="hs__n tnum">{profile.stats.activeDays}</span>
+        <span class="label">Active days</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="shell filters" aria-label="Filter builds">
+    <div class="filters__row">
+      <span class="label">Type</span>
+      <div class="chips" data-group="type">
+        <button class="chip is-on" data-filter="all" type="button">
+          All <span class="chip__n">{repos.length}</span>
+        </button>
+        <button class="chip" data-filter="original" type="button">
+          Original <span class="chip__n">{originals.length}</span>
+        </button>
+        <button class="chip" data-filter="fork" type="button">
+          Forks <span class="chip__n">{forks.length}</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="filters__row">
+      <span class="label">Language</span>
+      <div class="chips" data-group="lang">
+        <button class="chip is-on" data-lang="all" type="button">Any</button>
+        {languages.map(([name, n]) => (
+          <button class="chip" data-lang={name} type="button">
+            <span class="chip__dot" style={`background:${langColor(name)}`}></span>
+            {name} <span class="chip__n">{n}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <p class="filters__count" id="filter-count" aria-live="polite"></p>
+  </section>
+
+  <section class="shell">
+    <div class="build-grid" id="build-grid" data-stagger>
+      {sortedRepos.map((repo) => (
+        <div
+          class="grid-item"
+          data-type={repo.isFork ? 'fork' : 'original'}
+          data-langs={repo.languages.slice(0, 2).map((l) => l.name).join('|')}
+        >
+          <ProjectCard repo={repo} />
+        </div>
+      ))}
+    </div>
+
+    <p class="no-results" id="no-results" hidden>
+      Nothing matches that combination.
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-head {
+    padding-top: clamp(2.5rem, 6vw, 5rem);
+    padding-bottom: var(--sp-6);
+  }
+
+  .page-head__title {
+    font-size: var(--step-4);
+    margin-top: 0.6rem;
+    letter-spacing: -0.032em;
+  }
+
+  .page-head__lede {
+    margin-top: 1.1rem;
+    max-width: 60ch;
+    color: var(--ink-soft);
+    font-size: var(--step-1);
+    line-height: 1.5;
+  }
+
+  .head-stats {
+    display: flex;
+    gap: var(--sp-6);
+    flex-wrap: wrap;
+    margin-top: var(--sp-6);
+    padding-top: var(--sp-5);
+    border-top: 1px solid var(--line);
+  }
+
+  .hs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .hs__n {
+    font-family: var(--font-serif);
+    font-size: var(--step-2);
+    line-height: 1;
+  }
+
+  /* ---- filters ---- */
+  .filters {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    padding-bottom: var(--sp-5);
+    margin-bottom: var(--sp-5);
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: var(--header-h);
+    background: color-mix(in srgb, var(--bg) 90%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 100;
+    padding-top: var(--sp-3);
+  }
+
+  .filters__row {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-4);
+    flex-wrap: wrap;
+  }
+
+  .filters__row > .label {
+    min-width: 76px;
+  }
+
+  .chips {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    padding: 0.32em 0.75em;
+    border: 1px solid var(--line-mid);
+    border-radius: var(--r-full);
+    background: var(--bg-elev);
+    color: var(--ink-soft);
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    cursor: pointer;
+    transition: border-color var(--dur-fast) var(--ease-out),
+      color var(--dur-fast) var(--ease-out),
+      background-color var(--dur-fast) var(--ease-out),
+      transform var(--dur-fast) var(--ease-out);
+  }
+
+  .chip:hover {
+    border-color: var(--line-strong);
+    transform: translateY(-1px);
+  }
+
+  .chip.is-on {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+
+  .chip__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .chip__n {
+    color: var(--ink-faint);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .chip.is-on .chip__n {
+    color: color-mix(in srgb, var(--accent) 65%, var(--ink-faint));
+  }
+
+  .filters__count {
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    color: var(--ink-mute);
+  }
+
+  /* ---- grid ---- */
+  .build-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    gap: var(--sp-4);
+  }
+
+  .grid-item {
+    display: contents;
+  }
+
+  .grid-item.is-hidden {
+    display: none;
+  }
+
+  .no-results {
+    padding: var(--sp-8) 0;
+    text-align: center;
+    color: var(--ink-mute);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+  }
+</style>
+
+<script>
+  const grid = document.getElementById('build-grid');
+  const items = Array.from(document.querySelectorAll<HTMLElement>('.grid-item'));
+  const countEl = document.getElementById('filter-count');
+  const noResults = document.getElementById('no-results');
+
+  let type = 'all';
+  let lang = 'all';
+
+  function apply() {
+    let visible = 0;
+
+    for (const item of items) {
+      const typeOk = type === 'all' || item.dataset.type === type;
+      const langs = (item.dataset.langs || '').split('|');
+      const langOk = lang === 'all' || langs.includes(lang);
+      const show = typeOk && langOk;
+      item.classList.toggle('is-hidden', !show);
+      if (show) visible++;
+    }
+
+    if (countEl) {
+      countEl.textContent = `Showing ${visible} of ${items.length}`;
+    }
+    noResults?.toggleAttribute('hidden', visible > 0);
+  }
+
+  document.querySelector('[data-group="type"]')?.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('.chip');
+    if (!btn) return;
+    type = btn.dataset.filter || 'all';
+    btn.parentElement
+      ?.querySelectorAll('.chip')
+      .forEach((c) => c.classList.toggle('is-on', c === btn));
+    apply();
+  });
+
+  document.querySelector('[data-group="lang"]')?.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('.chip');
+    if (!btn) return;
+    lang = btn.dataset.lang || 'all';
+    btn.parentElement
+      ?.querySelectorAll('.chip')
+      .forEach((c) => c.classList.toggle('is-on', c === btn));
+    apply();
+  });
+
+  apply();
+</script>

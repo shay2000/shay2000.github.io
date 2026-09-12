@@ -1,0 +1,253 @@
+---
+/**
+ * Repository card. Renders straight from the GitHub data so the numbers
+ * are always the real ones.
+ */
+import LangBar from './LangBar.astro';
+import type { Repo } from '../lib/data';
+import { langColor, relativeTime, compact } from '../lib/site';
+
+interface Props {
+  repo: Repo;
+  /** Larger treatment for the featured grid. */
+  size?: 'sm' | 'md' | 'lg';
+  index?: number;
+}
+
+const { repo, size = 'md', index } = Astro.props;
+
+const status = repo.isArchived
+  ? 'archived'
+  : Date.now() - new Date(repo.pushedAt).getTime() < 30 * 86_400_000
+    ? 'active'
+    : 'quiet';
+---
+
+<article class:list={['card', 'card--spot', 'pc', `pc--${size}`, 'reveal']}>
+  <a class="pc__link" href={`/projects/${repo.name}`} aria-label={`${repo.name} — project details`}>
+    <div class="pc__head">
+      <h3 class="pc__name">{repo.name}</h3>
+
+      <p class="pc__desc">
+        {repo.description || 'No description yet — read the source.'}
+      </p>
+    </div>
+
+    <div class="pc__mid">
+      {repo.languages.length > 0 && (
+        <LangBar languages={repo.languages} height={5} max={5} />
+      )}
+
+      {repo.languages.length > 0 && (
+        <div class="pc__langs">
+          {repo.languages.slice(0, 3).map((l) => (
+            <span class="pc__lang">
+              <span class="pc__swatch" style={`background:${langColor(l.name)}`}></span>
+              {l.name}
+              <span class="pc__pct tnum">{l.percent.toFixed(0)}%</span>
+            </span>
+          ))}
+          {repo.languages.length > 3 && (
+            <span class="pc__lang pc__lang--more">+{repo.languages.length - 3}</span>
+          )}
+        </div>
+      )}
+    </div>
+
+    <div class="pc__foot">
+      <div class="pc__stats">
+        <span class:list={['pc__status', `pc__status--${status}`]}>
+          <span class="pc__dot"></span>{status}
+        </span>
+        {repo.stars > 0 && (
+          <span class="pc__stat" title={`${repo.stars} stars`}>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 3.6 2.6 5.3 5.9.85-4.25 4.15 1 5.85L12 17l-5.25 2.75 1-5.85L3.5 9.75l5.9-.85Z"/></svg>
+            <span class="tnum">{compact(repo.stars)}</span>
+          </span>
+        )}
+        <span class="pc__stat" title="Last push">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/>
+          </svg>
+          {relativeTime(repo.pushedAt)}
+        </span>
+        {repo.isFork && <span class="pc__stat pc__stat--dim">fork</span>}
+      </div>
+
+      <span class="pc__go" aria-hidden="true">↗</span>
+    </div>
+  </a>
+</article>
+
+<style>
+  .pc {
+    height: 100%;
+  }
+
+  .pc__link {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+    height: 100%;
+    padding: var(--sp-5);
+    position: relative;
+    z-index: 1;
+  }
+
+  .pc--lg .pc__link {
+    padding: var(--sp-6);
+    gap: var(--sp-5);
+  }
+
+  .pc__head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .pc__name {
+    font-family: var(--font-mono);
+    font-size: var(--step-1);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 1.15;
+    color: var(--ink);
+    transition: color var(--dur-fast) var(--ease-out);
+    word-break: break-word;
+  }
+
+  .pc--lg .pc__name {
+    font-size: var(--step-2);
+  }
+
+  .pc__link:hover .pc__name {
+    color: var(--accent);
+  }
+
+  .pc__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+
+  .pc__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--ink-faint);
+  }
+
+  .pc__status--active .pc__dot {
+    background: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.16);
+  }
+
+  .pc__status--quiet .pc__dot {
+    background: var(--ink-faint);
+  }
+
+  .pc__status--archived .pc__dot {
+    background: #a16207;
+  }
+
+  .pc__desc {
+    font-size: var(--step--1);
+    line-height: 1.6;
+    color: var(--ink-soft);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .pc__mid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    margin-top: auto;
+  }
+
+  .pc__langs {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+  }
+
+  .pc__lang {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-mute);
+  }
+
+  .pc__swatch {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .pc__pct {
+    color: var(--ink-faint);
+  }
+
+  .pc__lang--more {
+    color: var(--ink-faint);
+  }
+
+  .pc__foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-3);
+    padding-top: var(--sp-3);
+    border-top: 1px solid var(--line);
+  }
+
+  .pc__stats {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+  }
+
+  .pc__stat {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.32em;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-mute);
+  }
+
+  .pc__stat svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .pc__stat--dim {
+    color: var(--ink-faint);
+  }
+
+  .pc__go {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--ink-faint);
+    transition: transform var(--dur) var(--ease-spring),
+      color var(--dur-fast) var(--ease-out);
+  }
+
+  .pc__link:hover .pc__go {
+    color: var(--accent);
+    transform: translate(2px, -2px);
+  }
+</style>
