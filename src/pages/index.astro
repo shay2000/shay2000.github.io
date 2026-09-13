@@ -845,7 +845,9 @@ const topLangs = profile.topLanguages.filter((l) => l.percent >= 0.6).slice(0, 7
   /* ---------- Grids ---------- */
   .build-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    /* min(100%, …) so the track can shrink below 300px on narrow phones
+       rather than overflow the container. */
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
     gap: var(--sp-4);
   }
 
@@ -864,7 +866,9 @@ const topLangs = profile.topLanguages.filter((l) => l.percent >= 0.6).slice(0, 7
 
   .article-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    /* min(100%, …) so the track can shrink below 340px on narrow phones
+       rather than overflow the container. */
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
     gap: var(--sp-4);
   }
 
@@ -874,7 +878,7 @@ const topLangs = profile.topLanguages.filter((l) => l.percent >= 0.6).slice(0, 7
 
   .numbers {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
     gap: var(--sp-4);
   }
 

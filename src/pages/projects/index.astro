@@ -233,7 +233,7 @@ const forks = sortedRepos.filter((r) => r.isFork);
   /* ---- grid ---- */
   .build-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 310px), 1fr));
     gap: var(--sp-4);
   }
 

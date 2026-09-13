@@ -225,7 +225,10 @@ const totalMinutes = articles.reduce((a, x) => a + readingTime(x.body), 0);
   .featured-list,
   .article-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    /* The min(100%, …) guard lets the track shrink below 340px on narrow
+       phones instead of overflowing the container and running the cards
+       into the right edge while the left gutter stays. */
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
     gap: var(--sp-4);
   }
 
