@@ -230,6 +230,15 @@ const totalMinutes = articles.reduce((a, x) => a + readingTime(x.body), 0);
   }
 
   .featured-list {
+    /*
+     * The featured pieces render in their own grid above the main article
+     * grid. Inheriting `auto-fill` gave them the same three tracks as the
+     * grid below, so the pair filled two thirds of the row and left a
+     * ~370px void beside them while every row underneath ran full width.
+     * `auto-fit` collapses the unused track, so the pair divides the row
+     * evenly and still drops to one column on narrow screens.
+     */
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
     margin-bottom: var(--sp-4);
   }
 
