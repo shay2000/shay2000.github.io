@@ -668,7 +668,16 @@ const topLangs = profile.topLanguages.filter((l) => l.percent >= 0.6).slice(0, 7
   .lang-list {
     display: flex;
     flex-direction: column;
-    margin-top: auto;
+    /*
+     * The card is stretched by the grid to match the taller "Latest activity"
+     * card beside it, which leaves ~190px of slack. `margin-top: auto` used to
+     * absorb all of it, dumping one large gap between the language bar and the
+     * list. Letting the list grow and share that slack between the rows keeps
+     * the card full without the dead band. On one column there is no slack, so
+     * the rows sit at their natural height.
+     */
+    flex: 1;
+    justify-content: space-between;
   }
 
   .lang-list__row {
