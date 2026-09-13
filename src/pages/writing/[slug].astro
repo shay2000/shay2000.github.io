@@ -200,7 +200,16 @@ const showToc = toc.length >= 3;
 
   @media (max-width: 1040px) {
     .art {
-      grid-template-columns: 1fr;
+      /*
+       * Must stay minmax(0, 1fr), not a bare 1fr. A bare `1fr` track keeps an
+       * automatic minimum equal to its widest item's min-content size, and the
+       * prose holds code blocks whose min-content is ~780px. On a phone that
+       * dragged the single track out to 676px inside a 339px content box, so
+       * the whole article ran off the right edge and the page scrolled
+       * sideways. The explicit 0 minimum lets the track shrink and leaves the
+       * code block to scroll inside its own frame, which is what it is for.
+       */
+      grid-template-columns: minmax(0, 1fr);
     }
 
     .art__head {
