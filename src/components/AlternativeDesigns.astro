@@ -1,0 +1,37 @@
+---
+const links = [
+  { href: '/alternative-designs', label: 'Mood board & overview' },
+  { href: '/alternative-designs/atlas', label: '01 — Atlas' },
+  { href: '/alternative-designs/studio', label: '02 — Studio' },
+  { href: '/alternative-designs/observatory', label: '03 — Observatory' },
+  { href: '/alternative-designs/fieldnotes', label: '04 — Fieldnotes' },
+  { href: '/', label: 'Original homepage' },
+];
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+<details class="design-switcher">
+  <summary>Alternative designs <span aria-hidden="true">⌄</span></summary>
+  <nav aria-label="Alternative designs" class="design-menu">
+    {links.map(link => <a href={link.href} aria-current={path === link.href ? 'page' : undefined}>{link.label}<span aria-hidden="true">↗</span></a>)}
+  </nav>
+</details>
+<style>
+  .design-switcher { position: relative; font-family: 'Inter Variable', sans-serif; font-size: 12px; line-height: 1.5; color: inherit; }
+  summary { min-height: 44px; display: flex; align-items: center; justify-content: space-between; gap: 12px; cursor: pointer; list-style: none; padding: 8px 12px; border: 1px solid currentColor; border-radius: 4px; white-space: nowrap; }
+  summary::-webkit-details-marker { display: none; }
+  summary:focus-visible, a:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+  .design-menu { position: absolute; top: calc(100% + 8px); right: 0; width: 250px; max-width: calc(100vw - 32px); z-index: 500; background: #f5f3ec; color: #191919; padding: 8px; border: 1px solid #191919; box-shadow: 5px 5px 0 #19191933; }
+  a { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 44px; padding: 10px; text-decoration: none; color: inherit; }
+  a:hover, a[aria-current] { background: #dfdfd4; }
+  @media(max-width: 1100px) { .design-menu { left: 0; right: auto; } }
+</style>
+<script>
+  document.querySelectorAll<HTMLDetailsElement>('.design-switcher').forEach(switcher => {
+    const summary = switcher.querySelector('summary');
+    switcher.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && switcher.open) { switcher.open = false; summary?.focus(); event.stopPropagation(); }
+    });
+    document.addEventListener('click', event => { if (!switcher.contains(event.target as Node)) switcher.open = false; });
+    switcher.addEventListener('focusout', event => { if (event.relatedTarget && !switcher.contains(event.relatedTarget as Node)) switcher.open = false; });
+  });
+</script>

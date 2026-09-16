@@ -1,0 +1,36 @@
+---
+import Layout from '../../layouts/AlternativeLayout.astro';
+import { getAlternativeContent } from '../../lib/alternatives';
+const { projects, articles } = await getAlternativeContent();
+const positions = [{x:27,y:29},{x:66,y:17},{x:79,y:49},{x:60,y:78},{x:29,y:76},{x:14,y:52}];
+---
+<Layout title="Observatory" theme="observatory">
+  <div class="wrap observatory-shell"><div class="intro"><div><span class="eyebrow">03 / A constellation of small tools</span><h1>Follow a signal.</h1></div><p>Independent software, mapped by curiosity.<br/>Choose a point. Look a little closer.</p></div>
+  <section class="instrument" aria-label="Project observatory"><div class="map"><div class="map-label"><span class="eyebrow">Project map / schematic</span><span aria-hidden="true">+ &nbsp; + &nbsp; +</span></div><div class="sky">
+    <svg viewBox="0 0 600 600" aria-hidden="true"><g fill="none" stroke="currentColor"><circle cx="300" cy="300" r="95"/><circle cx="300" cy="300" r="180"/><circle cx="300" cy="300" r="260"/><path d="M300 0V600M0 300H600"/><path d="M162 174 396 102 474 294 360 468 174 456 84 312Z" stroke-dasharray="3 7"/></g><g fill="currentColor">{Array.from({length:50},(_,i) => <circle cx={(i*137+29)%600} cy={(i*79+53)%600} r={i%4===0?1.7:.8}/>)}</g></svg>
+    <div class="map-core" aria-hidden="true"><span>SP</span><small>Open source</small></div>
+    {projects.map((p,i) => <button class="star" data-signal={i} style={`--x:${positions[i].x}%;--y:${positions[i].y}%`} aria-label={`Inspect ${p.title}`} aria-pressed={i===0} aria-controls={`signal-${i}`}><span class="star-dot" aria-hidden="true"></span><span class="star-label">{p.title}</span></button>)}
+  </div><div class="map-key"><span><i></i> Selected project</span><span>Positions are illustrative, not live data.</span></div></div>
+  <div class="inspector"><span class="eyebrow">Object inspector</span>{projects.map((p,i) => <article class="signal" id={`signal-${i}`} hidden={i!==0}><div class="signal-id">BUILD / 0{i+1}</div><h2>{p.title}</h2><p>{p.description}</p><dl><dt>Discipline</dt><dd>{p.category}</dd><dt>Technology</dt><dd>{p.stack.join(' / ')}</dd><dt>Provenance</dt><dd>{p.fork?'Fork & development':'Original repository'}</dd></dl><a class="project-link" href={p.href}>Open project file <span>↗</span></a></article>)}<p id="signal-status" class="eyebrow" aria-live="polite">Inspecting {projects[0].title}</p><noscript><a href="/projects">Browse all project files</a></noscript></div></section>
+  <section class="transmissions"><div><span class="eyebrow">Reading room</span><h2>Longer transmissions.</h2><a class="text-link" href="/writing">All writing ↗</a></div><div>{articles.slice(0,3).map((a,i) => <a href={`/writing/${a.id}`}><span class="eyebrow">LOG / 0{i+1}</span><h3>{a.data.title}</h3><span aria-hidden="true">↗</span></a>)}</div></section>
+  </div>
+</Layout>
+<style>
+  .observatory-shell{padding-top:45px;padding-bottom:70px;}.intro{display:flex;justify-content:space-between;gap:30px;align-items:flex-end;margin-bottom:40px;}.intro h1{font-size:clamp(44px,6vw,85px);margin-top:20px;font-weight:450;}.intro p{color:#9aafaa;font-size:13px;}
+  .instrument{display:grid;grid-template-columns:1.65fr 1fr;border:1px solid #38504b;}.map{padding:20px;min-width:0;background-image:linear-gradient(#b7f1d408 1px,transparent 1px),linear-gradient(90deg,#b7f1d408 1px,transparent 1px);background-size:36px 36px;}.map-label{display:flex;justify-content:space-between;color:#9aafaa;}.sky{position:relative;aspect-ratio:1;max-width:680px;margin:auto;}.sky svg{position:absolute;inset:0;width:100%;height:100%;color:#395d53;}.map-core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;}.map-core span{font-size:42px;letter-spacing:-.1em;}.map-core small{display:block;font-family:'JetBrains Mono Variable',monospace;font-size:9px;color:#9aafaa;}
+  .star{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%);min-width:44px;min-height:44px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:8px;background:none;border:0;}.star-dot{width:9px;height:9px;border:1px solid #b7f1d4;border-radius:50%;background:#091719;box-shadow:0 0 0 5px #091719;transition:box-shadow .35s,background .35s;}.star[aria-pressed='true'] .star-dot{background:#b7f1d4;box-shadow:0 0 0 6px #b7f1d422,0 0 0 12px #b7f1d411;}.star-label{font-size:10px;font-family:'JetBrains Mono Variable',monospace;white-space:nowrap;background:#091719;padding:1px 3px;color:#afc8be;}.star[aria-pressed='true'] .star-label{color:#f1bc77;}.star:hover .star-dot{box-shadow:0 0 0 9px #b7f1d422;}
+  .map-key{display:flex;justify-content:space-between;gap:15px;font-size:10px;color:#9aafaa;}.map-key i{display:inline-block;width:6px;height:6px;background:#b7f1d4;border-radius:50%;margin-right:6px;}.inspector{border-left:1px solid #38504b;padding:30px;display:flex;flex-direction:column;}.inspector>.eyebrow{color:#9aafaa;}.signal-id{font-family:'JetBrains Mono Variable',monospace;color:#f1bc77;font-size:11px;margin:50px 0 18px;}.signal h2{font-size:clamp(32px,3.5vw,52px);letter-spacing:-.055em;}.signal p{font-size:15px;color:#b1c3bd;margin:24px 0 30px;}.signal dl{font-size:12px;border-top:1px solid #38504b;}.signal dt{font-family:'JetBrains Mono Variable',monospace;color:#9aafaa;font-size:10px;margin-top:15px;}.signal dd{margin:5px 0 18px;}.project-link{display:flex;justify-content:space-between;border:1px solid #729789;padding:14px;margin-top:30px;font-size:13px;text-decoration:none;}.project-link:hover{background:#b7f1d4;color:#091719;}#signal-status{margin-top:auto;padding-top:25px;font-size:9px;}
+  .transmissions{display:grid;grid-template-columns:1fr 1.4fr;gap:50px;margin-top:70px;}.transmissions h2{font-size:36px;margin:20px 0;}.transmissions>div:last-child a{display:grid;grid-template-columns:65px 1fr 15px;gap:20px;border-top:1px solid #38504b;padding:22px 0;text-decoration:none;align-items:baseline;}.transmissions h3{font-size:19px;line-height:1.35;}.transmissions .eyebrow{color:#9aafaa;}
+  @media(max-width:900px){.intro{display:block;}.intro p{margin-top:20px;}.instrument{grid-template-columns:1fr;}.inspector{border-left:0;border-top:1px solid #38504b;}.signal-id{margin-top:25px;}.transmissions{grid-template-columns:1fr;gap:20px;}}
+  @media(max-width:450px){.map{padding:12px 4px;}.map-label{padding-inline:10px;}.map-label>span:last-child{display:none;}.star-label{font-size:8px;}.map-key{padding:10px;flex-direction:column;gap:5px;}.map-core span{font-size:26px;}.map-core small{font-size:7px;}.inspector{padding:22px;}.transmissions>div:last-child a{grid-template-columns:1fr 15px;gap:10px;}.transmissions>div:last-child a>.eyebrow{grid-column:1/-1;}}
+</style>
+<script>
+  const stars = document.querySelectorAll<HTMLButtonElement>('[data-signal]');
+  const signals = document.querySelectorAll<HTMLElement>('.signal');
+  stars.forEach(star => star.addEventListener('click', () => {
+    stars.forEach(s => s.setAttribute('aria-pressed',String(s === star)));
+    signals.forEach((signal,i) => { signal.hidden = String(i) !== star.dataset.signal; });
+    const status = document.getElementById('signal-status');
+    if(status) status.textContent = `Inspecting ${signals[Number(star.dataset.signal)].querySelector('h2')?.textContent}`;
+  }));
+</script>

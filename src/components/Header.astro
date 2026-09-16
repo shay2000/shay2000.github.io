@@ -1,5 +1,6 @@
 ---
 import ThemeToggle from './ThemeToggle.astro';
+import AlternativeDesigns from './AlternativeDesigns.astro';
 import { NAV, SITE } from '../lib/site';
 
 const path = Astro.url.pathname;
@@ -26,6 +27,7 @@ function isActive(href: string) {
           {item.label}
         </a>
       ))}
+      <AlternativeDesigns />
     </nav>
 
     <div class="hdr__actions">
@@ -268,7 +270,7 @@ function isActive(href: string) {
     transform: translateY(-2.75px) rotate(-45deg);
   }
 
-  @media (max-width: 860px) {
+  @media (max-width: 1100px) {
     .burger {
       display: flex;
     }
@@ -298,6 +300,7 @@ function isActive(href: string) {
       box-shadow: var(--shadow);
       transform-origin: top;
       opacity: 0;
+      visibility: hidden;
       transform: translateY(-8px) scaleY(0.97);
       pointer-events: none;
       transition: opacity var(--dur) var(--ease-out),
@@ -305,6 +308,7 @@ function isActive(href: string) {
     }
 
     .nav.is-open {
+      visibility: visible;
       opacity: 1;
       transform: none;
       pointer-events: auto;

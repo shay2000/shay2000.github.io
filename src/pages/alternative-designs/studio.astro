@@ -1,0 +1,48 @@
+---
+import Layout from '../../layouts/AlternativeLayout.astro';
+import Art from '../../components/AlternativeArtwork.astro';
+import { getAlternativeContent } from '../../lib/alternatives';
+const { projects } = await getAlternativeContent();
+---
+<Layout title="Studio" theme="studio">
+  <section class="poster wrap"><span class="eyebrow">Independent builds / An open-source practice</span><h1>Useful.<br/>Not boring<span class="dot">.</span></h1><div class="flower"><Art kind="studio" /></div><div class="poster-bottom"><p>Small tools, built carefully.<br/>Native utilities. Browser experiments.<br/>A healthy disregard for unnecessary friction.</p><a href="#work" class="round-link" aria-label="Explore selected work">↓</a></div></section>
+  <section class="work" id="work" aria-labelledby="work-title"><div class="work-top"><h2 id="work-title">Pick a curiosity.</h2><span class="eyebrow">The project reel / Choose below</span></div>
+  <div class="project-picks" role="group" aria-label="Choose a project">{projects.map((p,i) => <button data-project={i} aria-pressed={i===0} aria-controls={`stage-${i}`} type="button"><span>0{i+1}</span>{p.title}</button>)}</div>
+  {projects.map((p,i) => <article id={`stage-${i}`} class="stage" hidden={i!==0} aria-label={p.title}><div class={`stage-art art-${i}`} aria-hidden="true"><span class="art-caption">An abstract study in {['energy','frequency','light','connection','rhythm','space'][i]}</span><div class="sculpture"><i></i><i></i><i></i><i></i><i></i></div><span class="art-number">0{i+1}</span></div><div class="stage-copy"><span class="eyebrow">{p.category} / {p.fork ? 'Fork & development' : 'Original repository'}</span><h3>{p.title}</h3><p>{p.description}</p><div class="stack">{p.stack.join(' · ')}</div><a href={p.href} class="visit">Meet the project <span>↗</span></a></div></article>)}
+  <p class="selection-status" aria-live="polite">Selected: {projects[0].title}</p>
+  <noscript><p>JavaScript is off. <a href="/projects">Browse every project in the archive.</a></p></noscript></section>
+  <section class="closing wrap"><span class="eyebrow">Behind the build</span><h2>There’s a story<br/>in the source.</h2><div><p>Why the wattage number matters. What brightness sliders hide. How a split-flap display thinks.</p><a href="/writing" class="text-link">Read the field reports ↗</a></div></section>
+</Layout>
+<style>
+  .poster { position:relative; padding-top:36px; padding-bottom:40px; min-height:700px; overflow:hidden; }
+  h1 { font-weight:750; font-size:clamp(65px,11.5vw,174px); line-height:.9; margin-top:60px; letter-spacing:-.085em; position:relative; z-index:2; }
+  .dot { color:var(--accent); } .flower { position:absolute; width:50%; right:-4%; top:65px; color:var(--accent); transform:rotate(-15deg); }
+  .poster-bottom { display:flex; justify-content:space-between; align-items:flex-end; margin-top:55px; position:relative;z-index:2; } .poster-bottom p { font-size:15px; }
+  .round-link { display:grid;place-items:center;border:1px solid;border-radius:50%;width:80px;height:80px;font-size:35px;text-decoration:none;transition:transform .3s; } .round-link:hover{transform:translateY(6px);}
+  .work { --accent:#15282a; background:#e0fc76; color:#15282a; padding:55px clamp(20px,4vw,64px); }
+  .work-top { display:flex;justify-content:space-between;align-items:center;gap:20px; } h2{font-size:clamp(35px,5vw,72px);font-weight:650;}
+  .project-picks{display:flex;flex-wrap:wrap;border-top:1px solid;margin-top:35px;margin-bottom:35px;}
+  .project-picks button{display:flex;gap:12px;align-items:center;background:transparent;border:0;border-bottom:1px solid;padding:16px 20px;min-height:52px;font-size:14px;flex:1 0 auto;}
+  .project-picks button span {font-family:'JetBrains Mono Variable',monospace;font-size:10px;} .project-picks button[aria-pressed='true']{background:#15282a;color:#e0fc76;}
+  .stage{display:grid;grid-template-columns:1.2fr 1fr;min-height:470px;} .stage-art{background:#193de8;color:#e0fc76;position:relative;overflow:hidden;display:grid;place-items:center;min-height:420px;}
+  .art-caption{position:absolute;top:20px;left:20px;font-size:11px;}.art-number{position:absolute;bottom:10px;right:20px;font-size:65px;font-weight:700;letter-spacing:-.08em;}
+  .sculpture{width:60%;height:65%;position:relative;transform:rotate(-25deg);transition:transform .7s;}.stage-art:hover .sculpture{transform:rotate(-10deg);}
+  .sculpture i{position:absolute;inset:0;border:20px solid currentColor;border-radius:50%;}.sculpture i:nth-child(2){inset:15%;}.sculpture i:nth-child(3){inset:30%;}.sculpture i:nth-child(4){inset:45%;}.sculpture i:nth-child(5){display:none;}
+  .art-1 .sculpture{transform:rotate(25deg);}.art-1 .sculpture i{border-radius:0 50% 50% 0;}.art-2 .sculpture i{border-radius:0;transform:rotate(15deg);}.art-3 .sculpture i{border-radius:50% 0;}.art-4 .sculpture i{border-radius:0;transform:rotate(-12deg);border-width:12px;}.art-5 .sculpture i{border-radius:0 70% 0 0;border-width:15px;}
+  .stage-copy{padding:clamp(25px,4vw,60px);display:flex;flex-direction:column;align-items:flex-start;border:1px solid #15282a;} h3{font-size:clamp(35px,4vw,64px);font-weight:650;letter-spacing:-.065em;margin:25px 0;} .stage-copy p{max-width:34ch;font-size:18px;}.stack{font-size:11px;margin:25px 0;font-family:'JetBrains Mono Variable',monospace;}.visit{display:flex;justify-content:space-between;gap:40px;margin-top:auto;border-bottom:1px solid;padding-block:12px;text-decoration:none;width:100%;}
+  .selection-status{font-size:12px;margin-top:15px;}.closing{padding-block:75px;display:grid;grid-template-columns:1.4fr 1fr;gap:25px 60px;}.closing>.eyebrow{grid-column:1/-1;}.closing>div{align-self:end;max-width:350px;}
+  .stage:not([hidden]) { animation: stage-enter .4s ease-out; }
+  @keyframes stage-enter { from { opacity:.4; transform:translateY(8px); } to { opacity:1; transform:none; } }
+  @media(max-width:800px) { .poster .flower { position:relative; width:65%; top:auto; right:auto; margin:20px 0 -15px auto; opacity:1; } .poster .poster-bottom { margin-top:0; } .poster { min-height:0; } .poster h1 { margin-top:40px; } }
+  @media(max-width:800px){.poster{min-height:600px;}h1{margin-top:75px;font-size:clamp(62px,12vw,110px);}.flower{width:70%;right:-15%;top:60px;opacity:.7;}.poster-bottom{margin-top:100px;gap:20px;}.work-top{align-items:flex-start;flex-direction:column;}.stage{grid-template-columns:1fr;}.stage-art{min-height:330px;}.closing{grid-template-columns:1fr;}.project-picks button{flex-basis:45%;justify-content:flex-start;padding:14px 8px;}.round-link{width:55px;height:55px;flex-shrink:0;}}
+</style>
+<script>
+  const picks = document.querySelectorAll<HTMLButtonElement>('[data-project]');
+  const stages = document.querySelectorAll<HTMLElement>('.stage');
+  picks.forEach(button => button.addEventListener('click', () => {
+    picks.forEach(b => b.setAttribute('aria-pressed',String(b === button)));
+    stages.forEach((stage,i) => { stage.hidden = String(i) !== button.dataset.project; });
+    const status = document.querySelector('.selection-status');
+    if (status) status.textContent = `Selected: ${stages[Number(button.dataset.project)].getAttribute('aria-label')}`;
+  }));
+</script>

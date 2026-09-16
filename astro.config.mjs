@@ -9,7 +9,7 @@ export const SITE = 'https://shayprasad.me';
 export default defineConfig({
   site: SITE,
   trailingSlash: 'ignore',
-  integrations: [sitemap()],
+  integrations: [sitemap({ filter: (page) => !new URL(page).pathname.startsWith('/alternative-designs') })],
 
   markdown: {
     // Dual-theme code blocks: Shiki emits both palettes, CSS picks one.
