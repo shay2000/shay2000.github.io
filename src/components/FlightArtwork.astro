@@ -1,0 +1,34 @@
+---
+interface Props { compact?: boolean; }
+const { compact = false } = Astro.props;
+---
+<svg class:list={['flight-plate', { compact }]} viewBox="0 0 640 680" fill="none" aria-hidden="true">
+  <rect width="640" height="680" fill="#182a3c" />
+  <g stroke="#efeee6" opacity=".22" stroke-width="1">
+    <path d="M40 40H600V640H40Z M320 40V640 M40 340H600" />
+    <circle cx="320" cy="340" r="240" /><circle cx="320" cy="340" r="180" />
+    <path d="M40 100H55 M585 100H600 M40 580H55 M585 580H600" />
+  </g>
+  <g class="flight-bands" stroke-width="24">
+    <path d="M-60 528H210C345 528 455 418 455 283V-40" stroke="#ee4b2b" />
+    <path d="M-60 560H210C363 560 487 436 487 283V-40" stroke="#e7803c" />
+    <path d="M-60 592H210C381 592 519 454 519 283V-40" stroke="#eab95b" />
+  </g>
+  <circle cx="280" cy="286" r="126" fill="#efeee6" />
+  <g stroke="#182a3c" stroke-width="2">
+    <path d="M169 226H391 M159 246H401 M154 266H406 M154 286H406 M157 306H403 M164 326H396 M176 346H384" />
+  </g>
+  <ellipse cx="280" cy="286" rx="235" ry="75" transform="rotate(-35 280 286)" stroke="#efeee6" stroke-width="2" />
+  <circle class="flight-point" cx="451" cy="173" r="8" fill="#efeee6" stroke="#182a3c" stroke-width="3" />
+  <g fill="#efeee6" font-family="monospace" font-size="11" letter-spacing="2">
+    <text x="65" y="80">SP / SYSTEMS STUDY 05</text>
+    <text x="65" y="626">INDEPENDENT EXPLORATION</text>
+  </g>
+  <path d="M565 590V626M547 608H583" stroke="#efeee6" />
+</svg>
+<style>
+  .flight-plate { display:block; width:100%; height:auto; }
+  .flight-point { transform-box:fill-box; transform-origin:center; animation:flight-beacon 4s ease-in-out infinite; }
+  @keyframes flight-beacon { 50% { opacity:.45; } }
+  @media(prefers-reduced-motion:reduce) { .flight-point { animation:none; } }
+</style>

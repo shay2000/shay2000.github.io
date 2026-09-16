@@ -1,0 +1,88 @@
+---
+import Layout from '../../layouts/AlternativeLayout.astro';
+import FlightArtwork from '../../components/FlightArtwork.astro';
+import { getAlternativeContent } from '../../lib/alternatives';
+const { projects, articles } = await getAlternativeContent();
+const serial = (n: number) => String(n + 1).padStart(2, '0');
+---
+<Layout title="Flight Manual" theme="flightmanual" description="A Shuttle-era inspired design study: precise typography, warm red, orbital graphics and useful independent software.">
+  <div class="flight-document">
+    <div class="document-id"><span>SP—05 / Independent software programme</span><span>Design study / Flight Manual</span></div>
+    <section class="flight-cover" aria-labelledby="flight-title">
+      <div class="cover-copy">
+        <div class="programme-mark"><span class="mark-lines" aria-hidden="true"><i></i><i></i><i></i></span><span>shay<br/>systems.</span></div>
+        <h1 id="flight-title">Small tools.<br/>New horizons.</h1>
+        <p class="cover-deck">Useful software for the everyday mission.</p>
+        <p class="cover-description">Native Mac utilities, browser experiments and field reports. Built to solve a particular problem. Shared so someone else can go further.</p>
+        <a class="flight-button" href="#payload">Explore the programme <span aria-hidden="true">↗</span></a>
+        <dl class="cover-spec"><div><dt>Programme</dt><dd>Open-source work</dd></div><div><dt>Operating principle</dt><dd>Small tools, built carefully.</dd></div></dl>
+      </div>
+      <figure class="cover-plate"><FlightArtwork /><figcaption><span>Fig. 01 / A trajectory, not a destination.</span><span>Original graphic</span></figcaption></figure>
+    </section>
+    <nav class="section-register" aria-label="Flight Manual sections"><a href="#payload"><span>01</span>Payload directory <span aria-hidden="true">↓</span></a><a href="#reports"><span>02</span>Field reports <span aria-hidden="true">↓</span></a><a href="#design-notes"><span>03</span>Design notes <span aria-hidden="true">↓</span></a></nav>
+    <section class="payload-section" id="payload" aria-labelledby="payload-title">
+      <div class="section-heading"><span class="doc-label">01 / Payload directory</span><h2 id="payload-title">Built for<br/>life down here.</h2><p>Select a project to open its technical brief. Real software, not simulated mission data.</p></div>
+      <div class="payload-console">
+        <div class="payload-list" role="group" aria-label="Select a project">{projects.map((p, i) => <button type="button" data-payload={i} aria-pressed={i === 0} aria-controls={`payload-${i}`}><span class="payload-code">SP / {serial(i)}</span><strong>{p.title}</strong><span class="payload-arrow" aria-hidden="true">↗</span></button>)}</div>
+        <div class="payload-reader">{projects.map((p, i) => <article id={`payload-${i}`} class="payload-sheet" hidden={i !== 0} aria-label={p.title}>
+          <div class="sheet-top"><span>Technical brief</span><span>SP / {serial(i)}</span></div><h3>{p.title}</h3><p class="payload-description">{p.description}</p>
+          <dl class="technical-data"><div><dt>Systems</dt><dd>{p.stack.join(' / ')}</dd></div><div><dt>Provenance</dt><dd>{p.fork ? 'Fork & development' : 'Original repository'}</dd></div></dl>
+          <a class="brief-link" href={p.href}>Read project documentation <span aria-hidden="true">↗</span></a>
+        </article>)}<p class="payload-status" aria-live="polite">Brief selected: {projects[0].title}</p><noscript><p><a href="/projects">Browse all projects in the archive.</a></p></noscript></div>
+      </div>
+    </section>
+    <section id="reports" class="reports-section" aria-labelledby="reports-title"><div class="section-heading"><span class="doc-label">02 / Field reports</span><h2 id="reports-title">The work behind<br/>the working thing.</h2><a class="brief-link" href="/writing">All writing <span aria-hidden="true">↗</span></a></div><div class="report-list">{articles.slice(0,3).map((a,i) => <a href={`/writing/${a.id}`} class="report"><span class="report-code">REPORT / {serial(i)}</span><div><h3>{a.data.title}</h3><p>{a.data.description}</p></div><span aria-hidden="true">↗</span></a>)}</div></section>
+    <section id="design-notes" class="design-colophon" aria-labelledby="design-title"><div><span class="doc-label">03 / Design notes</span><h2 id="design-title">An optimistic<br/>kind of precision.</h2></div><div><p>Inspired by NASA’s 1976 graphics standards and the visual language of the Shuttle era: flush-left typography, clear numbering, warm red on light paper, and diagrams with a purpose.</p><p>The navy, orange and gold orbital plate is an original interpretation, not a reproduction of the standards manual. No NASA insignia, logotype or affiliation.</p><a href="https://www.nasa.gov/wp-content/uploads/2015/01/nasa_graphics_manual_nhb_1430-2_jan_1976.pdf" class="brief-link">Explore the original standards manual <span aria-hidden="true">↗</span></a></div></section>
+    <div class="end-strip" aria-hidden="true"><span></span><span></span><span></span></div>
+  </div>
+</Layout>
+<style>
+  :global(body.flightmanual) { --paper:#efeee6; --ink:#182a3c; --accent:#bb321c; background:var(--paper); color:var(--ink); }
+  :global(.flightmanual .alt-header) { border-top:5px solid #ee4b2b; border-bottom:1px solid #182a3c; }
+  :global(.flightmanual .wordmark) { font-weight:600; letter-spacing:-.06em; }
+  .flight-document { max-width:1600px; margin:auto; padding:0 clamp(20px,4vw,64px); }
+  .document-id { display:flex; justify-content:space-between; gap:20px; padding:20px 0; font-size:10px; letter-spacing:.06em; text-transform:uppercase; border-bottom:1px solid #182a3c44; }
+  .flight-cover { display:grid; grid-template-columns:1.05fr 1fr; gap:clamp(30px,5vw,80px); padding:48px 0 52px; align-items:center; }
+  .cover-copy { min-width:0; }
+  .programme-mark { display:flex; gap:12px; align-items:center; color:#c73c24; font-size:30px; font-weight:650; line-height:.85; letter-spacing:-.08em; margin-bottom:42px; }
+  .mark-lines { display:flex; flex-direction:column; gap:5px; width:48px; }
+  .mark-lines i { display:block; height:7px; background:currentColor; border-radius:8px 0 0 8px; }
+  .mark-lines i:nth-child(2) { width:38px; }.mark-lines i:nth-child(3) { width:28px; }
+  h1 { font-size:clamp(54px,5.6vw,88px); line-height:.96; font-weight:580; letter-spacing:-.07em; }
+  .cover-deck { font-size:clamp(19px,1.7vw,25px); line-height:1.3; max-width:24ch; margin-top:28px; letter-spacing:-.025em; }
+  .cover-description { font-size:14px; line-height:1.7; max-width:43ch; margin-top:17px; color:#43515b; }
+  .flight-button { display:inline-flex; justify-content:space-between; gap:28px; align-items:center; min-height:48px; padding:12px 18px; background:#bb321c; color:#fffaf0; font-size:13px; text-decoration:none; margin-top:26px; transition:background .2s,transform .2s; }
+  .flight-button:hover { background:#182a3c; transform:translateY(-2px); }
+  .cover-spec { display:flex; gap:28px; border-top:1px solid #182a3c44; margin:34px 0 0; padding-top:16px; }
+  dt,.doc-label,.payload-code,.sheet-top,.report-code,.payload-status { font-family:'JetBrains Mono Variable',monospace; font-size:10px; letter-spacing:.04em; }
+  dt { text-transform:uppercase; margin-bottom:5px; color:#52606a; }dd { margin:0; font-size:11px; }
+  .cover-plate { margin:0; min-width:0; }.cover-plate figcaption { display:flex; justify-content:space-between; gap:20px; font-size:9px; padding-top:12px; color:#43515b; }
+  .section-register { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); border-block:2px solid #182a3c; }
+  .section-register a { display:flex; gap:16px; align-items:center; padding:20px 16px; font-size:13px; text-decoration:none; min-height:64px; border-right:1px solid #182a3c44; }
+  .section-register a:last-child { border:0; }.section-register a>span:first-child { color:#bb321c; font-size:11px; }.section-register a>span:last-child { margin-left:auto; }.section-register a:hover { background:#e2dfd3; }
+  .payload-section,.reports-section { padding:70px 0; border-bottom:1px solid #182a3c; }.section-heading { display:grid; grid-template-columns:1fr 1.6fr 1fr; align-items:start; gap:28px; margin-bottom:40px; }.doc-label { text-transform:uppercase; color:#bb321c; padding-top:8px; }
+  h2 { font-size:clamp(33px,3.5vw,52px); font-weight:500; letter-spacing:-.055em; }.section-heading>p { font-size:13px; color:#43515b; max-width:30ch; }
+  .payload-console { display:grid; grid-template-columns:1fr 1.75fr; border:1px solid #182a3c; }.payload-list { display:flex; flex-direction:column; border-right:1px solid #182a3c; }
+  .payload-list button { display:grid; grid-template-columns:65px 1fr 20px; align-items:center; gap:14px; text-align:left; color:#182a3c; background:transparent; border:0; border-bottom:1px solid #182a3c44; min-height:76px; padding:18px 22px; transition:background .2s,color .2s; }
+  .payload-list button:last-child { border:0; }.payload-list strong { font-size:16px; font-weight:500; letter-spacing:-.025em; }.payload-list button[aria-pressed='true'] { background:#182a3c; color:#efeee6; }.payload-list button:hover:not([aria-pressed='true']) { background:#e2dfd3; }.payload-list button:focus-visible { outline-offset:-5px; outline-color:#c4412a; }
+  .payload-reader { padding:clamp(24px,4vw,55px); background:#f7f5ed; display:flex; flex-direction:column; }.sheet-top { display:flex; justify-content:space-between; gap:20px; text-transform:uppercase; border-bottom:1px solid #182a3c44; padding-bottom:15px; }
+  h3 { font-size:clamp(32px,3.5vw,52px); font-weight:500; letter-spacing:-.05em; margin:30px 0 20px; }.payload-description { max-width:40ch; font-size:19px; line-height:1.5; }.technical-data { margin:28px 0; display:grid; grid-template-columns:1fr 1fr; gap:20px; }.technical-data dd { font-size:12px; line-height:1.7; }
+  .brief-link { display:flex; justify-content:space-between; gap:20px; align-items:center; min-height:48px; border-bottom:1px solid #182a3c; text-decoration:none; font-size:13px; padding:12px 0; }.brief-link:hover { color:#bb321c; }.payload-status { margin-top:auto; padding-top:25px; color:#52606a; }
+  .payload-sheet:not([hidden]) { animation:brief-in .32s ease-out; }@keyframes brief-in { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+  .report { display:grid; grid-template-columns:1fr 2.6fr 25px; gap:28px; align-items:baseline; border-top:1px solid #182a3c44; padding:24px 0; text-decoration:none; }.report h3 { font-size:25px; margin:0 0 12px; line-height:1.2; }.report p { font-size:13px; color:#43515b; max-width:65ch; }.report:hover h3 { color:#bb321c; }
+  .design-colophon { display:grid; grid-template-columns:1fr 1fr; gap:60px; padding:60px 0; }.design-colophon h2 { margin-top:22px; }.design-colophon p { font-size:13px; margin-bottom:18px; color:#43515b; }.end-strip { display:grid; gap:5px; padding-bottom:30px; }.end-strip span { height:8px; background:#ee4b2b; }.end-strip span:nth-child(2) { background:#e7803c; }.end-strip span:nth-child(3) { background:#eab95b; }
+  @media(min-width:1600px) { .cover-plate { max-width:650px; } }
+  @media(max-width:1000px) { .flight-cover { gap:30px; }h1 { font-size:58px; }.section-heading { grid-template-columns:1fr 2fr; }.section-heading>.doc-label { grid-column:1/-1; }.payload-console { grid-template-columns:1fr 1.4fr; }.payload-list button { padding:16px 12px; grid-template-columns:50px 1fr 15px; gap:8px; } }
+  @media(max-width:700px) { .document-id span:last-child { display:none; }.flight-cover { grid-template-columns:1fr; gap:32px; padding:32px 0; }.programme-mark { margin-bottom:30px; }h1 { font-size:clamp(49px,11vw,76px); }.cover-plate { max-width:520px; width:100%; }.section-register { grid-template-columns:1fr; }.section-register a { border-right:0; border-bottom:1px solid #182a3c44; min-height:54px; padding:14px 0; }.section-heading { grid-template-columns:1fr; gap:20px; }.section-heading>p { max-width:44ch; }.payload-section,.reports-section { padding:40px 0; }.payload-console { grid-template-columns:1fr; }.payload-list { border-right:0; border-bottom:1px solid #182a3c; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }.payload-list button { grid-template-columns:1fr 18px; padding:14px; border-bottom:1px solid #182a3c44; min-height:85px; }.payload-list button:nth-child(odd) { border-right:1px solid #182a3c44; }.payload-code { grid-column:1/-1; font-size:9px; }.payload-list strong { font-size:14px; }.technical-data { grid-template-columns:1fr; }.report { grid-template-columns:1fr 20px; gap:12px; }.report-code { grid-column:1/-1; }.report h3 { font-size:23px; }.design-colophon { grid-template-columns:1fr; gap:25px; padding:40px 0; }.cover-spec { gap:20px; }.cover-plate figcaption { font-size:8px; gap:10px; } }
+</style>
+<script>
+  const payloadButtons = document.querySelectorAll<HTMLButtonElement>('[data-payload]');
+  const payloadSheets = document.querySelectorAll<HTMLElement>('.payload-sheet');
+  payloadButtons.forEach(button => button.addEventListener('click', () => {
+    payloadButtons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+    payloadSheets.forEach((sheet, i) => { sheet.hidden = String(i) !== button.dataset.payload; });
+    const active = payloadSheets[Number(button.dataset.payload)];
+    const status = document.querySelector('.payload-status');
+    if (status && active) status.textContent = `Brief selected: ${active.getAttribute('aria-label')}`;
+  }));
+</script>
