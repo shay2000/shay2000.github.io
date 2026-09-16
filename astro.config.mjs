@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 
 // Update `site` to the real domain before deploying — it feeds canonical
 // URLs, the sitemap, and the RSS feed.
-export const SITE = 'https://www.shayprasad.me';
+export const SITE = 'https://shayprasad.me';
 
 export default defineConfig({
   site: SITE,

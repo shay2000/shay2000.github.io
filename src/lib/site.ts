@@ -4,7 +4,7 @@
  */
 
 export const SITE = {
-  url: 'https://www.shayprasad.me',
+  url: 'https://shayprasad.me',
   title: 'shay2000',
   tagline: 'Small tools, built carefully.',
   description:
