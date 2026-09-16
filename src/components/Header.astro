@@ -68,6 +68,16 @@ function isActive(href: string) {
     </div>
   </div>
 </header>
+<noscript>
+  <style is:inline>
+    @media (max-width: 1100px) {
+      #site-header { position: relative; }
+      #site-header .hdr__inner { flex-wrap: wrap; height: auto; padding-block: 12px; }
+      #site-nav { position: static; visibility: visible; opacity: 1; transform: none; pointer-events: auto; order: 3; width: 100%; max-height: none; overflow: visible; }
+      #nav-toggle { display: none; }
+    }
+  </style>
+</noscript>
 
 <style>
   .hdr {
@@ -289,6 +299,9 @@ function isActive(href: string) {
     .nav {
       position: absolute;
       top: var(--header-h);
+      max-height: calc(100dvh - var(--header-h));
+      overflow-y: auto;
+      overscroll-behavior: contain;
       left: 0;
       right: 0;
       flex-direction: column;

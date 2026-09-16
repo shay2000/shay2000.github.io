@@ -1,0 +1,13 @@
+---
+import { latest, commits, stamp, plain, snapshotDate } from '../lib/rich-alternatives';
+---
+<section class="activity" aria-label="Latest activity">
+  <span class="kicker">Latest activity / captured {snapshotDate}</span>
+  <h2>From the workbench.</h2>
+  <div class="latest-repository"><span class="kicker">Most recent repository push</span><h3><a href={`/projects/${latest.name}`}>{latest.name}</a></h3><p>{plain(latest.description ?? '')}</p><p class="activity-date">{stamp(latest.pushedAt)} · {latest.isFork ? 'Fork' : 'Original repository'}</p></div>
+  <ol class="commit-feed">{commits.map(c => <li><div><code>{c.sha}</code><time datetime={c.date}>{stamp(c.date!)}</time></div><a href={c.sha ? `${c.repoUrl}/commit/${c.sha}` : c.repoUrl}>{plain(c.message)}</a><span class="commit-repo">{c.repo}</span></li>)}</ol>
+  <p class="activity-note">Latest commits in the saved repository sample, including forks. Commit dates are not a live status feed.</p>
+</section>
+<style>
+.activity{min-width:0}.activity h2{font-size:clamp(28px,3vw,42px);margin:8px 0 20px}.latest-repository{padding:18px 0;border-block:1px solid color-mix(in srgb,var(--ink) 30%,transparent)}.latest-repository h3{font-size:20px;overflow-wrap:anywhere;margin-block:8px}.latest-repository h3 a{display:inline-flex;align-items:center;min-height:44px}.latest-repository p{font-size:13px}.activity-date{margin-top:12px}.commit-feed{list-style:none;padding:0;margin:0}.commit-feed li{padding:16px 0;border-bottom:1px solid color-mix(in srgb,var(--ink) 20%,transparent)}.commit-feed li>div{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;font-size:10px}.commit-feed a{display:flex;align-items:center;min-height:44px;font-size:13px;font-weight:600;line-height:1.5;text-decoration:none;overflow-wrap:anywhere}.commit-feed a:hover{text-decoration:underline}.commit-repo{display:block;font-size:10px;overflow-wrap:anywhere}.activity-note{font-size:11px;margin-top:18px;line-height:1.65}
+</style>

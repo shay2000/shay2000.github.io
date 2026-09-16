@@ -1,0 +1,24 @@
+---
+import { profile } from '../lib/data';
+import { calendar, period, calendarTotal, calendarMax, months, snapshotDate, stamp } from '../lib/rich-alternatives';
+interface Props { section?: 'history' | 'languages'; }
+const { section = 'history' } = Astro.props;
+---
+{section === 'history' ? <section class="ledger history" aria-label="Commit history">
+  <div class="ledger-heading"><span class="kicker">Public repository record</span><h2>Work, day by day.</h2></div>
+  <p class="ledger-period">{period} · <strong>{calendarTotal} sampled commits</strong></p>
+  <svg class="snapshot-heatmap" viewBox="0 0 623 83" role="img" aria-label={`Daily sampled commits, ${period}. ${calendarTotal} commits. Darker squares indicate more commits.`}>
+    {calendar.map((d, i) => <rect x={Math.floor(i / 7) * 12} y={(i % 7) * 12} width="10" height="10" rx="1" fill="currentColor" opacity={d.count ? .28 + .72 * Math.sqrt(d.count / calendarMax) : .09}><title>{d.date}: {d.count} sampled commits</title></rect>)}
+  </svg>
+  <div class="heat-key"><span>{stamp(calendar[0].date)}</span><span>Less <i style="opacity:.15"></i><i style="opacity:.45"></i><i></i> More</span><span>{snapshotDate}</span></div>
+  <p class="fine">Frozen at the GitHub snapshot of {snapshotDate}. Sampled repository commits, including fork history; not a complete contribution graph or a measure of personal output.</p>
+  <details class="month-record"><summary>Read the monthly totals <span aria-hidden="true">+</span></summary><dl>{months.map(([month, count]) => <div><dt>{stamp(`${month}-01`).replace(/^1 /, '')}</dt><dd>{count}</dd></div>)}</dl></details>
+</section> : <section class="ledger languages" aria-label="Language breakdown">
+  <div class="ledger-heading"><span class="kicker">Material composition</span><h2>Written in.</h2></div>
+  <p class="fine">Share of code bytes across tracked repositories, including forks. Snapshot: {snapshotDate}. Not time spent or proficiency.</p>
+  <ol class="language-list">{profile.topLanguages.slice(0, 7).map(l => <li><div><span>{l.name}</span><strong>{l.percent.toFixed(1)}%</strong></div><span class="language-track"><i style={`width:${l.percent}%`}></i></span></li>)}</ol>
+  <details class="remaining-languages"><summary>Remaining {profile.topLanguages.length - 7} languages <span aria-hidden="true">+</span></summary><dl>{profile.topLanguages.slice(7).map(l => <div><dt>{l.name}</dt><dd>{l.percent ? `${l.percent.toFixed(1)}%` : '<0.1%'}</dd></div>)}</dl></details>
+</section>}
+<style>
+.ledger{min-width:0}.ledger-heading{margin-bottom:14px}.ledger-heading h2{font-size:clamp(28px,3vw,42px);margin-top:8px}.ledger-period{font-size:12px;margin-bottom:18px}.snapshot-heatmap{width:100%;height:auto;color:var(--accent)}.heat-key{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:10px;margin:12px 0}.heat-key>span{display:flex;align-items:center;gap:4px}.heat-key i{background:var(--accent);width:9px;height:9px}.fine{font-size:12px;line-height:1.65}.language-list{list-style:none;margin:20px 0 10px;padding:0}.language-list li{margin-bottom:13px}.language-list li>div{display:flex;justify-content:space-between;font-size:12px}.language-track{display:block;background:color-mix(in srgb,var(--ink) 10%,transparent);height:5px;margin-top:5px}.language-track i{display:block;height:100%;background:var(--accent)}summary{display:flex;align-items:center;justify-content:space-between;gap:15px;min-height:48px;font-size:12px;border-block:1px solid color-mix(in srgb,var(--ink) 25%,transparent);margin-top:18px;list-style:none}summary::-webkit-details-marker{display:none}details[open] summary span{transform:rotate(45deg)}dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(115px,1fr));gap:12px;margin:16px 0;font-size:11px}dl>div{display:flex;justify-content:space-between;gap:8px}dd{margin:0;font-weight:700}
+</style>

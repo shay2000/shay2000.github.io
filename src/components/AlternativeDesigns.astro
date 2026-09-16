@@ -11,6 +11,9 @@ const links = [
   { href: '/alternative-designs/the-machine', label: '08 — The Machine' },
   { href: '/alternative-designs/workbench', label: '09 — Workbench' },
   { href: '/alternative-designs/broadcast', label: '10 — Broadcast' },
+  { href: '/alternative-designs/mission-desk', label: '11 — Mission Desk' },
+  { href: '/alternative-designs/the-independent', label: '12 — The Independent' },
+  { href: '/alternative-designs/parts-catalogue', label: '13 — Parts Catalogue' },
   { href: '/', label: 'Original homepage' },
 ];
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
@@ -21,19 +24,53 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
     {links.map(link => <a href={link.href} aria-current={path === link.href ? 'page' : undefined}>{link.label}<span aria-hidden="true">↗</span></a>)}
   </nav>
 </details>
+<noscript>
+  <style is:inline>
+    .design-switcher[open] > summary { position: fixed; top: 8px; right: 16px; z-index: 501; background: #f5f3ec; color: #191919; }
+    .design-switcher[open] .design-menu { top: 60px; right: 16px; max-height: calc(100dvh - 76px); }
+  </style>
+</noscript>
 <style>
   .design-switcher { position: relative; font-family: 'Inter Variable', sans-serif; font-size: 12px; line-height: 1.5; color: inherit; }
   summary { min-height: 44px; display: flex; align-items: center; justify-content: space-between; gap: 12px; cursor: pointer; list-style: none; padding: 8px 12px; border: 1px solid currentColor; border-radius: 4px; white-space: nowrap; }
   summary::-webkit-details-marker { display: none; }
   summary:focus-visible, a:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
-  .design-menu { position: absolute; top: calc(100% + 8px); right: 0; width: 250px; max-width: calc(100vw - 32px); max-height: min(458px, calc(100vh - 90px)); overflow-y: auto; z-index: 500; background: #f5f3ec; color: #191919; padding: 8px; border: 1px solid #191919; box-shadow: 5px 5px 0 #19191933; }
+  .design-menu { position: fixed; top: min(160px, 30dvh); left: auto !important; right: 16px; width: 270px; max-width: calc(100vw - 32px); max-height: calc(100dvh - min(160px, 30dvh) - 16px); overscroll-behavior: contain; overflow-y: auto; z-index: 500; background: #f5f3ec; color: #191919; padding: 8px; border: 1px solid #191919; box-shadow: 5px 5px 0 #19191933; }
   a { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 44px; padding: 10px; text-decoration: none; color: inherit; }
   a:hover, a[aria-current] { background: #dfdfd4; }
-  @media(max-width: 1100px) { .design-menu { left: 0; right: auto; } }
+
 </style>
 <script>
   document.querySelectorAll<HTMLDetailsElement>('.design-switcher').forEach(switcher => {
     const summary = switcher.querySelector('summary');
+    const menu = switcher.querySelector<HTMLElement>('.design-menu');
+    const positionMenu = () => {
+      if (!switcher.open || !summary || !menu) return;
+      const viewport = window.visualViewport;
+      const width = viewport?.width ?? window.innerWidth;
+      const height = viewport?.height ?? window.innerHeight;
+      const x = viewport?.offsetLeft ?? 0;
+      const y = viewport?.offsetTop ?? 0;
+      const rect = summary.getBoundingClientRect();
+      if (rect.bottom < y || rect.top > y + height) { switcher.open = false; return; }
+      const below = Math.max(0, y + height - rect.bottom - 24);
+      const above = Math.max(0, rect.top - y - 16);
+      const useAbove = below < Math.min(320, menu.scrollHeight) && above > below;
+      const available = useAbove ? above : below;
+      const top = useAbove ? y + 8 : Math.max(y + 8, rect.bottom + 8);
+      const menuWidth = Math.min(270, width - 32);
+      const left = Math.max(x + 16, Math.min(rect.right - menuWidth, x + width - menuWidth - 16));
+      menu.style.setProperty('left', `${left}px`, 'important');
+      menu.style.right = 'auto';
+      menu.style.top = `${top}px`;
+      menu.style.width = `${menuWidth}px`;
+      menu.style.maxHeight = `${Math.max(44, available)}px`;
+    };
+    switcher.addEventListener('toggle', positionMenu);
+    window.addEventListener('resize', positionMenu);
+    window.addEventListener('scroll', positionMenu, { passive: true });
+    window.visualViewport?.addEventListener('resize', positionMenu);
+    window.visualViewport?.addEventListener('scroll', positionMenu);
     switcher.addEventListener('keydown', event => {
       if (event.key === 'Escape' && switcher.open) { switcher.open = false; summary?.focus(); event.stopPropagation(); }
     });
